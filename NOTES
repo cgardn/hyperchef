@@ -1,0 +1,12 @@
+recipe website, searchable and easy to use
+
+Data Schema: (capitalized names are Classes)
+Recipe:
+  - Ingredient
+  - amount of that ingredient in grams
+  - instructionsa, possibly that reference ingredient specific instructions to prep for a particular outcome (well-done = cook for 2 minutes or 15 minutes)
+
+Ingredient
+  - name
+  - calories per gram
+  -
