@@ -82,33 +82,31 @@ Unsorted functions and ideas / things I want to be able to do (x4x)
     + basically fancy flash messages
 
 Data Schema (in rails model terms) (x5x)
+  "-" = column in database
+  "+" = association in model definition
 
   Ingredient
     - id.integer (pk)
     - name.string
     - caloriespergram.integer
-    + has_many :steps
+
+    + has_many :join_ingredientcategories_ingredients
+    + has_many :ingredient_categories, through: :join_ingredientcategories_ingredients
+
     + has_many :join_ingredients_recipes
     + has_many :recipes, through: :join_ingredients_recipes
 
-  Technique
+  Equipment
     - id.integer (pk)
     - name.string
-    - instruction.text
-    + has_many :join_steps_techniques
-    + has_many :steps, through: :join_steps_techniques
+    - equipment_type_id.integer
+    + belongs_to :equipment_type
 
-  Step
+  Action
     - id.integer (pk)
-    - name.string
-    - quantity.int
-    - t.references :ingredient, foreign_key: true
-    - t.references :recipe, foreign_key: true
-    + belongs_to :ingredient
+    - title.string
+    - body.text
     + belongs_to :recipe
-
-    + has_many :join_steps_techniques, dependent: :destroy
-    + has_many :techniques, through: join_steps_techniques
 
   Recipe
     - id.integer (pk)
@@ -118,40 +116,50 @@ Data Schema (in rails model terms) (x5x)
     - views.integer
     - saves.integer
 
-    + has_many :join_categories_recipes, dependent: :destroy
-    + has_many :categories, through: :join_categories_recipes
+    + has_many :actions
 
-    + has_many :join_ingredients_recipes, dependent: :destroy
+    + has_many :join_ingredients_recipes
     + has_many :ingredients, through: :join_ingredients_recipes
 
-    + has_many :steps, dependent: :destroy
+    + has_many :join_recipetypes_recipes, dependent: :destroy
+    + has_many :recipe_types, through: :join_recipetypes_recipes
 
-  Category
+  Recipe Type
     - id.integer (pk)
     - name.string
-    + has_many :join_categories_recipes
-    + has_many :recipes, through: :join_categories_recipes
+    + has_many :join_recipetypes_recipes, dependent: :destroy
+    + has_many :recipes, through: :join_recipetypes_recipes
+
+  Ingredient Type
+    - id.integer (pk)
+    - name.string (like meat, vegetable, etc)
+    + has_many :join_ingredienttypes_ingredients
+    + has_many :ingredients, through: :join_ingredienttypes_ingredients
+
+  Equipment Type
+    - id.integer (pk)
+    - name.string (pan, pot, grater, etc)
+    
+    + has_many :equipments
 
 -- Join Tables --
-  Join_Categories_Recipes
-    - id.integer (pk)
-    ? t.integer :id, primary_key: true
-    - t.references :recipe, foreign_key: true
-    - t.references :category, foreign_key: true
-    - category_id.integer (index)
+  Join_RecipeTypes_Recipe
+    - t.integer :id (pk)
+    - t.references :recipe
+    - t.references :recipe_type
     + belongs_to :recipe
-    + belongs_to :category
+    + belongs_to :recipe_type
 
-  Join_Steps_Techniques
-    - id.integer (pk)
-    - t.references :step, foreign_key: true
-    - t.references :technique, foreign_key: true
-    + belongs_to :step
-    + belongs_to :technique
+  Join_IngredientTypes_ingredient
+    - t.integer :id (pk)
+    - t.references :ingredient_type
+    - t.references :ingredient
+    + belongs_to :ingredient_type
+    + belongs_to :ingredient
 
-  Join_Ingredients_Recipes
+  Join_Ingredients_Recipe
     - id.integer (pk)
-    - t.references :recipe, foreign_key: true
-    - t.references :ingredient, foreign_key: true
+    - t.references :recipe
+    - t.references :ingredient
     + belongs_to :recipe
     + belongs_to :ingredient
