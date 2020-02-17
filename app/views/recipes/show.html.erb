@@ -1,0 +1,17 @@
+<%= @recipe.name %>
+<br><hr><br>
+Equipment you'll need for this recipe:<br>
+<% @recipe.equipment.each do |e| %>
+  <%= e.name %><br>
+<% end %>
+<br><hr><br>
+Ingredients:<br>
+<% @recipe.ingredients.each do |i| %>
+  <%= i.name %><br>
+<% end %>
+<br><hr><br>
+Steps:<br>
+<% @steps.each do |s| %>
+  <b><%= s.title %></b>:
+  <%= s.body %><br>
+<% end %>
