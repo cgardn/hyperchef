@@ -1,12 +1,157 @@
-recipe website, searchable and easy to use
+Big Idea: The google of recipes.
 
-Data Schema: (capitalized names are Classes)
-Recipe:
-  - Ingredient
-  - amount of that ingredient in grams
-  - instructionsa, possibly that reference ingredient specific instructions to prep for a particular outcome (well-done = cook for 2 minutes or 15 minutes)
+-!- New idea: 2-13-2020
+  = Maybe it would be simpler to have just a list of steps, and manually
+    enter the ingredients and quantities into the database, and search on that?
+      Basically I think I need to "flatten" the hierarchy as it currently is,
+      because I feel like I'm shoehorning it into place.
+      - List of ingredients with relative quantities (or "base" quantity for 1
+      person), a list of steps, and links to techniques used? I mean, there
+      isn't that many really complicated individual techniques in normal
+      cooking, I feel like it's mostly just baking/pastry stuff
+      - but at the same time, I want to have quick links out to learn on the
+      fly, so I can keep individual recipes "clean" and say stuff like "make a
+      burre blanc" or do i?
+      - As long as the steps are sensible and everything is efficiently laid
+      out, I don't need to overcomplicate the data model. This is a portfolio
+      project after all! Usability and getting a working, complete app out
+      there is the most important thing. I can complicate it later if I really
+      want to.
 
-Ingredient
-  - name
-  - calories per gram
-  -
+TOC
+- x1x What it looks like
+- x2x Monetization ideas
+- x3x Unsorted data scheme ideas
+- x4x Unsorted ideas for things I want to be able to do
+- x5x Data Schema (in rails model terms)
+
+What it looks like: (x1x)
+  - Simple interface with just a search bar and a slideshow of movies and/or
+  images behind, big colorful food pictures, people having fun cooking at home,
+  stuff like that
+  - Also a not-so-hidden link on the side to browse by various categories like
+  region, cuisine, ingredient type, etc.
+  - The basic idea is that the recipes integrate with a shopping list app, so
+  you can pick what you want to eat, get a shopping list that combines the per-
+  meal amounts of everything into batches (like 5 lbs of carrots), and even
+  integrates with calandar apps to set reminders to do things like take meat
+  out of the freezer on the morning of a particular meal, or when to start
+  cooking in order to be done in time for whenever you say you want to eat that
+  day.
+  - For registered users/subscribers, also a library of easy-to-follow cooking
+  lessons with pictures and everything, and links to recipes.
+
+Monetization: (x2x)
+  - I'd prefer no ads, if possible
+  - subscription service for the lessons and fancy 3rd-party service
+  integrations, very low, like $10 per year
+  - affiliate links to equipment on recipe and lesson pages
+  - affiliate links to amazon fresh for grocery delivery purchases
+    + possibly other grocery affiliate programs like wal-mart, if they exist
+  - once big enough, selling prominent space for food influencers to showcase
+  their own recipes and put their own affiliate links in, make their lives
+  easier etc.
+  - partnerships with sponsored ingredients and equipment (probably better
+  deals than affiliate links, but requires large audience I bet)
+
+Unsorted ideas for the data scheme: (x3x)
+  - 2 basic data units:
+    + ingredients (onions, chicken, cardamom)
+    + techniques (sear, chop, strain, bake, saute, etc)
+      !! issue !! What about steps that involve intermediate products, like
+                  straining a sauce? The sauce won't be a basic ingredient in
+                  the db, because you construct it during the recipe.
+  - Some quantity of one or more ingredients are combined with one technique to
+  create a "step"
+  - recipes are composed of one or more steps
+  - for each ingredient+technique combo, stock photos of before, after, and
+  possibly during. For example, dicing onions would have two pictures, one of
+  an onion just starting to be peeled, and one of a diced onion. If the user
+  clicks the link for "peeling an onion" they are taken to a lesson page on
+  ways to peel an onion. There is also an affiliate link to a small food
+  processor on the onion+chop step.
+
+  - grocery lists are one or more ingredients, each with a quantity in grams,
+  displayed in the user's chosen measurement system (defaults set by country).
+    + calculated from a list of recipes selected by user
+
+Unsorted functions and ideas / things I want to be able to do (x4x)
+  - site-wide messages for logged-in users, set to expire after arbitrary
+  amount of time
+    + but not a full-blown user messaging system, that's not necessary
+    + basically fancy flash messages
+
+Data Schema (in rails model terms) (x5x)
+
+  Ingredient
+    - id.integer (pk)
+    - name.string
+    - caloriespergram.integer
+    + has_many :steps
+    + has_many :join_ingredients_recipes
+    + has_many :recipes, through: :join_ingredients_recipes
+
+  Technique
+    - id.integer (pk)
+    - name.string
+    - instruction.text
+    + has_many :join_steps_techniques
+    + has_many :steps, through: :join_steps_techniques
+
+  Step
+    - id.integer (pk)
+    - name.string
+    - quantity.int
+    - t.references :ingredient, foreign_key: true
+    - t.references :recipe, foreign_key: true
+    + belongs_to :ingredient
+    + belongs_to :recipe
+
+    + has_many :join_steps_techniques, dependent: :destroy
+    + has_many :techniques, through: join_steps_techniques
+
+  Recipe
+    - id.integer (pk)
+    - name.string
+    - origin.string
+    - author.string
+    - views.integer
+    - saves.integer
+
+    + has_many :join_categories_recipes, dependent: :destroy
+    + has_many :categories, through: :join_categories_recipes
+
+    + has_many :join_ingredients_recipes, dependent: :destroy
+    + has_many :ingredients, through: :join_ingredients_recipes
+
+    + has_many :steps, dependent: :destroy
+
+  Category
+    - id.integer (pk)
+    - name.string
+    + has_many :join_categories_recipes
+    + has_many :recipes, through: :join_categories_recipes
+
+-- Join Tables --
+  Join_Categories_Recipes
+    - id.integer (pk)
+    ? t.integer :id, primary_key: true
+    - t.references :recipe, foreign_key: true
+    - t.references :category, foreign_key: true
+    - category_id.integer (index)
+    + belongs_to :recipe
+    + belongs_to :category
+
+  Join_Steps_Techniques
+    - id.integer (pk)
+    - t.references :step, foreign_key: true
+    - t.references :technique, foreign_key: true
+    + belongs_to :step
+    + belongs_to :technique
+
+  Join_Ingredients_Recipes
+    - id.integer (pk)
+    - t.references :recipe, foreign_key: true
+    - t.references :ingredient, foreign_key: true
+    + belongs_to :recipe
+    + belongs_to :ingredient
