@@ -1,3 +1,5 @@
 class Equipment < ApplicationRecord
-  belongs_to :equipment_type
+  has_many :join_equipment_recipes
+  has_many :recipes, through: :join_equipment_recipes
+
 end

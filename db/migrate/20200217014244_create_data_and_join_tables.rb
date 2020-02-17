@@ -18,13 +18,6 @@ class CreateDataAndJoinTables < ActiveRecord::Migration[5.2]
 
     create_table :equipment do |t|
       t.string :name
-      t.references :equipment_type
-
-      t.timestamps
-    end
-
-    create_table :equipment_types do |t|
-      t.string :name
 
       t.timestamps
     end
@@ -46,6 +39,7 @@ class CreateDataAndJoinTables < ActiveRecord::Migration[5.2]
     create_table :actions do |t|
       t.string :title
       t.text :body
+      t.integer :order
       t.references :recipe
       t.timestamps
     end
@@ -68,6 +62,12 @@ class CreateDataAndJoinTables < ActiveRecord::Migration[5.2]
       t.integer :quantity_in_grams
       t.references :recipe
       t.references :ingredient
+      t.timestamps
+    end
+
+    create_table :join_equipment_recipes do |t|
+      t.references :equipment
+      t.references :recipe
       t.timestamps
     end
 

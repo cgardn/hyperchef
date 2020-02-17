@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
   create_table "actions", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.integer "order"
     t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,14 +26,6 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
   end
 
   create_table "equipment", force: :cascade do |t|
-    t.string "name"
-    t.bigint "equipment_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["equipment_type_id"], name: "index_equipment_on_equipment_type_id"
-  end
-
-  create_table "equipment_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -49,6 +42,15 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
     t.integer "caloriespergram"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "join_equipment_recipes", force: :cascade do |t|
+    t.bigint "equipment_id"
+    t.bigint "recipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_id"], name: "index_join_equipment_recipes_on_equipment_id"
+    t.index ["recipe_id"], name: "index_join_equipment_recipes_on_recipe_id"
   end
 
   create_table "join_ingredients_recipes", force: :cascade do |t|
