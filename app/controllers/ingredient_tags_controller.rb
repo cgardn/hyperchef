@@ -1,0 +1,2 @@
+class IngredientTagsController < ApplicationController
+end

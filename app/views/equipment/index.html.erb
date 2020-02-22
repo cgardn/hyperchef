@@ -1,0 +1,13 @@
+<table>
+<% @equipment.each do |e| %>
+  <tr>
+    <td><%= link_to e.name, edit_equipment_path(e) %></td>
+    <td><%= link_to "Delete", e, method: :delete,
+                     data: { confirm: "Delete?" } %></td>
+  </tr>
+
+<% end %>
+</table>
+<br>
+
+<%= link_to "New Equipment", new_equipment_path %>

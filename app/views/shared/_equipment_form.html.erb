@@ -1,0 +1,6 @@
+<%= form_with(model: @equipment, local: true) do |eForm| %>
+  <%= eForm.label :name %>
+  <%= eForm.text_field :name %>
+
+  <%= eForm.submit "Submit" %>
+<% end %>

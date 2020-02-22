@@ -1,0 +1,9 @@
+<%= form_with(model: @ingredient, local: true) do |iForm| %>
+  <%= iForm.label :name %>
+  <%= iForm.text_field :name %>
+
+  <%= iForm.label :caloriespergram %>
+  <%= iForm.number_field :caloriespergram %>
+
+  <%= iForm.submit "Submit" %> 
+<% end %>
