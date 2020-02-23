@@ -51,6 +51,8 @@ i.ingredient_tags << IngredientTag.find_by(name: "spice")
 i = Ingredient.create!(name: "carrot", caloriespergram: 1.65)
 i.ingredient_tags << IngredientTag.find_by(name: "vegetable")
 i.ingredient_tags << IngredientTag.find_by(name: "root")
+i = Ingredient.create!(name: "broccoli", caloriespergram: 1)
+i.ingredient_tags << IngredientTag.find_by(name: "vegetable")
 i = Ingredient.create!(name: "potato", caloriespergram: 1.65)
 i.ingredient_tags << IngredientTag.find_by(name: "root")
 i.ingredient_tags << IngredientTag.find_by(name: "vegetable")
@@ -102,3 +104,16 @@ r.actions.build(title: "season beef", body: "When beef is just about browned, ad
 r.actions.build(title: "mis en place", body: "Chop zucchini into whatever size you want to eat. Peel ginger root. Get out the soy sauce and some salt and pepper and put it nearby where you're going to cook.", order: 2)
 r.actions.build(title: "plate it!", body: "The rice should be done by now. If it isn't, just cover the meat+veg and turn off the heat while you wait. When the rice is done, scoop it onto the plate and squeeze half a lime over each person's portion. Portion beef and zucchini onto each plate. Enjoy!", order: 6)
 r.save
+
+
+t = Recipe.create!(name: "Chicken and broccoli with mashed potatoes",
+                   origin: "American",
+                   author: "me",
+                   views: 0, saves: 0)
+t.ingredients << Ingredient.find_by(name: "chicken")
+t.ingredients << Ingredient.find_by(name: "broccoli")
+t.ingredients << Ingredient.find_by(name: "potato")
+t.actions.build(title: "cook chicken", body: "Put the chicken in a pan with a little oil and cook it until it's not raw anymore.", order: 1)
+t.actions.build(title: "cook broccoli", body: "At the same time, put the broccoli in a pan with a little oil, salt, and pepper, and cook on medium heat, covered.", order: 2)
+t.actions.build(title: "cook potatoes", body: "Poke both potatoes a bunch of times with a sharp knife, making sure the knife goes all the way through. Put them on a plate and microwave for 6-8 minutes, depending on how big they are. The smaller the potato, the more likely the part touching the plate turns into a dry crunchy potato-chip sort of texture (though you may like that.)", order: 3)
+t.save

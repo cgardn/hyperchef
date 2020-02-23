@@ -1,5 +1,5 @@
 Search results for '<%= @q %>'
 <hr>
 <% @results.each do |r| %>
-  <%= r.name %><br>
+  <%= link_to r.name, r %><br>
 <% end %>
