@@ -9,4 +9,9 @@ class Recipe < ApplicationRecord
 
   has_many :join_equipment_recipes
   has_many :equipment, through: :join_equipment_recipes
+
+  def self.search_names(q)
+    q.split(', ')
+    where("lower(name) LIKE :query", query: "%#{sanitize_sql_like(q.downcase)}%")
+  end
 end
