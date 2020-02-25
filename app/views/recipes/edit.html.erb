@@ -8,6 +8,18 @@
   <%= rForm.label :author %>
   <%= rForm.text_field :author%>
   <hr>
+  Ingredients:<br>
+  <% Ingredient.all.each do |i| %>
+    <% if @iNames.include?(i[:name]) %>
+      <%= rForm.check_box("ingredients[]selected", {checked: true}, i[:name], "0") %>
+    <% else %>
+      <%= rForm.check_box("ingredients[]selected", {}, i[:name], "0") %>
+    <% end %>
+    <%= rForm.label(i[:name]) %>
+  <% end %>
+  <hr>
+
+
   <br>
   <% @recipe.actions.keys.sort.each do |k| %>
     <%= rForm.label("Title: ") %>
