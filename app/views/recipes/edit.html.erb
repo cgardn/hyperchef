@@ -8,6 +8,17 @@
   <%= rForm.label :author %>
   <%= rForm.text_field :author%>
   <hr>
+  Equipment:<br>
+  <% Equipment.all.each do |e| %>
+    <% if @eNames.include?(e[:name]) %>
+      <%= rForm.check_box("equipment[]selected", {checked: true}, e[:name], "0") %>
+    <% else %>
+      <%= rForm.check_box("equipment[]selected", {}, e[:name], "0") %>
+    <% end %>
+    <%= rForm.label(e[:name]) %>
+  <% end %>
+  <br>
+  <hr>
   Ingredients:<br>
   <% Ingredient.all.each do |i| %>
     <% if @iNames.include?(i[:name]) %>

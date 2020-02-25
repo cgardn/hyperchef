@@ -11,6 +11,7 @@ class RecipesController < ApplicationController
   def edit
     @recipe = Recipe.find(params[:id])
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
+    @eNames = @recipe.equipment.map{ |e| e[:name] }
   end
 
   def update
@@ -20,15 +21,20 @@ class RecipesController < ApplicationController
     @recipe.origin = recipe_params[:origin]
     @recipe.author = recipe_params[:author]
 
+    # Setting equipment list
+    @recipe.equipment.delete_all
+
+    recipe_params[:equipment].each do |e|
+      unless e[:selected] == "0"
+        @recipe.equipment << Equipment.find_by(name: e[:selected])
+      end
+    end
+
     # Setting ingredients list
-    puts "cp 1"
     @recipe.ingredients.delete_all
-    puts "cp 2"
     
     recipe_params[:ingredients].each do |i|
-      puts "cp #{i}"
       unless i[:selected] == "0"
-        puts "cp #{i}-bb"
         @recipe.ingredients << Ingredient.find_by(name: i[:selected])
       end
     end
@@ -61,6 +67,7 @@ class RecipesController < ApplicationController
   private
     def recipe_params
       params.require(:recipe).permit(:name, :origin, :author,
+                                     equipment: [:selected],
                                      ingredients: [:selected],
                                      actions: [:title, :order, :body])
     end
