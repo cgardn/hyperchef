@@ -1,3 +1,5 @@
+<%= link_to "Delete this recipe", @recipe, method: :delete, data: {confirm: "Delete this?"} %>
+<br>
 <%= @recipe.name %>
 <br><hr><br>
 Equipment you'll need for this recipe:<br>
@@ -11,7 +13,7 @@ Ingredients:<br>
 <% end %>
 <br><hr><br>
 Steps:<br>
-<% @steps.each do |s| %>
-  <b><%= s.title %></b>:
-  <%= s.body %><br>
+<% @recipe.actions.sort.each do |s| %>
+  <b><%= s[1][:title] %></b>:
+  <%= s[1][:body] %><br>
 <% end %>

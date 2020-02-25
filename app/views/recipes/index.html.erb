@@ -1,4 +1,6 @@
+<%= render 'shared/search_form' %>
+<hr>
 <% @recipes.each do |r| %>
-  <%= link_to r.name, r %>
+  <%= render 'shared/recipe_link', rec: r %>
   <br>
 <% end %>

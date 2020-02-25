@@ -15,16 +15,6 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "actions", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.integer "order"
-    t.bigint "recipe_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recipe_id"], name: "index_actions_on_recipe_id"
-  end
-
   create_table "equipment", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -91,6 +81,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
     t.string "name"
     t.string "origin"
     t.string "author"
+    t.string "actions"
     t.integer "views"
     t.integer "saves"
     t.datetime "created_at", null: false

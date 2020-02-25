@@ -97,14 +97,13 @@ r.equipment << Equipment.find_by(name: "10-inch frying pan")
 r.equipment << Equipment.find_by(name: "citrus squeezer")
 r.equipment << Equipment.find_by(name: "grater")
 
-r.actions.build(title: "cook rice", body: "Measure however much rice you want into the rice cooker, according to its instructions.", order: 1)
-r.actions.build(title: "cook beef", body: "Break up ground beef in pan, and cook on medium-high heat until browned. Try not to stir too much so it'll get nice and crispy.", order: 4)
-r.actions.build(title: "cook vegetables", body: "Put the zucchini in one of the pans. Add however much salt and pepper you feel like, and turn on medium heat while you do the next steps.", order: 3)
-r.actions.build(title: "season beef", body: "When beef is just about browned, add the soy sauce, sesame oil, and ginger. The soy sauce will sizzle and help crisp the beef. Now's a good time to give the zucchini a stir. If it's getting too brown for your taste, turn the heat down a bit.", order: 5)
-r.actions.build(title: "mis en place", body: "Chop zucchini into whatever size you want to eat. Peel ginger root. Get out the soy sauce and some salt and pepper and put it nearby where you're going to cook.", order: 2)
-r.actions.build(title: "plate it!", body: "The rice should be done by now. If it isn't, just cover the meat+veg and turn off the heat while you wait. When the rice is done, scoop it onto the plate and squeeze half a lime over each person's portion. Portion beef and zucchini onto each plate. Enjoy!", order: 6)
+r.actions[1] = {title: "cook rice", body: "Measure however much rice you want into the rice cooker, according to its instructions."}
+r.actions[4] = {title: "cook beef", body: "Break up ground beef in pan, and cook on medium-high heat until browned. Try not to stir too much so it'll get nice and crispy."}
+r.actions[3] = {title: "cook vegetables", body: "Put the zucchini in one of the pans. Add however much salt and pepper you feel like, and turn on medium heat while you do the next steps."}
+r.actions[5] = {title: "season beef", body: "When beef is just about browned, add the soy sauce, sesame oil, and ginger. The soy sauce will sizzle and help crisp the beef. Now's a good time to give the zucchini a stir. If it's getting too brown for your taste, turn the heat down a bit."}
+r.actions[2] = {title: "mis en place", body: "Chop zucchini into whatever size you want to eat. Peel ginger root. Get out the soy sauce and some salt and pepper and put it nearby where you're going to cook."}
+r.actions[6] = {title: "plate it!", body: "The rice should be done by now. If it isn't, just cover the meat+veg and turn off the heat while you wait. When the rice is done, scoop it onto the plate and squeeze half a lime over each person's portion. Portion beef and zucchini onto each plate. Enjoy!"}
 r.save
-
 
 t = Recipe.create!(name: "Chicken and broccoli with mashed potatoes",
                    origin: "American",
@@ -113,7 +112,7 @@ t = Recipe.create!(name: "Chicken and broccoli with mashed potatoes",
 t.ingredients << Ingredient.find_by(name: "chicken")
 t.ingredients << Ingredient.find_by(name: "broccoli")
 t.ingredients << Ingredient.find_by(name: "potato")
-t.actions.build(title: "cook chicken", body: "Put the chicken in a pan with a little oil and cook it until it's not raw anymore.", order: 1)
-t.actions.build(title: "cook broccoli", body: "At the same time, put the broccoli in a pan with a little oil, salt, and pepper, and cook on medium heat, covered.", order: 2)
-t.actions.build(title: "cook potatoes", body: "Poke both potatoes a bunch of times with a sharp knife, making sure the knife goes all the way through. Put them on a plate and microwave for 6-8 minutes, depending on how big they are. The smaller the potato, the more likely the part touching the plate turns into a dry crunchy potato-chip sort of texture (though you may like that.)", order: 3)
+t.actions[1] = {title: "cook chicken", body: "Put the chicken in a pan with a little oil and cook it until it's not raw anymore."}
+t.actions[2] = {title: "cook broccoli", body: "At the same time, put the broccoli in a pan with a little oil, salt, and pepper, and cook on medium heat, covered."}
+t.actions[3] = {title: "cook potatoes", body: "Poke both potatoes a bunch of times with a sharp knife, making sure the knife goes all the way through. Put them on a plate and microwave for 6-8 minutes, depending on how big they are. The smaller the potato, the more likely the part touching the plate turns into a dry crunchy potato-chip sort of texture (though you may like that.)"}
 t.save

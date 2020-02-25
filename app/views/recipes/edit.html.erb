@@ -1,0 +1,23 @@
+<%= form_with(model: @recipe, local: true) do |rForm| %>
+  <%= rForm.label :name %>
+  <%= rForm.text_field :name %>
+
+  <%= rForm.label :origin %>
+  <%= rForm.text_field :origin %>
+
+  <%= rForm.label :author %>
+  <%= rForm.text_field :author%>
+  <hr>
+  <br>
+  <% @recipe.actions.keys.sort.each do |k| %>
+    <%= rForm.label("Title: ") %>
+    <%= rForm.text_field("[actions][][title]", value: @recipe.actions[k][:title]) %>
+    <%= rForm.label("Order: ") %>
+    <%= rForm.number_field("[actions][][order]", value: k) %>
+    <br>
+    <%= rForm.label("Body: ") %>
+    <%= rForm.text_area("[actions][][body]", value: @recipe.actions[k][:body], size: "80x5") %>
+  <% end %>
+
+  <%= rForm.submit "Submit changes" %>
+<% end %>
