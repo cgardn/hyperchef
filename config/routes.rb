@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'search#index'
   get '/search', to: 'search#query'
   get '/browse', to: 'search#browse'
+  get '/browse/:id', to: 'search#browse_query'
 
   resources :recipes, except: [:create]
   post '/recipes', to: 'recipes#update'

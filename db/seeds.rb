@@ -6,6 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+RecipeType.create!(name: "salad")
+RecipeType.create!(name: "pastry")
+RecipeType.create!(name: "dinner")
+RecipeType.create!(name: "lunch")
+RecipeType.create!(name: "breakfast")
+RecipeType.create!(name: "quick & easy")
+RecipeType.create!(name: "rice bowls")
+
 IngredientTag.create!(name: "poultry")
 IngredientTag.create!(name: "meat")
 IngredientTag.create!(name: "red meat")
