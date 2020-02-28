@@ -1,7 +1,12 @@
-<ul>
-<% @ingredients.each do |i| %>
-  <li><%= link_to i.name, edit_ingredient_path(i) %> | <%= i.caloriespergram %> CPG</li>
-<% end %>
-</ul>
-
+<table>
+  <% @ingredients.each do |i| %>
+    <tr>
+      <td><%= link_to i.name, edit_ingredient_path(i) %></td>
+      <td><%= i.caloriespergram %> Calories per 100g</td>
+      <td><%= link_to "Delete", i, method: :delete,
+                       data: { confirm: "Delete?" } %></td>
+    </tr>
+  <% end %>
+</table>
+<br>
 <%= link_to "New Ingredient", new_ingredient_path %>

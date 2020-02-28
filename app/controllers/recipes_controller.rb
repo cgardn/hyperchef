@@ -3,6 +3,16 @@ class RecipesController < ApplicationController
   def index
     @recipes = Recipe.all
   end
+  
+  def new
+    @recipe = Recipe.new
+    5.times do |n|
+      @recipe.actions[n.to_s] = {title: "", body: ""}
+    end
+    @iNames = @recipe.ingredients.map{ |i| i[:name] }
+    @eNames = @recipe.equipment.map{ |e| e[:name] }
+    render :edit
+  end
 
   def show
     @recipe = Recipe.find(params[:id])
@@ -42,17 +52,20 @@ class RecipesController < ApplicationController
     # Setting action steps hash
     @recipe.actions.clear
     puts recipe_params[:actions]
-    p "-"*10
     recipe_params[:actions].each do |a|
-      puts a
-      p "="*10
-      @recipe.actions[a[:order]] = { title: a[:title],
+      # Handling multiple steps with the same order number
+      if @recipe.actions.keys.include?(a[:order])
+        @recipe.actions[(a[:order].to_i+1).to_s] = { title: a[:title],
                                           body: a[:body] }
+      else
+        @recipe.actions[a[:order]] = { title: a[:title],
+                                          body: a[:body] }
+      end
     end
     
     if @recipe.save
       flash[:info] = "Updated recipe!"
-      redirect_to '/recipes'
+      redirect_to @recipe
     else
       render :edit
     end

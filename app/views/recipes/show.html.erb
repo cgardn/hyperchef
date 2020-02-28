@@ -1,4 +1,4 @@
-<%= link_to "Delete this recipe", @recipe, method: :delete, data: {confirm: "Delete this?"} %>
+<%= link_to "Delete this", @recipe, method: :delete, data: {confirm: "Delete this?"} %> | <%= link_to "Edit this", edit_recipe_path(@recipe) %>
 <br>
 <%= @recipe.name %>
 <br><hr><br>

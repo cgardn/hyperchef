@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'search#index'
   get '/search', to: 'search#query'
+  get '/browse', to: 'search#browse'
 
   resources :recipes, except: [:create]
   post '/recipes', to: 'recipes#update'

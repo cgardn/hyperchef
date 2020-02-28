@@ -1,0 +1,14 @@
+<%= form_with(model: @iTag, local: true) do |tForm| %>
+  <%= tForm.label "Tag Name: " %>
+  <%= tForm.text_field :tag, value: @iTag.name %>
+
+  <%= tForm.submit "Submit"%>
+<% end %>
+<table>
+<% @allTags.each do |t| %>
+  <tr>
+    <td><%= link_to t.name, edit_ingredient_tag_path(t) %></td>
+    <td><%= link_to "Delete", t, method: :delete %></td>
+  </tr>
+<% end %>
+</table>
