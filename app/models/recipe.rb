@@ -12,5 +12,15 @@ class Recipe < ApplicationRecord
     where("lower(name) LIKE :query", query: "%#{sanitize_sql_like(q.downcase)}%")
   end
 
+  def all_tags
+    rt = recipe_types.pluck(:name)
+    it = []
+    ingredients.each do |ing|
+      it.push(ing.ingredient_tags.pluck(:name))
+    end
+    rt + it.flatten.uniq
+  end
+
+
   serialize :actions, Hash
 end

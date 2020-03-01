@@ -1,6 +1,39 @@
 <%= render 'shared/search_form' %>
+
+<div>
 Search results for '<%= @q %>'
+</div>
 <hr>
-<% @results.each do |r| %>
-  <%= render 'shared/recipe_link', rec: r %><br>
-<% end %>
+<div class ="row">
+  <div class="col-4">
+    <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
+      <%= fForm.label "Recipe Categories:" %><br>
+      <% RecipeType.all.each do |rt| %>
+        <%= fForm.check_box("rTypes[]selected", {}, rt[:name]) %>
+        <%= fForm.label rt[:name] %>
+        <br>
+      <% end %>
+      <%= fForm.label "Ingredient Types:" %><br>
+      <% IngredientTag.all.each do |it| %>
+        <%= fForm.check_box("iTags[]selected", {}, it[:name], "0") %>
+        <%= fForm.label it[:name] %>
+        <br>
+      <% end %>
+      <%= fForm.hidden_field(:query, value: params[:query]) %>
+      <%= fForm.submit "Filter" %>
+    <% end %>
+  </div>
+  <div class="col-8">
+    Showing only 
+    <% @filter.each do |f| %>
+      "<%= f %>"
+    <% end %>
+    <br>
+    Returned <%= @results.count %> recipes out of <%= @total %> total
+    <hr>
+
+    <% @results.each do |r| %>
+      <%= render 'shared/recipe_link', rec: r %><br>
+    <% end %>
+  </div>
+</div>

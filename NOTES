@@ -12,6 +12,7 @@ TODOs:
       while preserving original order)
     + Eventuall I want to make this drag-and-drop anyways, or at least 
       Steam-style numbers with up/down clicky boxes
+  - Waaay too many database hits for a filter search
 
 + Refactoring
   - single shared form for each resource (if possible)

@@ -1,1 +1,4 @@
-This is where category results will go
+<% @recipes.each do |r| %>
+  <%= link_to r.name, r %>
+  <br>
+<% end %>
