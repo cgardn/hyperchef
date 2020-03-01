@@ -1,5 +1,27 @@
 Big Idea: The google of recipes.
 
+next steps: fix results page to be one proper form including categories and search bar
+- so the only place with just one search bar alone is on main page
+
+proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
+add tag selection for recipe+ingredient pages
+make sure both types of tags have bulk addition + bulk-checkbox deletion
+show how many recipes+ingredients reference each respective tag on the tag index pages
+make proper drop-down hidey-menu for search results page
+fix front page
+remove top navbar links, replace with title link (HyperChef)
+add actual quantities to the ingredient-recipe join model
+get some background images+gradients going to fit the pixel-art game theme
+style+format everything
+---
+soft-launch!
+add a bunch of recipes
+---
+add user accounts for saving recipes
+add grocery list function (save or <3 a recipe and it goes on the one list, that list also generates a grocery list)
+- eventually have multiple named custom lists
+
+
 TODOs:
 + Weird Behavior/Bugs
   - Recipe edit flow: if two steps have the same order number, it pushes
