@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   resources :actions
   resources :equipment
   resources :ingredient_tags
+  resources :recipe_types
   
 end

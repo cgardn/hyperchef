@@ -3,13 +3,13 @@ Big Idea: The google of recipes.
 next steps: fix results page to be one proper form including categories and search bar
 - so the only place with just one search bar alone is on main page
 
-proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
 add tag selection for recipe+ingredient pages
+proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
 make sure both types of tags have bulk addition + bulk-checkbox deletion
 show how many recipes+ingredients reference each respective tag on the tag index pages
-make proper drop-down hidey-menu for search results page
+make proper drop-down hidey-menu for search results page filters
+make side-bar filters a partial
 fix front page
-remove top navbar links, replace with title link (HyperChef)
 add actual quantities to the ingredient-recipe join model
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything

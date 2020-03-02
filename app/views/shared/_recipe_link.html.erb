@@ -1,2 +1,5 @@
+<!--
+if current_user.admin?
 <%= link_to "Edit", edit_recipe_path(rec) %> | <%= link_to "Delete", rec, method: :delete, data: {confirm: "Delete this?"} %> | 
+-->
 <%= link_to rec.name, rec %>

@@ -18,7 +18,8 @@ class SearchController < ApplicationController
     # only filter results by checked boxes if boxes were actually checked
     # - hack to fix top search bar and filter submit button technically
     #   being seperate forms
-    unless params[:rTypes] == "" || params[:iTags] == "" 
+    
+    unless params[:rTypes].to_s + params[:iTags].to_s == ""
       @filter = params[:rTypes].concat(params[:iTags]).flatten.reject {
         |n| n[:selected] == "0" }.pluck(:selected)
 
@@ -30,6 +31,7 @@ class SearchController < ApplicationController
       end
       @results = out
     end
+    
     @total = Recipe.all.count
     
   end

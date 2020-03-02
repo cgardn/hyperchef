@@ -9,7 +9,11 @@ class Recipe < ApplicationRecord
   has_many :equipment, through: :join_equipment_recipes
 
   def self.search_names(q)
-    where("lower(name) LIKE :query", query: "%#{sanitize_sql_like(q.downcase)}%")
+    unless q.nil?
+      where("lower(name) LIKE :query", query: "%#{sanitize_sql_like(q.downcase)}%")
+    else
+      all
+    end
   end
 
   def all_tags
