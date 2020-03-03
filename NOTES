@@ -1,8 +1,6 @@
 Big Idea: The google of recipes.
 
 proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
-?make sure both types of tags have bulk addition + bulk-checkbox deletion
-make proper drop-down hidey-menu for search results page filters
 make side-bar filters a partial
 fix front page
 add actual quantities to the ingredient-recipe join model
