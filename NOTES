@@ -1,29 +1,30 @@
 Big Idea: The google of recipes.
 
-next steps: fix results page to be one proper form including categories and search bar
-- so the only place with just one search bar alone is on main page
-
-add tag selection for recipe+ingredient pages
 proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
-make sure both types of tags have bulk addition + bulk-checkbox deletion
-show how many recipes+ingredients reference each respective tag on the tag index pages
+?make sure both types of tags have bulk addition + bulk-checkbox deletion
 make proper drop-down hidey-menu for search results page filters
 make side-bar filters a partial
 fix front page
 add actual quantities to the ingredient-recipe join model
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything
+fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
+replace all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
 ---
 soft-launch!
 add a bunch of recipes
 ---
-add user accounts for saving recipes
+add user accounts for auth using devise
+add user profile model for saving recipes
 add grocery list function (save or <3 a recipe and it goes on the one list, that list also generates a grocery list)
 - eventually have multiple named custom lists
 
 
 TODOs:
 + Weird Behavior/Bugs
+  - Search results sidebar behavior: add one-click way to remove the search query (like show the query with a little 'x' next to it or something
+    + basically, clarify the behavior for getting exactly the search you want, so you know exactly at a glance what the search will be when you
+      press 'filter'
   - Recipe edit flow: if two steps have the same order number, it pushes
     everything up by 1 to preserve order. Better would be rejecting the
     edit, putting error in flash, and re-rendering the form. Even better

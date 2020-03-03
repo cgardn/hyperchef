@@ -1,8 +1,14 @@
 <table>
+  <tr>
+    <th>Name</th>
+    <th>Calories per 100g</th>
+    <th>Recipe Count</th>
   <% @ingredients.each do |i| %>
     <tr>
-      <td><%= link_to i.name, edit_ingredient_path(i) %></td>
-      <td><%= i.caloriespergram %> Calories per 100g</td>
+      <td><%= i.name %></td>
+      <td><%= i.caloriespergram %></td>
+      <td><%= i.recipes.count %>
+      <td><%= link_to "Edit", edit_ingredient_path(i) %></td>
       <td><%= link_to "Delete", i, method: :delete,
                        data: { confirm: "Delete?" } %></td>
     </tr>

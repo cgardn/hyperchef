@@ -1,0 +1,20 @@
+<%= form_with(model: @rType, local: true) do |rtForm| %>
+  <%= rtForm.label "Tag Name: " %>
+  <%= rtForm.text_field :tag, value: @rType.name %>
+
+  <%= rtForm.submit "Submit" %>
+<% end %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Recipe Count</th>
+  </tr>
+  <% @rTypes.each do |rt| %>
+    <tr>
+      <td><%= link_to rt.name, edit_recipe_type_path(rt) %></td>
+      <td><%= rt.recipes.count %></td>
+      <td><%= link_to "Delete", rt, method: :delete %></td>
+    </tr>
+  <% end %>
+</table>
+        

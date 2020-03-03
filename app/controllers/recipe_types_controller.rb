@@ -1,11 +1,23 @@
 class RecipeTypesController < ApplicationController
 
   def index
-    alltypes = RecipeType.all
-    counts = []
-    alltypes.count.times do |n|
-      counts[n] = alltypes[n].recipes.count
-    end
-    @types = [alltypes.count, alltypes, counts]
+    @rType = RecipeType.new
+    @rTypes = RecipeType.all.order(created_at: :desc)
+  end
+
+  def edit
+    @rType = RecipeType.find(params[:id])
+    @rTypes = RecipeType.all.order(created_at: :desc)
+  end
+
+  def update
+    @rType = RecipeType.find(params[:id])
+    @rType.update_attributes(name: rType_params[:tag])
+    redirect_to recipe_types_path
+  end
+
+  private
+  def rType_params
+    params.require(:recipe_type).permit(:tag)
   end
 end

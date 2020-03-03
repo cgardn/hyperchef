@@ -5,9 +5,14 @@
   <%= tForm.submit "Submit"%>
 <% end %>
 <table>
+  <tr>
+    <th>Name</th>
+    <th>Ingredient Count</th>
+  </tr>
 <% @allTags.each do |t| %>
   <tr>
     <td><%= link_to t.name, edit_ingredient_tag_path(t) %></td>
+    <td><%= t.ingredients.count %></td>
     <td><%= link_to "Delete", t, method: :delete %></td>
   </tr>
 <% end %>

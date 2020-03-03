@@ -1,12 +1,10 @@
-<%= render 'shared/search_form' %>
-
-<div>
-Search results for '<%= @q %>'
-</div>
-<hr>
 <div class ="row">
   <div class="col-4">
+    <% if @q != '' %>
+      Search: <%= @q %>
+    <% end %>
     <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
+      <%= fForm.text_field :query %><br>
       <%= fForm.label "Recipe Categories:" %><br>
       <% RecipeType.all.each do |rt| %>
         <% if @filter && @filter.include?(rt[:name]) %>
@@ -27,18 +25,11 @@ Search results for '<%= @q %>'
         <%= fForm.label it[:name] %>
         <br>
       <% end %>
-      <%= fForm.hidden_field(:query, value: params[:query]) %>
+      <!--<%= fForm.hidden_field(:query, value: params[:query]) %>-->
       <%= fForm.submit "Filter" %>
     <% end %>
   </div>
   <div class="col-8">
-    <% if @filter %>
-      Showing only 
-      <% @filter.each do |f| %>
-        "<%= f %>"
-      <% end %>
-      <br>
-    <% end %>
     Returned <%= @results.count %> recipes out of <%= @total %> total
     <hr>
 

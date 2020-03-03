@@ -2,6 +2,11 @@
 <br>
 <%= @recipe.name %>
 <br><hr><br>
+Tags:
+<% @tags.each do |t| %>
+  <%= t %><% unless t == @tags.last %><%= ", " %><% end %>
+<% end %>
+<br><hr><br>
 Equipment you'll need for this recipe:<br>
 <% @recipe.equipment.each do |e| %>
   <%= e.name %><br>

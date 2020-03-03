@@ -12,3 +12,7 @@
         margin-bottom: 4px;
         @include box-sizing;
 }
+
+th, td {
+  padding: 0 50px;
+}
