@@ -1,11 +1,12 @@
 Big Idea: The google of recipes.
 
 make side-bar filters a partial
-fix front page
 add actual quantities to the ingredient-recipe join model
 
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything
+  - add background gifs/movies of cooking+food to front page
+  - add big graphic above search bar
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - possibly reject {"selected" => "0"} in the controller? or does this need to happen at rack/routing level?
 replace all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)

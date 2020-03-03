@@ -13,6 +13,14 @@
         @include box-sizing;
 }
 
-th, td {
-  padding: 0 50px;
+html {
+  height: 90%
+}
+
+body {
+  height: 100%;
+}
+
+.row {
+  overflow-y: auto;
 }
