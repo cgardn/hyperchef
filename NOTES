@@ -1,13 +1,16 @@
 Big Idea: The google of recipes.
 
-proper admin panel for listing all the resources (recipes, ingredients, and both types of tags) with links to edit+delete
 make side-bar filters a partial
 fix front page
 add actual quantities to the ingredient-recipe join model
+
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
+  - possibly reject {"selected" => "0"} in the controller? or does this need to happen at rack/routing level?
 replace all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
+  - look up custom URL slugs, it's a thing somewhere inside Rails, will require a migration to add a "slug" column to models that will have their own
+    endpoints
 ---
 soft-launch!
 add a bunch of recipes
@@ -20,6 +23,7 @@ add grocery list function (save or <3 a recipe and it goes on the one list, that
 
 TODOs:
 + Weird Behavior/Bugs
+  - Admin panel: clicking a tag to edit brings me to the edit page for that tag, not staying inside the admin panel. Need AJAX?
   - Search results sidebar behavior: add one-click way to remove the search query (like show the query with a little 'x' next to it or something
     + basically, clarify the behavior for getting exactly the search you want, so you know exactly at a glance what the search will be when you
       press 'filter'

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/browse', to: 'search#browse'
   get '/browse/:id', to: 'search#browse_query'
 
+  get '/admin', to: 'admin#index'
+
   resources :recipes, except: [:create]
   post '/recipes', to: 'recipes#update'
   post '/recipes/:id', to: 'recipes#update'
@@ -14,5 +16,7 @@ Rails.application.routes.draw do
   resources :equipment
   resources :ingredient_tags
   resources :recipe_types
+  
+
   
 end
