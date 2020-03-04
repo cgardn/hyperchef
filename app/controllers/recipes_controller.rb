@@ -23,10 +23,14 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     @tags = @recipe.all_tags
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
+    @iQuants = @recipe.ing_quants
     @eNames = @recipe.equipment.map{ |e| e[:name] }
   end
 
   def update
+    throw
+    p recipe_params
+
     @recipe ||= Recipe.find(params[:id]) || Recipe.new
 
     @recipe.name = recipe_params[:name]
@@ -55,9 +59,8 @@ class RecipesController < ApplicationController
     @recipe.ingredients.delete_all
     
     recipe_params[:ingredients].each do |i|
-      unless i[:selected] == "0"
-        @recipe.ingredients << Ingredient.find_by(name: i[:selected])
-      end
+      @recipe.ingredients << Ingredient.find_by(name: i[:selected])
+      @recipe.set_quantity(i, i[:quantity])
     end
 
     # Setting action steps hash
@@ -94,6 +97,7 @@ class RecipesController < ApplicationController
                                      rTypes: [:selected],
                                      equipment: [:selected],
                                      ingredients: [:selected],
+                                     ingredients: [:quantity],
                                      actions: [:title, :order, :body])
     end
   

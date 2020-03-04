@@ -25,6 +25,22 @@ class Recipe < ApplicationRecord
     rt + it.flatten.uniq
   end
 
+  def set_quantity(ing, amt)
+    join_ingredients_recipes.find_by(ingredient_id: Ingredient.find_by(name: ing)).quantity_in_grams = amt
+  end
+
+  def ing_quants
+    out = {}
+    join_ingredients_recipes.each do |i|
+      out[Ingredient.find(i.ingredient_id).name] = i.quantity_in_grams
+    end
+    out
+  end
+
+  def join_i(ing)
+    join_ingredients_recipes.find_by(ingredient_id: ing.id)
+  end
+
 
   serialize :actions, Hash
 end

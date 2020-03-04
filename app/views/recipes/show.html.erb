@@ -13,9 +13,14 @@ Equipment you'll need for this recipe:<br>
 <% end %>
 <br><hr><br>
 Ingredients:<br>
-<% @recipe.ingredients.each do |i| %>
-  <%= i.name %><br>
+<table>
+<% @recipe.ing_quants.each do |iq| %>
+  <tr>
+    <td><%= iq[1] %></td>
+    <td><%= iq[0].name %></td>
+  </tr>
 <% end %>
+</table>
 <br><hr><br>
 Steps:<br>
 <% @recipe.actions.sort.each do |s| %>
