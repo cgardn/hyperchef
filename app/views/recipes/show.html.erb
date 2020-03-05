@@ -17,7 +17,7 @@ Ingredients:<br>
 <% @recipe.ing_quants.each do |iq| %>
   <tr>
     <td><%= iq[1] %></td>
-    <td><%= iq[0].name %></td>
+    <td><%= iq[0] %></td>
   </tr>
 <% end %>
 </table>

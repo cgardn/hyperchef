@@ -1,7 +1,9 @@
 Big Idea: The google of recipes.
 
 make side-bar filters a partial
-add actual quantities to the ingredient-recipe join model
+add ability to edit what gram quantities are displayed as on recipe edit page
+look at various things that get done to recipes, ingredients, and tags in views+controllers and
+  think about what could/should be pulled into model functions
 
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything

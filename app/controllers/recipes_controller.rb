@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+  before_action :clean_params_ingredients, only: [:update, :create]
 
   def index
     @recipes = Recipe.all
@@ -28,8 +29,6 @@ class RecipesController < ApplicationController
   end
 
   def update
-    throw
-    p recipe_params
 
     @recipe ||= Recipe.find(params[:id]) || Recipe.new
 
@@ -58,9 +57,9 @@ class RecipesController < ApplicationController
     # Setting ingredients list
     @recipe.ingredients.delete_all
     
-    recipe_params[:ingredients].each do |i|
-      @recipe.ingredients << Ingredient.find_by(name: i[:selected])
-      @recipe.set_quantity(i, i[:quantity])
+    @fresh_ing.keys.each do |key|
+      @recipe.ingredients << Ingredient.find_by(name: key)
+      @recipe.set_quantity(key, @fresh_ing[key]) 
     end
 
     # Setting action steps hash
@@ -92,12 +91,22 @@ class RecipesController < ApplicationController
   end
 
   private
+
+    def clean_params_ingredients
+      @fresh_ing = {}
+      recipe_params[:ingredients].keys.each do |key|
+        unless recipe_params[:ingredients][key] == ""
+          @fresh_ing[key] = recipe_params[:ingredients][key]
+        end
+      end
+      @fresh_ing
+    end
+
     def recipe_params
       params.require(:recipe).permit(:name, :origin, :author,
                                      rTypes: [:selected],
                                      equipment: [:selected],
-                                     ingredients: [:selected],
-                                     ingredients: [:quantity],
+                                     :ingredients => {},
                                      actions: [:title, :order, :body])
     end
   

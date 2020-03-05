@@ -8,6 +8,8 @@ class Recipe < ApplicationRecord
   has_many :join_equipment_recipes
   has_many :equipment, through: :join_equipment_recipes
 
+  accepts_nested_attributes_for :ingredients
+
   def self.search_names(q)
     unless q.nil?
       where("lower(name) LIKE :query", query: "%#{sanitize_sql_like(q.downcase)}%")
@@ -26,7 +28,9 @@ class Recipe < ApplicationRecord
   end
 
   def set_quantity(ing, amt)
-    join_ingredients_recipes.find_by(ingredient_id: Ingredient.find_by(name: ing)).quantity_in_grams = amt
+    ingquant = join_ingredients_recipes.find_by(ingredient_id: Ingredient.find_by(name: ing))
+    ingquant.quantity_in_grams = amt
+    ingquant.save
   end
 
   def ing_quants
