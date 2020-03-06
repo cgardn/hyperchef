@@ -24,6 +24,7 @@ class EquipmentController < ApplicationController
   def update
     @equipment = Equipment.find(params[:id])
     @equipment.name = equipment_params[:name]
+    @equipment.affiliate_link = equipment_params[:affiliate_link]
 
     if @equipment.save
       redirect_to equipment_index_path
@@ -41,6 +42,6 @@ class EquipmentController < ApplicationController
   private
   
     def equipment_params
-      params.require(:equipment).permit(:name)
+      params.require(:equipment).permit(:name, :affiliate_link)
     end
 end

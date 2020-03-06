@@ -9,14 +9,14 @@ Tags:
 <br><hr><br>
 Equipment you'll need for this recipe:<br>
 <% @recipe.equipment.each do |e| %>
-  <%= e.name %><br>
+  <%= link_to e.name, e.affiliate_link %><br>
 <% end %>
 <br><hr><br>
 Ingredients:<br>
 <table>
 <% @recipe.ing_quants.each do |iq| %>
   <tr>
-    <td><%= iq[1] %></td>
+    <td><%= iq[1] %> grams</td>
     <td><%= iq[0] %></td>
   </tr>
 <% end %>

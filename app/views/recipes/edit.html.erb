@@ -11,9 +11,13 @@
   Recipe Tags:<br>
   <% RecipeType.all.each do |rt| %>
     <% if @tags.include?(rt[:name]) %>
-      <%= rForm.check_box("rTypes[]selected", {checked: true}, rt[:name], "0") %>
+      <%= check_box_tag("recipe[rTypes][]selected",
+                               value=rt[:name],
+                               checked=true) %>
     <% else %>
-      <%= rForm.check_box("rTypes[]selected", {}, rt[:name], "0") %>
+      <%= check_box_tag("recipe[rTypes][]selected",
+                               value=rt[:name],
+                               checked=false) %>
     <% end %>
     <%= rForm.label(rt[:name]) %>
   <% end %>
@@ -21,9 +25,11 @@
   Equipment:<br>
   <% Equipment.all.each do |e| %>
     <% if @eNames.include?(e[:name]) %>
-      <%= rForm.check_box("equipment[]selected", {checked: true}, e[:name], "0") %>
+      <%= check_box_tag("recipe[equipment][]selected",
+                        value=e[:name], checked=true) %>
     <% else %>
-      <%= rForm.check_box("equipment[]selected", {}, e[:name], "0") %>
+      <%= check_box_tag("recipe[equipment][]selected",
+                        value=e[:name], checked=false) %>
     <% end %>
     <%= rForm.label(e[:name]) %>
   <% end %>

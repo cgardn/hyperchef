@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
 
   create_table "equipment", force: :cascade do |t|
     t.string "name"
+    t.string "affiliate_link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

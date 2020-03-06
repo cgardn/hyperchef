@@ -13,9 +13,9 @@
         <div class="collapse" id="collapseRTypes">
       <% RecipeType.all.each do |rt| %>
         <% if @filter && @filter.include?(rt[:name]) %>
-          <%= fForm.check_box("rTypes[]selected", {checked: true}, rt[:name]) %>
+          <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
         <% else %>
-          <%= fForm.check_box("rTypes[]selected", {}, rt[:name]) %>
+          <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
         <% end %>
         <%= fForm.label rt[:name] %>
         <br>
@@ -30,9 +30,9 @@
         <div class="collapse" id="collapseITags">
       <% IngredientTag.all.each do |it| %>
         <% if @filter && @filter.include?(it[:name]) %>
-          <%= fForm.check_box("iTags[]selected", {checked: true}, it[:name], "0") %>
+          <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
         <% else %>
-          <%= fForm.check_box("iTags[]selected", {}, it[:name], "0") %>
+          <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
         <% end %>
         <%= fForm.label it[:name] %>
         <br>

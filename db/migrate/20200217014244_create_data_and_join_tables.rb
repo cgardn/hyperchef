@@ -18,6 +18,7 @@ class CreateDataAndJoinTables < ActiveRecord::Migration[5.2]
 
     create_table :equipment do |t|
       t.string :name
+      t.string :affiliate_link
       t.timestamps
     end
     

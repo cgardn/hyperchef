@@ -1,9 +1,12 @@
 Big Idea: The google of recipes.
 
-make side-bar filters a partial
-add ability to edit what gram quantities are displayed as on recipe edit page
+? make side-bar filters a partial (where else does the side-bar appear besides search results?)
+! ability to change imperial or metric quantities (user) and default units (admin, but still stored as grams internally - just setting a conversion factor)
 look at various things that get done to recipes, ingredients, and tags in views+controllers and
   think about what could/should be pulled into model functions
+? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
+! way to add or remove steps in recipe create/edit pages
+  - steps generally wack, extra blank steps get saved as blank and shown on the show page as just ':'
 
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything
@@ -11,9 +14,10 @@ style+format everything
   - add big graphic above search bar
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - possibly reject {"selected" => "0"} in the controller? or does this need to happen at rack/routing level?
+  - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
 replace all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
   - look up custom URL slugs, it's a thing somewhere inside Rails, will require a migration to add a "slug" column to models that will have their own
-    endpoints
+    endpoints, or possibly a function that just downcases and hyphenates the model name
 ---
 soft-launch!
 add a bunch of recipes
@@ -25,6 +29,8 @@ add grocery list function (save or <3 a recipe and it goes on the one list, that
 
 
 TODOs:
+
+add ability to edit what gram quantities are displayed as on recipe edit page
 + Weird Behavior/Bugs
   - Admin panel: clicking a tag to edit brings me to the edit page for that tag, not staying inside the admin panel. Need AJAX?
   - Search results sidebar behavior: add one-click way to remove the search query (like show the query with a little 'x' next to it or something

@@ -1,27 +1,37 @@
 class RecipesController < ApplicationController
   before_action :clean_params_ingredients, only: [:update, :create]
+  before_action :set_recipe, only: [:new, :show, :edit, :update]
+
+  def set_recipe
+    if params[:id]
+      @recipe = Recipe.find(params[:id])
+    else
+      @recipe = Recipe.new
+    end
+  end
 
   def index
     @recipes = Recipe.all
   end
   
   def new
-    @recipe = Recipe.new
+    #@recipe = Recipe.new
     5.times do |n|
       @recipe.actions[n.to_s] = {title: "", body: ""}
     end
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
+    @tags = []
     render :edit
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
+    #@recipe = Recipe.find(params[:id])
     @tags = @recipe.all_tags
   end
 
   def edit
-    @recipe = Recipe.find(params[:id])
+    #@recipe = Recipe.find(params[:id])
     @tags = @recipe.all_tags
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @iQuants = @recipe.ing_quants
@@ -30,7 +40,7 @@ class RecipesController < ApplicationController
 
   def update
 
-    @recipe ||= Recipe.find(params[:id]) || Recipe.new
+    #@recipe ||= Recipe.find(params[:id]) || Recipe.new
 
     @recipe.name = recipe_params[:name]
     @recipe.origin = recipe_params[:origin]
@@ -58,8 +68,15 @@ class RecipesController < ApplicationController
     @recipe.ingredients.delete_all
     
     @fresh_ing.keys.each do |key|
-      @recipe.ingredients << Ingredient.find_by(name: key)
-      @recipe.set_quantity(key, @fresh_ing[key]) 
+
+      # Need to create a Join_Ingredients_Recipes directly here
+      #   since the join model has an extra attribute (quantity)
+      jir = JoinIngredientsRecipe.new
+      jir.recipe = @recipe
+      jir.ingredient = Ingredient.find_by(name: key)
+      jir.quantity_in_grams = @fresh_ing[key]
+      jir.save
+
     end
 
     # Setting action steps hash
