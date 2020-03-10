@@ -1,6 +1,6 @@
-<%= link_to "Delete this", @recipe, method: :delete, data: {confirm: "Delete this?"} %> | <%= link_to "Edit this", edit_recipe_path(@recipe) %>
-<br>
-<%= @recipe.name %>
+<div class="text-center jumbotron">
+<%= @recipe.convert_name_for_title %>
+</div>
 <br><hr><br>
 Tags:
 <% @tags.each do |t| %>

@@ -5,8 +5,9 @@ Big Idea: The google of recipes.
 look at various things that get done to recipes, ingredients, and tags in views+controllers and
   think about what could/should be pulled into model functions
 ? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
-! way to add or remove steps in recipe create/edit pages
-  - steps generally wack, extra blank steps get saved as blank and shown on the show page as just ':'
+
+* way to add or remove steps in recipe create/edit pages
+  ! Fixed for now by creating 20 blank steps for new recipe form. Will circle back around when updating to modern UI
   - probably easy to fix with React, but that's a whole thing
 
 get some background images+gradients going to fit the pixel-art game theme
@@ -14,7 +15,6 @@ style+format everything
   - add background gifs/movies of cooking+food to front page
   - add big graphic above search bar
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
-  - possibly reject {"selected" => "0"} in the controller? or does this need to happen at rack/routing level?
   - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
 replace all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
   - look up custom URL slugs, it's a thing somewhere inside Rails, will require a migration to add a "slug" column to models that will have their own

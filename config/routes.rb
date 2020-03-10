@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get '/admin', to: 'admin#index'
 
-  resources :recipes, except: [:create]
+  resources :recipes, except: [:create], param: :name
   post '/recipes', to: 'recipes#update'
   post '/recipes/:id', to: 'recipes#update'
   resources :ingredients, except: [:show]

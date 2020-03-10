@@ -3,8 +3,8 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: [:new, :show, :edit, :update]
 
   def set_recipe
-    if params[:id]
-      @recipe = Recipe.find(params[:id])
+    if params[:name]
+      @recipe = Recipe.find_by(name: params[:name])
     else
       @recipe = Recipe.new
     end

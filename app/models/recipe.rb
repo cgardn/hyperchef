@@ -45,6 +45,9 @@ class Recipe < ApplicationRecord
     join_ingredients_recipes.find_by(ingredient_id: ing.id)
   end
 
+  def convert_name_for_title
+    URI::decode(name.gsub('-', ' ').titleize)
+  end
 
   serialize :actions, Hash
 end
