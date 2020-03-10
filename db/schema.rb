@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
   end
 
   create_table "recipes", force: :cascade do |t|
+    t.string "slug"
     t.string "name"
     t.string "origin"
     t.string "author"
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_02_17_014244) do
     t.integer "saves"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_recipes_on_slug", unique: true
   end
 
 end

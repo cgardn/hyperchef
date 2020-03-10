@@ -63,8 +63,10 @@
   <% @recipe.actions.keys.each do |k| %>
     <%= rForm.label("Title: ") %>
     <%= rForm.text_field("[actions][][title]", value: @recipe.actions[k][:title]) %>
-    <%= rForm.label("Order: ") %>
-    <%= rForm.number_field("[actions][][order]", value: k) %>
+    <%= rForm.label("Step: #{k.to_i + 1}") %>
+    <!--
+    <%= rForm.number_field("[actions][][order]", value: (k.to_i)+1) %>
+    -->
     <br>
     <%= rForm.label("Body: ") %>
     <%= rForm.text_area("[actions][][body]", value: @recipe.actions[k][:body], size: "80x5") %>

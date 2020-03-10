@@ -23,6 +23,8 @@ class CreateDataAndJoinTables < ActiveRecord::Migration[5.2]
     end
     
     create_table :recipes do |t|
+      t.string :slug
+      t.index :slug, unique: true
       t.string :name
       t.string :origin
       t.string :author

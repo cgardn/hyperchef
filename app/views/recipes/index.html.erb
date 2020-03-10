@@ -1,7 +1,3 @@
-<%= render 'shared/search_form' %>
-<hr>
-<%= link_to "Create new recipe", new_recipe_path %>
-<hr>
 <% @recipes.each do |r| %>
   <%= render 'shared/recipe_link', rec: r %>
   <br>

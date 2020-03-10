@@ -6,11 +6,15 @@
     <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
       <%= fForm.text_field :query %><%= fForm.submit "Filter" %>
       <br>
+      <!--
       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRTypes" aria-expanded="false" aria-controls="collapseRTypes">
         Recipe Tags
       </button>
-      <hr>
-        <div class="collapse" id="collapseRTypes">
+      -->
+      <br>
+      <h5>Filter by recipe type</h5>
+      <!--<div class="collapse" id="collapseRTypes">-->
+        <div class="font-sm">
       <% RecipeType.all.each do |rt| %>
         <% if @filter && @filter.include?(rt[:name]) %>
           <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
@@ -21,13 +25,15 @@
         <br>
       <% end %>
         </div>
-        <br>
+        <!--
       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseITags" aria-expanded="false" aria-controls="collapseITags">
         Ingredient Tags
       </button>
-      <hr>
+        -->
       <br>
-        <div class="collapse" id="collapseITags">
+      <h5>Filter ingredients</h5>
+      <!--<div class="collapse" id="collapseITags">-->
+        <div class="font-sm">
       <% IngredientTag.all.each do |it| %>
         <% if @filter && @filter.include?(it[:name]) %>
           <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
@@ -41,7 +47,13 @@
     <% end %>
   </div>
   <div class="col-8">
-    Returned <%= @results.count %> recipes out of <%= @total %> total
+    Returned <%= @results.count %> recipes out of <%= @total %> total<br>
+    <% unless @q.nil? || @q == "" %>
+      Query: <%= @q %><br>
+    <% end %>
+    <% unless @filter.nil? %>
+    Tags: <% @filter.each do |t| %><%= " #{t}" %> <% end %>
+    <% end %>
     <hr>
 
     <% @results.each do |r| %>

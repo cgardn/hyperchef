@@ -18,6 +18,10 @@ class Recipe < ApplicationRecord
     end
   end
 
+  def to_param
+    slug
+  end
+
   def all_tags
     rt = recipe_types.pluck(:name)
     it = []

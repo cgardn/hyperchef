@@ -20,8 +20,16 @@ class SearchController < ApplicationController
     #   being seperate forms
     
     unless params[:rTypes].to_s + params[:iTags].to_s == ""
-      @filter = params[:rTypes].concat(params[:iTags]).flatten.reject {
-        |n| n[:selected] == "0" }.pluck(:selected)
+      if params[:rTypes].to_s == ""
+        @filter = params[:iTags].flatten.reject {
+          |n| n[:selected] == "0" }.pluck(:selected)
+      elsif params[:iTags].to_s == ""
+        @filter = params[:rTypes].flatten.reject {
+          |n| n[:selected] == "0" }.pluck(:selected)
+      else
+        @filter = params[:rTypes].concat(params[:iTags]).flatten.reject {
+          |n| n[:selected] == "0" }.pluck(:selected)
+      end
 
       out = []
       @results.each do |r|
@@ -33,6 +41,7 @@ class SearchController < ApplicationController
     end
     
     @total = Recipe.all.count
+    puts @filter
     
   end
 
