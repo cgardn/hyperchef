@@ -14,11 +14,17 @@
 }
 
 html {
-  height: 90%
+  height: 100%
 }
 
-body {
+.gradient {
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(10,10,139,1) 8%, rgba(0,212,255,1) 100%) no-repeat; 
   height: 100%;
+}
+
+.top-buffer {
+  margin-top: 75px;
 }
 
 .row {

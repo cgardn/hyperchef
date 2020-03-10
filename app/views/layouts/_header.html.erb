@@ -1,16 +1,24 @@
-<header class="bg-light">
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light">
+      <% unless request.fullpath == '/' || request.fullpath == '/search' %>
       <ul class="nav mr-auto">
         <li class="p-1"><%= link_to image_tag('icon_small.png',
                                               size: "32x32"), 
                                               root_path %></li>
       </ul>
-      <% unless request.fullpath == '/' || request.fullpath == '/search' %>
         <ul class="nav ml-auto">
           <%= render 'shared/search_form' %>
         </ul>
+        <ul>
+          <%= link_to "Login", "#" %>
+        </ul>
       <% end %>
-    </nav>
-  </div>
+      <% if request.fullpath == '/search' %>
+      <ul class="nav mr-auto">
+        <li class="p-1"><%= link_to image_tag('icon_small.png',
+                                              size: "32x32"), 
+                                              root_path %></li>
+      </ul>
+      <% end %>
+  </nav>
 </header>

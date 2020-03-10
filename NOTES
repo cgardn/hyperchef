@@ -1,10 +1,12 @@
 Big Idea: The google of recipes.
 
 ? make side-bar filters a partial (where else does the side-bar appear besides search results?)
+? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
+
 ! ability to change imperial or metric quantities (user) and default units (admin, but still stored as grams internally - just setting a conversion factor)
+
 look at various things that get done to recipes, ingredients, and tags in views+controllers and
   think about what could/should be pulled into model functions
-? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
 * add recipe name->slug conversion code to a helper function so it's just in one place
   - needs knowledge of where to put helpers
 * make the equipment links do something, or just disable them for soft-launch until I get affiliate links going

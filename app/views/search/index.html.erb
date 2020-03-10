@@ -1,6 +1,10 @@
-<div class="row text-center h-100 align-items-center">
+<div class="row text-center align-content-center top-buffer">
   <div class="col">
+    <div class="jumbotron bg-transparent">
+      HYPERCHEF
+    </div>
     <%= render 'shared/search_form' %><br>
-    <%= "or " %><%= link_to " see them all!", search_path %>
+    <%= "or " %>
+    <%= link_to " see them all!", search_path, class: "text-white" %>
   </div>
 </div>

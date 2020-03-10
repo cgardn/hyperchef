@@ -13,14 +13,17 @@
   </head>
   
 
-  <body>
-    <%= render 'layouts/header' %>
+  <% if request.fullpath == '/' %>
+    <body class="gradient">
+  <% else %>
+    <body>
+  <% end %>
     <div class="container h-100">
+    <%= render 'layouts/header' %>
       <% flash.each do |msg_type, msg| %>
         <%= content_tag(:div, msg, class: "alert alert-#{msg_type}") %>
       <% end %>
       <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
     </div>
     
 
