@@ -8,9 +8,10 @@ Rails.application.routes.draw do
 
   get '/admin', to: 'admin#index'
 
-  resources :recipes, except: [:create], param: :name
+  resources :recipes, except: [:create, :index], param: :slug
+  get '/recipes', to: 'search#query'
   post '/recipes', to: 'recipes#update'
-  post '/recipes/:id', to: 'recipes#update'
+  post '/recipes/:slug', to: 'recipes#update'
   resources :ingredients, except: [:show]
   resources :actions
   resources :equipment

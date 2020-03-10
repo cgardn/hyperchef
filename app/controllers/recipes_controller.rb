@@ -3,8 +3,8 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: [:new, :show, :edit, :update]
 
   def set_recipe
-    if params[:name]
-      @recipe = Recipe.find_by(name: params[:name])
+    if params[:slug]
+      @recipe = Recipe.find_by(slug: params[:slug])
     else
       @recipe = Recipe.new
     end
@@ -15,7 +15,6 @@ class RecipesController < ApplicationController
   end
   
   def new
-    #@recipe = Recipe.new
     20.times do |n|
       @recipe.actions[(n+1).to_s] = {title: "", body: ""}
     end
@@ -34,11 +33,27 @@ class RecipesController < ApplicationController
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @iQuants = @recipe.ing_quants
     @eNames = @recipe.equipment.map{ |e| e[:name] }
+
+    # if less than 20 steps, add blank steps until 20
+    aCount = @recipe.actions.keys.count
+    if aCount == 0
+      20.times do |n|
+        @recipe.actions[(n).to_s] = {title: "", body: ""}
+      end
+    elsif aCount < 20
+      (20 - aCount).times do |n|
+        @recipe.actions[(n+aCount).to_s] = {title: "", body: ""}
+      end
+    end
+
   end
 
   def update
 
+    # encoding name for storage
     @recipe.name = recipe_params[:name]
+    @recipe.slug = URI::encode(recipe_params[:name].gsub(' ','-').downcase)
+
     @recipe.origin = recipe_params[:origin]
     @recipe.author = recipe_params[:author]
 
@@ -76,7 +91,9 @@ class RecipesController < ApplicationController
     end
 
     # Setting action steps hash
-    @recipe.actions.clear
+    # - putting all new steps in fresh Hash, preserves existing steps if
+    #   there's any errors with parsing the params
+    newActionHash = {}
     recipe_params[:actions].each do |a|
       # skip blank steps - form has 20 empty slots, workaround until
       #   proper UI for recipe creation
@@ -84,25 +101,25 @@ class RecipesController < ApplicationController
         next
       end
       # Handling multiple steps with the same order number
-      if @recipe.actions.keys.include?(a[:order])
-        @recipe.actions[(a[:order].to_i+1).to_s] = { title: a[:title],
+      #if newActionHash.keys.include?(a[:order])
+      #  newActionHash[(a[:order].to_i+1).to_s] = { title: a[:title],
+      #                                    body: a[:body] }
+      #else
+      newActionHash[a[:order]] = { title: a[:title],
                                           body: a[:body] }
-      else
-        @recipe.actions[a[:order]] = { title: a[:title],
-                                          body: a[:body] }
-      end
+      #end
     end
-    
+    @recipe.actions = newActionHash
     if @recipe.save
       flash[:info] = "Updated recipe!"
-      redirect_to @recipe
+      redirect_to recipes_path
     else
       render :edit
     end
   end
 
   def destroy
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find_by(name: params[:name])
     @recipe.delete
     redirect_to recipes_path
   end
