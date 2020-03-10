@@ -16,8 +16,8 @@ class RecipesController < ApplicationController
   
   def new
     #@recipe = Recipe.new
-    5.times do |n|
-      @recipe.actions[n.to_s] = {title: "", body: ""}
+    20.times do |n|
+      @recipe.actions[(n+1).to_s] = {title: "", body: ""}
     end
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
@@ -26,12 +26,10 @@ class RecipesController < ApplicationController
   end
 
   def show
-    #@recipe = Recipe.find(params[:id])
     @tags = @recipe.all_tags
   end
 
   def edit
-    #@recipe = Recipe.find(params[:id])
     @tags = @recipe.all_tags
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @iQuants = @recipe.ing_quants
@@ -39,8 +37,6 @@ class RecipesController < ApplicationController
   end
 
   def update
-
-    #@recipe ||= Recipe.find(params[:id]) || Recipe.new
 
     @recipe.name = recipe_params[:name]
     @recipe.origin = recipe_params[:origin]
@@ -81,8 +77,12 @@ class RecipesController < ApplicationController
 
     # Setting action steps hash
     @recipe.actions.clear
-    puts recipe_params[:actions]
     recipe_params[:actions].each do |a|
+      # skip blank steps - form has 20 empty slots, workaround until
+      #   proper UI for recipe creation
+      if a[:body] == ""
+        next
+      end
       # Handling multiple steps with the same order number
       if @recipe.actions.keys.include?(a[:order])
         @recipe.actions[(a[:order].to_i+1).to_s] = { title: a[:title],

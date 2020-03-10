@@ -7,6 +7,7 @@ look at various things that get done to recipes, ingredients, and tags in views+
 ? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
 ! way to add or remove steps in recipe create/edit pages
   - steps generally wack, extra blank steps get saved as blank and shown on the show page as just ':'
+  - probably easy to fix with React, but that's a whole thing
 
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything

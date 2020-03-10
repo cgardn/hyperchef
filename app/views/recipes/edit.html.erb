@@ -60,7 +60,7 @@
 
   Steps:
   <br>
-  <% @recipe.actions.keys.sort.each do |k| %>
+  <% @recipe.actions.keys.each do |k| %>
     <%= rForm.label("Title: ") %>
     <%= rForm.text_field("[actions][][title]", value: @recipe.actions[k][:title]) %>
     <%= rForm.label("Order: ") %>
