@@ -8,6 +8,9 @@ class Recipe < ApplicationRecord
   has_many :join_equipment_recipes
   has_many :equipment, through: :join_equipment_recipes
 
+  has_many :join_userprofiles_recipes
+  has_many :user_profiles, through: :join_userprofiles_recipes
+
   accepts_nested_attributes_for :ingredients
 
   def self.search_names(q)

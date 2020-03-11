@@ -25,14 +25,8 @@
         <br>
       <% end %>
         </div>
-        <!--
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseITags" aria-expanded="false" aria-controls="collapseITags">
-        Ingredient Tags
-      </button>
-        -->
       <br>
-      <h5>Filter ingredients</h5>
-      <!--<div class="collapse" id="collapseITags">-->
+      <h5>Filter by ingredient type</h5>
         <div class="font-sm">
       <% IngredientTag.all.each do |it| %>
         <% if @filter && @filter.include?(it[:name]) %>

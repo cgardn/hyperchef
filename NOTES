@@ -1,5 +1,30 @@
 Big Idea: The google of recipes.
 
+!! New features - user profiles, favoriting recipes, and building grocery lists !!
+  - can re-use same search page, but add a button for logged-in users that only filters through saved/favorited recipes
+  - can have many grocery lists/weekly meal plans
+    -- each composed of multiple 
+  + each User has exactly one UserProfile, created at time of creating User
+  + each UserProfile has exactly one FavoriteList
+    - favorites list is just an array of recipe IDs, "saving" a recipe just pushes that ID into the favorites list array on the userprofile
+  + each UserProfile has many MealPlans
+    - grocery lists are arrays of ingredient IDs and quantities, owned by MealPlans and generated with MealPlan model functions
+    - each MealPlan has exactly one grocery list, it is editable but there's only one per plan
+
+-=- Model Planning -=-
+UserProfile
+- belongs_to: User
+- has_many: join_userprofiles_recipes
+- has_many: favorites, through: join_userprofiles_recipes
+- 
+
+JoinUserprofilesRecipes
+- belongs_to: Recipe
+- belongs_to: User
+
+
+
+--- Pre-Soft-Launch
 ? make side-bar filters a partial (where else does the side-bar appear besides search results?)
 ? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
 
@@ -23,7 +48,8 @@ style+format everything
     -- pixel art? animated chipmunk chef hero guy?
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
-soft-launch!
+
+--- Post Soft-Launch
 add a bunch of recipes
 ---
 add user profile model for saving recipes

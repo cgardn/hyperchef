@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_015127) do
+ActiveRecord::Schema.define(version: 2020_03_11_204648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 2020_03_11_015127) do
     t.index ["recipe_type_id"], name: "index_join_recipetypes_recipes_on_recipe_type_id"
   end
 
+  create_table "join_userprofiles_recipes", force: :cascade do |t|
+    t.bigint "user_profile_id"
+    t.bigint "recipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_join_userprofiles_recipes_on_recipe_id"
+    t.index ["user_profile_id"], name: "index_join_userprofiles_recipes_on_user_profile_id"
+  end
+
   create_table "recipe_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -89,6 +98,13 @@ ActiveRecord::Schema.define(version: 2020_03_11_015127) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
+  end
+
+  create_table "user_profiles", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
