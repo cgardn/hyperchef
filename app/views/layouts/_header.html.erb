@@ -1,32 +1,34 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light">
-      <% unless request.fullpath == '/' || request.fullpath == '/search' %>
+      <!-- home button image -->
+      <% unless request.fullpath == '/' %>
       <ul class="nav mr-auto">
         <li class="p-1"><%= link_to image_tag('icon_small.png',
                                               size: "32x32"), 
                                               root_path %></li>
       </ul>
+      <% end %>
+
+      <!-- header search bar -->
+      <% unless request.fullpath == '/' || request.fullpath == '/search' %>
         <ul class="nav ml-auto">
           <%= render 'shared/search_form' %>
         </ul>
       <% end %>
-      <% if request.fullpath == '/search' %>
-      <ul class="nav mr-auto">
-        <li class="p-1"><%= link_to image_tag('icon_small.png',
-                                              size: "32x32"), 
-                                              root_path %></li>
-      </ul>
+
+      <!-- Login/Logout/UserProfile links -->
+      <% if user_signed_in? %>
+        <ul class="ml-auto font-lg">
+          <%= link_to "Profile", user_profile_path(current_user.user_profile) %>
+          |
+          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+        </ul>
+      <% else %>
+        <ul class="ml-auto font-lg">
+          <%= link_to "Login", user_session_path %>
+          or
+          <%= link_to "Sign-up", "#" %>
+        </ul>
       <% end %>
-        <% if user_signed_in? %>
-          <ul class="ml-auto">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-          </ul>
-        <% else %>
-          <ul class="ml-auto">
-            <%= link_to "Login", user_session_path %>
-            or
-            <%= link_to "Sign-up", "#" %>
-          </ul>
-        <% end %>
   </nav>
 </header>

@@ -1,4 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <%= link_to 'Edit', edit_user_profile_path(@user_profile) %> |
-<%= link_to 'Back', user_profiles_path %>
+<%= link_to 'Back to Search', '/search' %>
+
+<br><br>
+<table>
+  <th>Favorited Recipes:<th>
+<% @user_profile.favorites.each do |f| %>
+  <tr>
+    <td class="font-lg"><%= render 'shared/recipe_link', rec: f %></td>
+  </tr>
+<% end %>
+</table>

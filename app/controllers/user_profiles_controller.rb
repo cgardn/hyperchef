@@ -1,28 +1,30 @@
 class UserProfilesController < ApplicationController
   before_action :set_user_profile, only: [:show, :edit, :update, :destroy]
 
-  # GET /user_profiles
-  # GET /user_profiles.json
+  # don't need this
   def index
-    @user_profiles = UserProfile.all
   end
 
   # GET /user_profiles/1
   # GET /user_profiles/1.json
+  #   access controlled to current user
   def show
   end
 
   # GET /user_profiles/new
+  #   only happens during new user signup, maybe managed by user controller
   def new
     @user_profile = UserProfile.new
   end
 
   # GET /user_profiles/1/edit
+  #   only current user
   def edit
   end
 
   # POST /user_profiles
   # POST /user_profiles.json
+  #   same as new
   def create
     @user_profile = UserProfile.new(user_profile_params)
 
@@ -39,6 +41,7 @@ class UserProfilesController < ApplicationController
 
   # PATCH/PUT /user_profiles/1
   # PATCH/PUT /user_profiles/1.json
+  #   only current user
   def update
     respond_to do |format|
       if @user_profile.update(user_profile_params)
@@ -53,6 +56,7 @@ class UserProfilesController < ApplicationController
 
   # DELETE /user_profiles/1
   # DELETE /user_profiles/1.json
+  #   only current user
   def destroy
     @user_profile.destroy
     respond_to do |format|
