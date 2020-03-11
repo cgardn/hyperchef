@@ -18,14 +18,18 @@ look at various things that get done to recipes, ingredients, and tags in views+
 get some background images+gradients going to fit the pixel-art game theme
 style+format everything
   - add background gifs/movies of cooking+food to front page
+    -- edit together some stock footage and put it on the home page
   - add big graphic above search bar
+    -- pixel art? animated chipmunk chef hero guy?
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
 soft-launch!
 add a bunch of recipes
 ---
-add user accounts for auth using devise
 add user profile model for saving recipes
+add ability to save recipes to your profile
+  - all the little parts, like the 'save/favorite' button/icon or whatever,
+      the columns in the user profile model, plus the routes and functions to connect it all
 add grocery list function (save or <3 a recipe and it goes on the one list, that list also generates a grocery list)
 - eventually have multiple named custom lists
 
@@ -34,6 +38,10 @@ Things I did, and how
   - added :slug as parameter in recipe model
   - changed recipe routing to -> resources :recipes, except: [:create], param: :slug
   - overwrote to_param in recipe model to return :slug instead of :id
+* added devise, but being signed in doesn't do anything yet
+  - added "gem 'devise'" to Gemfile
+  - followed instructions on the devise github page to install and create a plain User model
+
 ---
 
 TODOs:

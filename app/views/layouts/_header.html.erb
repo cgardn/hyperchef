@@ -9,9 +9,6 @@
         <ul class="nav ml-auto">
           <%= render 'shared/search_form' %>
         </ul>
-        <ul>
-          <%= link_to "Login", "#" %>
-        </ul>
       <% end %>
       <% if request.fullpath == '/search' %>
       <ul class="nav mr-auto">
@@ -20,5 +17,16 @@
                                               root_path %></li>
       </ul>
       <% end %>
+        <% if user_signed_in? %>
+          <ul class="ml-auto">
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          </ul>
+        <% else %>
+          <ul class="ml-auto">
+            <%= link_to "Login", user_session_path %>
+            or
+            <%= link_to "Sign-up", "#" %>
+          </ul>
+        <% end %>
   </nav>
 </header>
