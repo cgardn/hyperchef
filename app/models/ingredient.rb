@@ -13,7 +13,8 @@ class Ingredient < ApplicationRecord
     tags
   end
 
-  def asdf
+  def base_unit
+    {true => "mL", false => "g"}[is_liquid]
   end
 
 end

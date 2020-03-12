@@ -34,12 +34,9 @@ Tags:
 <table>
 <% @recipe.ing_quants.each do |iq| %>
   <tr>
-    <% if iq[1][1] %>
-      <td class="font-md"><%= iq[1][0] %> mL</td>
-    <% else %>
-      <td class="font-md"><%= iq[1][0] %> grams</td>
-    <% end %>
-    <td class="font-md"><%= iq[0] %></td>
+    <td class="font-md"><%= "#{iq[1][:quant]}" %>
+    <td class="font-md"><%= "#{iq[1][:baseunit]}" %>
+    <td class="font-md"><%= "#{iq[0]}" %>
   </tr>
 <% end %>
 </table>

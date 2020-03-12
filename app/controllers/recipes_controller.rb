@@ -27,6 +27,8 @@ class RecipesController < ApplicationController
 
   def show
     @tags = @recipe.all_tags
+    @ingredients = @recipe.ingredients
+    @quants = @recipe.ing_quants(params[:convert])
   end
 
   def edit
@@ -135,6 +137,10 @@ class RecipesController < ApplicationController
         end
       end
       @fresh_ing
+    end
+
+    def show_params
+      params.require(:convert).permit(:yesconvert)
     end
 
     def recipe_params

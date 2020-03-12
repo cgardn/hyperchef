@@ -40,11 +40,18 @@ class Recipe < ApplicationRecord
     ingquant.save
   end
 
-  def ing_quants
+  def ing_quants(convert = false)
     out = {}
+    grams2oz = 0.035
+    ml2floz = 0.034
     join_ingredients_recipes.each do |i|
       ingredient = Ingredient.find(i.ingredient_id)
-      out[ingredient.name] = [i.quantity_in_grams, ingredient.is_liquid]
+      out[ingredient.name] = {:quant => i.quantity_in_grams,
+                              :isliquid => ingredient.is_liquid,
+                              :baseunit => ingredient.base_unit}
+      if convert
+        out[ingredient.name][:quant] *= grams2oz
+      end
     end
     out
   end
