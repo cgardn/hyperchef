@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :clean_params_ingredients, only: [:update, :create]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
+  before_action :set_user_profile, only: [:show]
 
   def set_recipe
     if params[:slug]
@@ -143,5 +144,13 @@ class RecipesController < ApplicationController
                                      :ingredients => {},
                                      actions: [:title, :order, :body])
     end
+
+    def set_user_profile
+      if user_signed_in?
+        @favorites = UserProfile.find(current_user.user_profile.id).favorites
+      end
+    end
+
+
   
 end

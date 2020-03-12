@@ -1,6 +1,22 @@
 <div class="text-center jumbotron">
 <%= @recipe.name %>
 </div>
+
+<% if user_signed_in? %>
+  <% unless @favorites.include?(@recipe) %>
+    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}",
+               method: "post", local: true) do |favForm| %>
+               <%= favForm.hidden_field :addFavID, value: @recipe.id %>
+               <%= favForm.submit "Favorite" %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
+      <%= favForm.hidden_field :addFavID, value: @recipe.id %>
+      <%= favForm.submit "Un-favorite" %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <br><hr><br>
 Tags:
 <% @tags.each do |t| %>

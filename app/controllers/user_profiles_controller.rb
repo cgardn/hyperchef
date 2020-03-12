@@ -1,5 +1,8 @@
 class UserProfilesController < ApplicationController
-  before_action :set_user_profile, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:show, :edit, :udpate, :destroy]
+  before_action :set_user_profile, only: [:show, :edit, :update, :destroy,
+                                          :add_favorite_recipe,
+                                          :remove_favorite_recipe]
 
   # don't need this
   def index
@@ -65,13 +68,45 @@ class UserProfilesController < ApplicationController
     end
   end
 
+  def add_favorite_recipe
+    newRec = Recipe.find(favorite_params)
+    unless @user_profile.favorites.include?(newRec)
+      @user_profile.favorites << newRec
+    end
+    puts "!!--!!"
+    puts params
+    redirect_to("/recipes/#{Recipe.find(favorite_params).slug}")
+  end
+
+  def remove_favorite_recipe
+    dumpRec = Recipe.find(favorite_params)
+    @user_profile.favorites.delete(dumpRec)
+    puts "**!!**"
+    puts params
+    redirect_to("/recipes/#{Recipe.find(favorite_params).slug}")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
+    
+    def correct_user
+      # only correct user can see profile while logged in
+      unless user_signed_in? and UserProfile.find(params[:id]).user == current_user
+        redirect_to("/search")
+      end
+    end
+
     def set_user_profile
       @user_profile = UserProfile.find(params[:id])
+      @favorites = @user_profile.favorites
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    
+    def favorite_params
+      params.fetch(:addFavID)
+    end
+
     def user_profile_params
       params.fetch(:user_profile, {})
     end

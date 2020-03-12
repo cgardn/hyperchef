@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   get '/recipes', to: 'search#query'
   post '/recipes', to: 'recipes#update'
   post '/recipes/:slug', to: 'recipes#update'
+
+  post '/user_profiles/favorites/:id', to: 'user_profiles#add_favorite_recipe'
+  delete '/user_profiles/favorites/:id', to: 'user_profiles#remove_favorite_recipe'
+
   resources :ingredients, except: [:show]
   resources :actions, except: [:index, :show]
   resources :equipment, except: [:index]
