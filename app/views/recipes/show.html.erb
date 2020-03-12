@@ -23,17 +23,23 @@ Tags:
   <%= t %><% unless t == @tags.last %><%= ", " %><% end %>
 <% end %>
 <br><hr><br>
-Equipment you'll need for this recipe:<br>
+<h4>Equipment you'll need</h4>
+<br>
 <% @recipe.equipment.each do |e| %>
   <%= link_to e.name, e.affiliate_link %><br>
 <% end %>
 <br><hr><br>
-Ingredients:<br>
+<h4>Ingredients:</h4>
+<br>
 <table>
 <% @recipe.ing_quants.each do |iq| %>
   <tr>
-    <td><%= iq[1] %> grams</td>
-    <td><%= iq[0] %></td>
+    <% if iq[1][1] %>
+      <td class="font-md"><%= iq[1][0] %> mL</td>
+    <% else %>
+      <td class="font-md"><%= iq[1][0] %> grams</td>
+    <% end %>
+    <td class="font-md"><%= iq[0] %></td>
   </tr>
 <% end %>
 </table>

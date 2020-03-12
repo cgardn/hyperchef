@@ -12,4 +12,8 @@ class Ingredient < ApplicationRecord
     end
     tags
   end
+
+  def asdf
+  end
+
 end

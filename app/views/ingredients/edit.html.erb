@@ -1,5 +1,5 @@
 <%= link_to "Back to list", ingredients_path %>
-<%= form_with(model: @ingredient, local: true) do |iForm| %>
+<%= form_with(model: @ingredient, local: true, method: "patch") do |iForm| %>
   Tags:<br>
   <% IngredientTag.all.each do |it| %>
     <% if @tags.include?(it[:name]) %>
@@ -16,6 +16,9 @@
 
   <%= iForm.label "Calories per 100g" %>
   <%= iForm.number_field :caloriespergram %>
+
+  <%= iForm.label "Liquid?" %>
+  <%= iForm.check_box :is_liquid %>
 
   <%= iForm.submit "Submit" %> 
 <% end %>

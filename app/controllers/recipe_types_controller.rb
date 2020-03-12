@@ -1,4 +1,5 @@
 class RecipeTypesController < ApplicationController
+  before_action :auth_admin
 
   def index
     @rType = RecipeType.new
@@ -19,5 +20,11 @@ class RecipeTypesController < ApplicationController
   private
   def rType_params
     params.require(:recipe_type).permit(:tag)
+  end
+
+  def auth_admin
+    unless user_signed_in? and current_user.admin == true
+      redirect_to root_url
+    end
   end
 end

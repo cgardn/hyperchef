@@ -43,7 +43,8 @@ class Recipe < ApplicationRecord
   def ing_quants
     out = {}
     join_ingredients_recipes.each do |i|
-      out[Ingredient.find(i.ingredient_id).name] = i.quantity_in_grams
+      ingredient = Ingredient.find(i.ingredient_id)
+      out[ingredient.name] = [i.quantity_in_grams, ingredient.is_liquid]
     end
     out
   end

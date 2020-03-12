@@ -8,6 +8,7 @@
 
 require 'faker'
 
+# Creating recipe and ingredient tags - must be done first to assign to actual ingredients/recipes
 puts "Creating tags..."
 rTypes = RecipeType.create([{name: "salad"},{name: "pastry"},{name: "dinner"},{name: "lunch"},
                             {name: "breakfast"},{name: "quick & easy"},{name: "rice bowls"}])
@@ -15,11 +16,18 @@ iTags = IngredientTag.create([{name: "poultry"},{name: "meat"},{name: "red meat"
                               {name: "vegetable"},{name: "starch"},{name: "root"},
                               {name: "grain"},{name: "leafy greens"},{name: "spice"},
                               {name: "herb"},{name: "liquid"},{name: "fruit"},{name: "citrus"}])
-p "done."
+puts "done."
+
+# Creating ingredients
 puts "Creating ingredients..."
 
 100.times do 
-  i = Ingredient.create({name: Faker::Food.unique.ingredient, caloriespergram: rand(100)})
+  b_liquid = false
+  if rand(2) == 1
+    b_liquid = true
+  end
+
+  i = Ingredient.create({name: Faker::Food.unique.ingredient, caloriespergram: rand(100), is_liquid: b_liquid})
   tags = nil
   while tags == nil || tags.length < 3
     tags = Array.new(rand(3..4)) {rand(1..iTags.length-1)}.uniq!
@@ -30,12 +38,16 @@ puts "Creating ingredients..."
 end
 
 puts "done."
+
+# Creating Equipment
 puts "Creating Equipment..."
 equipment = Equipment.create([{name: "10-inch frying pan"},{name: "4-quart stock pot"},
                               {name: "oven"},{name: "chef's knife"},{name: "paring knife"},
                               {name: "bread knife"},{name: "rice cooker"},
                               {name: "citrus squeezer"},{name: "grater"}])
 puts "done, #{equipment.length} pieces created."
+
+# Creating recipes
 puts "Creating Recipes..."
 53.times do |n|
   used = []
@@ -77,3 +89,29 @@ puts "Creating Recipes..."
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
   r.save
 end
+
+# Creating users
+puts "Creating admin"
+u = User.new(email: "admin@test.gov", password: "password", password_confirmation: "password", admin: true)
+p = UserProfile.new
+p.user = u
+rand(1..10).times do |n|
+  p.favorites << Recipe.find(rand(1..53))
+end
+p.save
+u.save
+puts "done."
+
+puts "Creating 50 users"
+50.times do |n|
+  puts "#{n}..."
+  u = User.new(email: Faker::Internet.email, password: "password", password_confirmation: "password")
+  p = UserProfile.new
+  p.user = u
+  rand(1..10).times do |n|
+    p.favorites << Recipe.find(rand(1..53))
+  end
+  p.save
+  u.save
+end
+puts "done."

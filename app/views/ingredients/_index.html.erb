@@ -5,16 +5,18 @@
     <th>Name</th>
     <th>Calories per 100g</th>
     <th>Recipe Count</th>
+    <th>Liquid?</th>
   <% @ingredients.each do |i| %>
     <tr>
       <td><%= i.name %></td>
       <td><%= i.caloriespergram %></td>
-      <td><%= i.recipes.count %>
-    <!-- if current_user.admin? 
-      <td><%= link_to "Edit", edit_ingredient_path(i) %></td>
-      <td><%= link_to "Delete", i, method: :delete,
+      <td><%= i.recipes.count %></td>
+      <td><%= i.is_liquid %></td>
+      <% if current_user.admin == true %>
+        <td><%= link_to "Edit", edit_ingredient_path(i) %></td>
+        <td><%= link_to "Delete", i, method: :delete,
                        data: { confirm: "Delete?" } %></td>
-    -->
+      <% end %>
     </tr>
   <% end %>
 </table>

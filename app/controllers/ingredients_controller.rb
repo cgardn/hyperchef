@@ -26,6 +26,7 @@ class IngredientsController < ApplicationController
     @ingredient = Ingredient.find(params[:id])
     @ingredient.name = ingredient_params[:name]
     @ingredient.caloriespergram = ingredient_params[:caloriespergram]
+    @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
 
     # Setting tag list
     @ingredient.ingredient_tags.delete_all
@@ -52,7 +53,7 @@ class IngredientsController < ApplicationController
 
   private
     def ingredient_params
-      params.require(:ingredient).permit(:name, :caloriespergram,
+      params.require(:ingredient).permit(:name, :caloriespergram, :is_liquid,
                                          iTags: [:selected] )
     end
 end

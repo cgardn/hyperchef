@@ -3,32 +3,30 @@ Big Idea: The google of recipes.
 !! New features - user profiles, favoriting recipes, and building grocery lists !!
   - can re-use same search page, but add a button for logged-in users that only filters through saved/favorited recipes
   - can have many grocery lists/weekly meal plans
-    -- each composed of multiple 
-  + each User has exactly one UserProfile, created at time of creating User
-  + each UserProfile has exactly one FavoriteList
-    - favorites list is just an array of recipe IDs, "saving" a recipe just pushes that ID into the favorites list array on the userprofile
+    -- each composed of multiple recipes
+    -- meal plan model will own the function(s) for generating grocery lists
+    -- meal plan model will also have attribute for owning grocery list? or always generated dynamically? 
+      - what about interactivity on the list, like checking off stuff as you get it? what about
+        saving grocery lists (handled by generating from meal plans? Would someone want to save a grocery list
+        separate from a meal plan? Should I even allow that?)?
   + each UserProfile has many MealPlans
     - grocery lists are arrays of ingredient IDs and quantities, owned by MealPlans and generated with MealPlan model functions
     - each MealPlan has exactly one grocery list, it is editable but there's only one per plan
+      - can start with non-editable grocery lists that are always generated dynamically based on meal plan, add editiable lists later
+        - easier option, only need the meal plan model
 
 -=- Model Planning -=-
-UserProfile
-- belongs_to: User
-- has_many: join_userprofiles_recipes
-- has_many: favorites, through: join_userprofiles_recipes
-- 
-
-JoinUserprofilesRecipes
-- belongs_to: Recipe
-- belongs_to: User
-
-
 
 --- Pre-Soft-Launch
 ? make side-bar filters a partial (where else does the side-bar appear besides search results?)
 ? make equipment links a reusable partial (added to recipe show view, where else will it need to be used?)
 
 ! ability to change imperial or metric quantities (user) and default units (admin, but still stored as grams internally - just setting a conversion factor)
+  - add bool column to ingredient for "is a liquid"
+  - add function to join table (where quantities live) for conversions between imperial and metric
+  - buttons connect to js func that asks controller for conversion factors, join model for quantities, and returns new value
+    - quantities stored as grams internally, so conversion factor to grams is just 1 for everything
+  + Imperial amounts should def be converted into pounds+ounces, or cups+ounces (for solid vs liquid), should I split out kilos and litres?
 
 look at various things that get done to recipes, ingredients, and tags in views+controllers and
   think about what could/should be pulled into model functions
@@ -46,8 +44,12 @@ style+format everything
     -- edit together some stock footage and put it on the home page
   - add big graphic above search bar
     -- pixel art? animated chipmunk chef hero guy?
+      - dream: keep sky-blue background, add green-grass/kitchen tile floor, pixel-chef-warrior swings in and fights vegetables with spatula/knife
+              while wearing toque, ends with star wars-style holding spatula to sky while chef's jacket flaps around him, stays there
+  - replace recipe, ingredient, and equipment links with bootstrap cards (change partials)
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
+
 
 --- Post Soft-Launch
 add a bunch of recipes
@@ -68,6 +70,17 @@ Things I did, and how
   - added "gem 'devise'" to Gemfile
   - followed instructions on the devise github page to install and create a plain User model
 
+* Added Users and User Profiles
+  - used devise gem for users and authentication
+  - created separate UserProfile model to leave devise user and auth stuff untouched
+    -- not sure if this is the "correct" way, but I like the idea of leaving the pre-built solution totally alone
+       plus maybe if I want to swap devise for something else, the app-specific profile stuff is not totally coupled
+       to devise
+    -- each UserProfile belongs_to one User, and the profiles are created and assigned in the User controller during 
+       signup
+    -- UserProfile is where favorites list lives, also where meal plans will live too
+  + each UserProfile has exactly one FavoriteList
+    - favorite lists are a many-to-many association between UserProfiles and Recipes, through a join table
 ---
 
 TODOs:

@@ -39,19 +39,13 @@
   <table>
   <% Ingredient.all.each do |i| %>
     <tr>
-      <!--
-      <% if @iNames.include?(i[:name]) %>
-        <td><%= check_box_tag("recipe[ingredients][][name]", value=i[:name], checked = true) %></td>
-      <% else %>
-        <td><%= check_box_tag("recipe[ingredients][][name]", value=i[:name], checked = false) %></td>
-      <% end %>
-      -->
 
       <% if @iNames.include?(i[:name]) %>
-        <td><%= number_field_tag("recipe[ingredients]#{i[:name]}", @iQuants[i[:name]]) %></td>
+        <td><%= number_field_tag("recipe[ingredients]#{i[:name]}", @iQuants[i[:name]][0]) %></td>
       <% else %>
         <td><%= number_field_tag("recipe[ingredients]#{i[:name]}") %></td>
       <% end %>
+      <td><%= {true => "mL", false => "g"}[i.is_liquid] %></td>
       <td><%= rForm.label(i[:name]) %></td>
     </tr>
   <% end %>

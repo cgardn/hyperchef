@@ -1,8 +1,9 @@
 class IngredientTagsController < ApplicationController
+  before_action :auth_admin
 
   def index
     @iTag = IngredientTag.new
-    @allTags = IngredientTag.all.order(created_at: :desc)
+    @iTags = IngredientTag.all.order(created_at: :desc)
   end
 
   def create
@@ -19,7 +20,7 @@ class IngredientTagsController < ApplicationController
 
   def edit
     @iTag = IngredientTag.find(params[:id])
-    @allTags = IngredientTag.all.order(created_at: :desc)
+    @iTags = IngredientTag.all.order(created_at: :desc)
   end
 
   def update
@@ -36,7 +37,14 @@ class IngredientTagsController < ApplicationController
   end
 
   private
+
   def tag_params
     params.require(:ingredient_tag).permit(:tag)
+  end
+
+  def auth_admin
+    unless user_signed_in? and current_user.admin == true
+      redirect_to root_url
+    end
   end
 end
