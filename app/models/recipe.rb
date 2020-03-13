@@ -49,8 +49,9 @@ class Recipe < ApplicationRecord
       out[ingredient.name] = {:quant => i.quantity_in_grams,
                               :isliquid => ingredient.is_liquid,
                               :baseunit => ingredient.base_unit}
-      if convert
-        out[ingredient.name][:quant] *= grams2oz
+      if convert == "true"
+        out[ingredient.name][:quant] = (out[ingredient.name][:quant] * grams2oz).round(0)
+        out[ingredient.name][:baseunit] = {"g" => "oz", "mL" => "fl. oz"}[out[ingredient.name][:baseunit]]
       end
     end
     out

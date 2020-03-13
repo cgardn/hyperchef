@@ -1,12 +1,9 @@
 Big Idea: The google of recipes.
 
 Immediate TODOs:
-  - fix rounding errors on ing_quant conversion in Recipe model
-  - also have it change base units in ing_quant when convert=true
-  - probably just go straight to JS for the convert buttons? a whole endpoint just to change a few values seems silly, 
-      but what about people with NoScript?
 
 !! New features - user profiles, favoriting recipes, and building grocery lists !!
+  + Converting to imperial units should be saved per recipe for a logged-in user
   - can re-use same search page, but add a button for logged-in users that only filters through saved/favorited recipes
   - can have many grocery lists/weekly meal plans
     -- each composed of multiple recipes

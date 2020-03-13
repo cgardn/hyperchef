@@ -30,9 +30,15 @@ Tags:
 <% end %>
 <br><hr><br>
 <h4>Ingredients:</h4>
+<% if params[:convert] == "true" %>
+  <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-primary" %>
+<% end %>
+<br>
 <br>
 <table>
-<% @recipe.ing_quants.each do |iq| %>
+<% @quants.each do |iq| %>
   <tr>
     <td class="font-md"><%= "#{iq[1][:quant]}" %>
     <td class="font-md"><%= "#{iq[1][:baseunit]}" %>

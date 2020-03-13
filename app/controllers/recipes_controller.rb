@@ -127,6 +127,12 @@ class RecipesController < ApplicationController
     redirect_to recipes_path
   end
 
+  def convert_to_metric
+  end
+
+  def convert_to_imperial
+  end
+
   private
 
     def clean_params_ingredients
@@ -137,10 +143,6 @@ class RecipesController < ApplicationController
         end
       end
       @fresh_ing
-    end
-
-    def show_params
-      params.require(:convert).permit(:yesconvert)
     end
 
     def recipe_params
