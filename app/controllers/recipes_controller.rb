@@ -28,7 +28,7 @@ class RecipesController < ApplicationController
   def show
     @tags = @recipe.all_tags
     @ingredients = @recipe.ingredients
-    @quants = @recipe.ing_quants(params[:convert])
+    @quants = @recipe.ing_quants(params[:convert], 1)
   end
 
   def edit
@@ -125,12 +125,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find_by(name: params[:name])
     @recipe.delete
     redirect_to recipes_path
-  end
-
-  def convert_to_metric
-  end
-
-  def convert_to_imperial
   end
 
   private

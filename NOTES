@@ -1,6 +1,11 @@
 Big Idea: The google of recipes.
 
 Immediate TODOs:
+  - break out amounts into smaller units of measure:
+    - 18oz dry -> 18 lb. 2oz.
+    - 1012g dry -> 1 kg. 12 g.
+    - 17 fl. oz -> 2 cups 1 fl. oz
+    - 1012mL -> 1 L 12 mL
 
 !! New features - user profiles, favoriting recipes, and building grocery lists !!
   + Converting to imperial units should be saved per recipe for a logged-in user

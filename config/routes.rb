@@ -16,8 +16,6 @@ Rails.application.routes.draw do
   get '/recipes', to: 'search#query'
   post '/recipes', to: 'recipes#update'
   post '/recipes/:slug', to: 'recipes#update'
-  get '/recipes/:slug/metric', to: 'recipes#convert_to_metric'
-  get '/recipes/:slug/imperial', to: 'recipes#convert_to_imperial'
 
   post '/user_profiles/favorites/:id', to: 'user_profiles#add_favorite_recipe'
   delete '/user_profiles/favorites/:id', to: 'user_profiles#remove_favorite_recipe'
