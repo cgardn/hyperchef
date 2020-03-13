@@ -2,6 +2,8 @@
 <%= @recipe.name %>
 </div>
 
+<div class="row">
+  <div class="col text-center">
 <% if user_signed_in? %>
   <% unless @favorites.include?(@recipe) %>
     <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}",
@@ -15,37 +17,49 @@
       <%= favForm.submit "Un-favorite" %>
     <% end %>
   <% end %>
+<% else %>
+  <%= link_to "Sign-in to save this recipe!",
+    new_user_session_path,
+    class: "btn btn-dark" %>
 <% end %>
+</div>
+</div>
+<br>
+<br>
+<br>
+
+<div class="row">
+  <div class="col">
+    <h4>Equipment you'll need</h4>
+    <br>
+    <% @recipe.equipment.each do |e| %>
+      <%= link_to e.name, e.affiliate_link %><br>
+    <% end %>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col">
+    <h4>Ingredients:</h4>
+    <br>
+    <table>
+      <% @quants.each do |iq| %>
+        <tr>
+          <td class="font-md"><%= "#{iq[1]}" %>
+          <td class="font-md"><%= "#{iq[0]}" %>
+        </tr>
+      <% end %>
+    </table>
+    <% if params[:convert] == "true" %>
+      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-secondary btn-sm" %>
+    <% else %>
+      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-dark" %>
+    <% end %>
+  </div>
+</div>
 
 <br><hr><br>
-Tags:
-<% @tags.each do |t| %>
-  <%= t %><% unless t == @tags.last %><%= ", " %><% end %>
-<% end %>
-<br><hr><br>
-<h4>Equipment you'll need</h4>
-<br>
-<% @recipe.equipment.each do |e| %>
-  <%= link_to e.name, e.affiliate_link %><br>
-<% end %>
-<br><hr><br>
-<h4>Ingredients:</h4>
-<% if params[:convert] == "true" %>
-  <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-primary" %>
-<% else %>
-  <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-primary" %>
-<% end %>
-<br>
-<br>
-<table>
-<% @quants.each do |iq| %>
-  <tr>
-    <td class="font-md"><%= "#{iq[1]}" %>
-    <td class="font-md"><%= "#{iq[0]}" %>
-  </tr>
-<% end %>
-</table>
-<br><hr><br>
+
 Steps:<br>
 <% @recipe.actions.sort.each do |s| %>
   <b><%= s[1][:title] %></b>:

@@ -1,19 +1,20 @@
 Big Idea: The google of recipes.
 
 Immediate TODOs:
-  - break out amounts into smaller units of measure:
-    - 18oz dry -> 18 lb. 2oz.
-    - 1012g dry -> 1 kg. 12 g.
-    - 17 fl. oz -> 2 cups 1 fl. oz
-    - 1012mL -> 1 L 12 mL
 
-!! New features - user profiles, favoriting recipes, and building grocery lists !!
+!! New features - user profiles, building grocery lists !!
   + Converting to imperial units should be saved per recipe for a logged-in user
+    - part of larger user profile things, what else would go in a user profile/preferences?
+  - What about ingredients that are typically used as whole items? Cucumbers/Squash, lettuce, etc
+    - maybe just look up standard sizes and use those in place of "1 cucumber" and when people pick imperial, it'll be converted into pounds anyways
   - can re-use same search page, but add a button for logged-in users that only filters through saved/favorited recipes
-  - can have many grocery lists/weekly meal plans
-    -- each composed of multiple recipes
+  
+  MEAL PLANS
+  - Each user can have many weekly meal plans
+    -- each plan composed of multiple recipes
+    -- each recipe in the plan (i.e. on the join model) can be assigned a particular day, and notes
     -- meal plan model will own the function(s) for generating grocery lists
-    -- meal plan model will also have attribute for owning grocery list? or always generated dynamically? 
+    -- meal plan model will also have attribute for saving generated grocery list? or always generated dynamically? 
       - what about interactivity on the list, like checking off stuff as you get it? what about
         saving grocery lists (handled by generating from meal plans? Would someone want to save a grocery list
         separate from a meal plan? Should I even allow that?)?
@@ -78,7 +79,7 @@ Things I did, and how
   - added "gem 'devise'" to Gemfile
   - followed instructions on the devise github page to install and create a plain User model
 
-* Added Users and User Profiles
+* Added Users and User Profiles, and ability to favorite/save recipes
   - used devise gem for users and authentication
   - created separate UserProfile model to leave devise user and auth stuff untouched
     -- not sure if this is the "correct" way, but I like the idea of leaving the pre-built solution totally alone
@@ -89,6 +90,16 @@ Things I did, and how
     -- UserProfile is where favorites list lives, also where meal plans will live too
   + each UserProfile has exactly one FavoriteList
     - favorite lists are a many-to-many association between UserProfiles and Recipes, through a join table
+    - UserProfile show page lists favorited recipe links
+
+* Added ability to convert between metric and imperial units on recipes
+  - added conversion logic to Recipe model
+    - "thin view, thin controller, fat model" pattern - everything happens in the model, the controller just gets the
+        finished text and passes it to the view, which inserts it into a table
+    - whether to convert or not is handled by passing or not passing a query param (convert = true)
+    - all quantities for all recipes are stored in either grams or mL depending on wet or dry ingredient, then converted
+      from grams to US dry ounces, and from mL to US teaspoons. The amounts are then broken down with modulo division
+      into kilos/grams, liters/mL, pounds/ounces, and cups/tablespoons/teaspoons, and formatted for display
 ---
 
 TODOs:
