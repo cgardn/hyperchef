@@ -15,30 +15,31 @@
             </div>
             <div class="modal-body">
 
-      <h5>Filter by recipe type</h5>
-        <div class="font-sm">
-      <% RecipeType.all.each do |rt| %>
-        <% if @filter && @filter.include?(rt[:name]) %>
-          <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
-        <% else %>
-          <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
-        <% end %>
-        <%= fForm.label rt[:name] %>
-        <br>
-      <% end %>
-        </div>
-      <br>
-      <h5>Filter by ingredient type</h5>
-        <div class="font-sm">
-      <% IngredientTag.all.each do |it| %>
-        <% if @filter && @filter.include?(it[:name]) %>
-          <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
-        <% else %>
-          <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
-        <% end %>
-        <%= fForm.label it[:name] %>
+              <h5>Filter by recipe type</h5>
+              <div class="font-sm">
+                <% RecipeType.all.each do |rt| %>
+                  <% if @filter && @filter.include?(rt[:name]) %>
+                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
+                  <% else %>
+                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
+                  <% end %>
+                  <%= fForm.label rt[:name] %>
                   <br>
                 <% end %>
+              </div>
+              <br>
+
+              <h5>Filter by ingredient type</h5>
+              <div class="font-sm">
+              <% IngredientTag.all.each do |it| %>
+                <% if @filter && @filter.include?(it[:name]) %>
+                  <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
+                <% else %>
+                  <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
+                <% end %>
+                <%= fForm.label it[:name] %>
+                <br>
+              <% end %>
               </div>
             </div>
             <div class="modal-footer">
@@ -57,7 +58,7 @@
       Search: <%= @q %><br>
     <% end %>
     <% unless @filter.nil? %>
-    Tags: <% @filter.each do |t| %><%= " #{t}" %> <% end %>
+      Tags: <% @filter.each do |t| %><%= " #{t}" %> <% end %>
     <% end %>
     <hr>
 

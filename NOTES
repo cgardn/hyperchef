@@ -1,15 +1,15 @@
 Big Idea: The google of recipes.
 
 Immediate TODOs:
+  - remove toggle button from mobile view, just make it a couple of buttons and style/size appropriately for mobile/non-mobile
   Styling:
     - recipe cards on search result should have a couple points of relavent data: cook time, room for whether you have it favorited, etc
     - design cards to have a specific fixed minimum width, and then design the media breakpoints around at most 1-wide columns with filter down 
       left side
       + filters stay where they are, cards-per-row expands as window expands
   Search page:
-    - maybe separate text box and checkboxes, but both should persist from page to page
-    - collapse filters from top
-    - filters should be grouped by type/organized somehow
+    - see about converting modal to dropdown on desktop/tablet version? or at least better formatting of last searched tags+query
+    - filters should be grouped by type/organized somehow? does this require extra db columns on tag models?
 
 
 !! New features - user profiles, building grocery lists !!
