@@ -1,19 +1,21 @@
 <div class ="row">
-  <div class="col-4">
-    <% if @q != '' %>
-      Search: <%= @q %>
-    <% end %>
+  <div class="col-md-4">
+    
     <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
-      <%= fForm.text_field :query %><%= fForm.submit "Filter" %>
+      <%= fForm.text_field :query, placeholder: "Search", value: @q %><%= fForm.submit "Go!" %>
       <br>
-      <!--
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRTypes" aria-expanded="false" aria-controls="collapseRTypes">
-        Recipe Tags
-      </button>
-      -->
-      <br>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">Filters</button>
+      <div class="modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalTitle" aria-hidden-"true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="filterModalTitle">Filters</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
       <h5>Filter by recipe type</h5>
-      <!--<div class="collapse" id="collapseRTypes">-->
         <div class="font-sm">
       <% RecipeType.all.each do |rt| %>
         <% if @filter && @filter.include?(rt[:name]) %>
@@ -35,15 +37,24 @@
           <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
         <% end %>
         <%= fForm.label it[:name] %>
-        <br>
-      <% end %>
+                  <br>
+                <% end %>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
+      </div>
+
     <% end %>
+
   </div>
-  <div class="col-8">
-    Returned <%= @results.count %> recipes out of <%= @total %> total<br>
+  <div class="col-md-8 col-12">
+    <%= @results.count %> of <%= @total %> recipes<br>
     <% unless @q.nil? || @q == "" %>
-      Query: <%= @q %><br>
+      Search: <%= @q %><br>
     <% end %>
     <% unless @filter.nil? %>
     Tags: <% @filter.each do |t| %><%= " #{t}" %> <% end %>

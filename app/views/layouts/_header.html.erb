@@ -1,5 +1,11 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <% if request.fullpath == '/' %>
+  <nav class="navbar navbar-toggleable-md navbar-expand-md navbar-dark">
+  <% else %>
+  <nav class="navbar navbar-toggleable-md navbar-expand-md navbar-light">
+  <% end %>
+
+
       <!-- home button image -->
       <% unless request.fullpath == '/' %>
       <ul class="nav mr-auto">
@@ -8,14 +14,18 @@
                                               root_path %></li>
       </ul>
       <% end %>
+      <button class="navbar-toggler navbar-toggler-right ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <!-- header search bar -->
-      <% unless request.fullpath == '/' || request.fullpath == '/search' %>
+      <!-- header search bar, only on recipe pages  -->
+      <% if request.fullpath.include? '/recipes/' %>
         <ul class="nav ml-auto">
           <%= render 'shared/search_form' %>
         </ul>
       <% end %>
 
+      <div class="collapse navbar-collapse align-items-right" id="navbarNav">
       <!-- Login/Logout/UserProfile links -->
       <% if user_signed_in? %>
         <ul class="ml-auto font-lg">
@@ -30,5 +40,6 @@
           <%= link_to "Sign-up", new_user_registration_path %>
         </ul>
       <% end %>
+      </div>
   </nav>
 </header>

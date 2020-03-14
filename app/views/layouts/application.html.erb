@@ -20,10 +20,17 @@
   <% end %>
     <div class="container h-100">
       <%= render 'layouts/header' %>
-      <% flash.each do |msg_type, msg| %>
-        <%= content_tag(:div, msg, class: "alert alert-#{msg_type}") %>
-      <% end %>
+
+      <div class="row text-center align-items-center">
+        <div class="col-12">
+        <% flash.each do |msg_type, msg| %>
+          <%= content_tag(:div, msg, class: "alert alert-#{msg_type}", class: "text-light") %>
+        <% end %>
+        </div>
+      </div>
+
       <%= yield %>
+
       <%= debug(params) if Rails.env.development? %>
     </div>
     

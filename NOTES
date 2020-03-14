@@ -1,6 +1,16 @@
 Big Idea: The google of recipes.
 
 Immediate TODOs:
+  Styling:
+    - recipe cards on search result should have a couple points of relavent data: cook time, room for whether you have it favorited, etc
+    - design cards to have a specific fixed minimum width, and then design the media breakpoints around at most 1-wide columns with filter down 
+      left side
+      + filters stay where they are, cards-per-row expands as window expands
+  Search page:
+    - maybe separate text box and checkboxes, but both should persist from page to page
+    - collapse filters from top
+    - filters should be grouped by type/organized somehow
+
 
 !! New features - user profiles, building grocery lists !!
   + Converting to imperial units should be saved per recipe for a logged-in user
