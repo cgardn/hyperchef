@@ -1,20 +1,31 @@
 Big Idea: The google of recipes.
 
+area below for TODOs and near-future planning
+search (xHDJx) for design journal
+
+
 Immediate TODOs:
-  - remove toggle button from mobile view, just make it a couple of buttons and style/size appropriately for mobile/non-mobile
+  - remove hamburger toggle button from mobile view, just make it a couple of buttons and style/size appropriately for mobile/non-mobile
+    - will only have (Profile | Logout) and (Login | Signup) depending on login state.
+  - add "Back to Search" or "Back to Browse" button next to left-side home image, should be simple and clear, and also preserve the last
+    search query and chosen filters if there were any
   Styling:
     - recipe cards on search result should have a couple points of relavent data: cook time, room for whether you have it favorited, etc
     - design cards to have a specific fixed minimum width, and then design the media breakpoints around at most 1-wide columns with filter down 
       left side
       + filters stay where they are, cards-per-row expands as window expands
   Search page:
-    - see about converting modal to dropdown on desktop/tablet version? or at least better formatting of last searched tags+query
-    - filters should be grouped by type/organized somehow? does this require extra db columns on tag models?
+    - see about adjusting size and scroll of modal, I'd like it to just fill the screen and have a close button at the bottom, and
+      scroll internally if it's too big, like the Amazon site filter box
+    - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
+      etc. does this require extra db columns on tag models?
 
 
 !! New features - user profiles, building grocery lists !!
   + Converting to imperial units should be saved per recipe for a logged-in user
     - part of larger user profile things, what else would go in a user profile/preferences?
+    - a lot of that kind of stuff could probably just get stuffed into a hash and saved in the session, but I think I want to specifically
+      avoid putting too much in the session to encourage people to sign-up and get on the email list.
   - What about ingredients that are typically used as whole items? Cucumbers/Squash, lettuce, etc
     - maybe just look up standard sizes and use those in place of "1 cucumber" and when people pick imperial, it'll be converted into pounds anyways
   - can re-use same search page, but add a button for logged-in users that only filters through saved/favorited recipes
@@ -181,12 +192,49 @@ add ability to edit what gram quantities are displayed as on recipe edit page
       there is the most important thing. I can complicate it later if I really
       want to.
 
-TOC
+HYPERCHEF! Design journal (xHDJx)
+- x0x Where my head's at right now
 - x1x What it looks like
 - x2x Monetization ideas
 - x3x Unsorted data scheme ideas
 - x4x Unsorted ideas for things I want to be able to do
 - x5x Data Schema (in rails model terms)
+
+Where my head's at right now/running log of where I'm focusing (x0x)
+  - (3-16-2020) Focusing on mobile styling, fiddling with buttons and stuff. 
+  Tried putting profile/login/signup links into a collapsible hamburger on 
+  mobile, but the animation feels clunky and shifts all the content down to
+  make it fit. I could probably tinker with the animation, maybe remove it, 
+  but that seems like a lot of work for what amounts to 4 buttons shown 2 
+  at a time at most (Profile | Logout, Login | Signup). I don't imagine there'd
+  ever be as extensive a side-menu as a place like Amazon, which is where I'm 
+  taking some mobile design queues from in terms of searchable database of 
+  items (well, recipes, but functionally similar just without cart+checkout).
+  Also I have some pretty strong opinions about UI and hiding things, so I
+  think it's best to just remove the hamburger and try to keep the buttons
+  clear and simple on the header. I also have an image that brings back to
+  the home page, and I'd like to add one for going back to the overall
+  browse screen too (a "back to search" or something.)
+  - (pre- 3-16-2020) Retroactive first entry. I've been working on this 
+  for about a month now, in place of The Odin Project's final Rails project
+  to replicate Facebook or some other social media site. I've probably spent
+  way more time on this than I would have on the final project, mainly due to
+  the more complicated data models I've put together for an efficient way of
+  representing recipes and their ingredients. I'm trying to avoid repetition
+  so each ingredient has a single entry in a table, and all recipes just 
+  reference that one thing. Recipes are basically just a set of text steps
+  and a lot of references to ingredients. Quantities of ingredients for a 
+  recipe are saved on the join model that connects recipes with ingredients.
+  I'm not sure if it's actually more efficient, because of my newness, 
+  but it seems pretty clever if I do say so myself.
+  + My main motivation behind this project is to follow the common advice of 
+  solving problems you have yourself. I also wanted to do something more 
+  original than just whatever TOP says to do for a final project, to make
+  myself stand out more. But mostly it's because I'm trying to learn to cook
+  more than just beans and rice, and my travels through the food side of the
+  internet have shown me that pretty much every recipe website is a train
+  wreck of ads and paragraphs of pointless prose about the author's personal
+  history with chicken stew.
 
 What it looks like: (x1x)
   - Simple interface with just a search bar and a slideshow of movies and/or
@@ -247,6 +295,7 @@ Unsorted functions and ideas / things I want to be able to do (x4x)
 Data Schema (in rails model terms) (x5x)
   "-" = column in database
   "+" = association in model definition
+  (out of date as of 3-16-2020 -> models have grown)
 
   Ingredient
     - id.integer (pk)

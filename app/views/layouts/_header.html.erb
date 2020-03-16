@@ -25,8 +25,8 @@
         </ul>
       <% end %>
 
-      <div class="ml-auto collapse navbar-collapse" id="navbarNav">
       <!-- Login/Logout/UserProfile links -->
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
       <% if user_signed_in? %>
         <span class="font-lg">
           <%= link_to "Profile", user_profile_path(current_user.user_profile) %>
