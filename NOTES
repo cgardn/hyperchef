@@ -3,10 +3,13 @@ Big Idea: The google of recipes.
 area below for TODOs and near-future planning
 search (xHDJx) for design journal
 
-
 Immediate TODOs:
   - remove hamburger toggle button from mobile view, just make it a couple of buttons and style/size appropriately for mobile/non-mobile
     - will only have (Profile | Logout) and (Login | Signup) depending on login state.
+    + Have two buttons (Login or Signup) when logged out, or one dropdown (containing profile/logout/etc) when logged in? Or just smart
+      positioning for the 3 buttons, OR MAYBE just rely on back button to get back to search, although people would look for a way to 
+      go back to the browse screen since that's the "main" screen in terms of function, the actual main page is just for looks and 
+      first impressions
   - add "Back to Search" or "Back to Browse" button next to left-side home image, should be simple and clear, and also preserve the last
     search query and chosen filters if there were any
   Styling:
@@ -15,10 +18,12 @@ Immediate TODOs:
       left side
       + filters stay where they are, cards-per-row expands as window expands
   Search page:
+
     - see about adjusting size and scroll of modal, I'd like it to just fill the screen and have a close button at the bottom, and
       scroll internally if it's too big, like the Amazon site filter box
     - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
       etc. does this require extra db columns on tag models?
+    - I'd like a way to easily and helpfully allow positive and negative searches, so easy to include tomatoes and exclude wheat/gluten
 
 
 !! New features - user profiles, building grocery lists !!
@@ -235,6 +240,9 @@ Where my head's at right now/running log of where I'm focusing (x0x)
   internet have shown me that pretty much every recipe website is a train
   wreck of ads and paragraphs of pointless prose about the author's personal
   history with chicken stew.
+    (for me): also i looked up copyright on recipes, you can copy lists of
+              ingredients and plain-language instructions, but any prose
+              or creative descriptions and obviously photos are copywritten.
 
 What it looks like: (x1x)
   - Simple interface with just a search bar and a slideshow of movies and/or
