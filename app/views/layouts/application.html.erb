@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HyperChef!</title>
+    <title><%= "#{yield(:title)}HyperChef!" %></title>
     <%= favicon_link_tag asset_path('icon_small.png') %>
 
     <%= csrf_meta_tags %>
@@ -18,10 +18,10 @@
   <% else %>
     <body>
   <% end %>
-    <div class="container h-100">
+    <div class="container h-100 px-1">
       <%= render 'layouts/header' %>
 
-      <div class="row text-center align-items-center">
+      <div class="row text-center align-items-center w-100">
         <div class="col-12">
         <% flash.each do |msg_type, msg| %>
           <%= content_tag(:div, msg, class: "alert alert-#{msg_type}", class: "text-light") %>

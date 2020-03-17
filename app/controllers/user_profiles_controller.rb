@@ -75,7 +75,7 @@ class UserProfilesController < ApplicationController
     end
     puts "!!--!!"
     puts params
-    redirect_to("/recipes/#{Recipe.find(favorite_params).slug}")
+    redirect_back(fallback_location: search_path)
   end
 
   def remove_favorite_recipe
@@ -83,7 +83,7 @@ class UserProfilesController < ApplicationController
     @user_profile.favorites.delete(dumpRec)
     puts "**!!**"
     puts params
-    redirect_to("/recipes/#{Recipe.find(favorite_params).slug}")
+    redirect_back(fallback_location: search_path)
   end
 
   private

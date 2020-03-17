@@ -1,3 +1,4 @@
+<% content_for :title, "#{@recipe.name} - " %>
 <div class="text-center jumbotron">
   <%= @recipe.name %>
 </div>
@@ -6,27 +7,24 @@
   <div class="col text-center">
 <% if user_signed_in? %>
   <% unless @favorites.include?(@recipe) %>
-    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}",
-               method: "post", local: true) do |favForm| %>
-               <%= favForm.hidden_field :addFavID, value: @recipe.id %>
-               <%= favForm.submit "Favorite" %>
+    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
+      <%= favForm.hidden_field :addFavID, value: @recipe.id %>
+      <%= favForm.submit "Favorite", class: "btn btn-dark active" %>
     <% end %>
   <% else %>
     <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
       <%= favForm.hidden_field :addFavID, value: @recipe.id %>
-      <%= favForm.submit "Un-favorite" %>
+      <%= favForm.submit "Un-favorite", class: "btn btn-dark active" %>
     <% end %>
   <% end %>
 <% else %>
   <%= link_to "Sign-in to save this recipe!",
     new_user_session_path,
-    class: "btn btn-dark" %>
+    class: "btn btn-dark active" %>
 <% end %>
 </div>
 </div>
-<br>
-<br>
-<br>
+<hr>
 
 <div class="row">
   <div class="col">
@@ -51,9 +49,9 @@
       <% end %>
     </table>
     <% if params[:convert] == "true" %>
-      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-secondary btn-sm" %>
+      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-secondary btn-sm active" %>
     <% else %>
-      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-dark" %>
+      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-dark active" %>
     <% end %>
   </div>
 </div>

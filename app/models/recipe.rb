@@ -101,5 +101,13 @@ class Recipe < ApplicationRecord
     URI::decode(name.gsub('-', ' ').titleize)
   end
 
+  def get_image_path
+    unless card_image_path == ""
+      return card_image_path
+    end
+    return "recipe_card_image_default.png"
+  end
+
+
   serialize :actions, Hash
 end

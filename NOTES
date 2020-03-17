@@ -4,21 +4,19 @@ area below for TODOs and near-future planning
 search (xHDJx) for design journal
 
 Immediate TODOs:
-  - remove hamburger toggle button from mobile view, just make it a couple of buttons and style/size appropriately for mobile/non-mobile
-    - will only have (Profile | Logout) and (Login | Signup) depending on login state.
-    + Have two buttons (Login or Signup) when logged out, or one dropdown (containing profile/logout/etc) when logged in? Or just smart
-      positioning for the 3 buttons, OR MAYBE just rely on back button to get back to search, although people would look for a way to 
-      go back to the browse screen since that's the "main" screen in terms of function, the actual main page is just for looks and 
-      first impressions
-  - add "Back to Search" or "Back to Browse" button next to left-side home image, should be simple and clear, and also preserve the last
-    search query and chosen filters if there were any
+  - Pull recipe favorite-button-form out of both show view and card and make it a partial, or make it a plain link somehow
   Styling:
+    - 360px minimum width for mobile, target 350px wide cards, for golden ratio then 350 -> 216
     - recipe cards on search result should have a couple points of relavent data: cook time, room for whether you have it favorited, etc
     - design cards to have a specific fixed minimum width, and then design the media breakpoints around at most 1-wide columns with filter down 
       left side
-      + filters stay where they are, cards-per-row expands as window expands
+      + filters stay where they are, cards-per-row expands as window expands, hopefully with plain Bootstrap
   Search page:
 
+    - need clarity about having to press "go" to apply filters, maybe put search button below filter modal button and rename filter
+      modal button to say something like "Advanced search" or something, though that would imply that its separate from the main
+      search and probably cause confusion when closing the modal with selected checkboxes doesn't do anything
+      + Can I trigger the search form submission when the modal is closed without extra JS?
     - see about adjusting size and scroll of modal, I'd like it to just fill the screen and have a close button at the bottom, and
       scroll internally if it's too big, like the Amazon site filter box
     - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
@@ -97,6 +95,8 @@ add grocery list function (save or <3 a recipe and it goes on the one list, that
 - eventually have multiple named custom lists
 
 Things I did, and how
+* removed hamburger menu from mobile view, replaced with a couple of buttons for Profile/Logout or Login/Signup depending on whether
+  you're logged in or not
 * replaced all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
   - added :slug as parameter in recipe model
   - changed recipe routing to -> resources :recipes, except: [:create], param: :slug
@@ -206,6 +206,39 @@ HYPERCHEF! Design journal (xHDJx)
 - x5x Data Schema (in rails model terms)
 
 Where my head's at right now/running log of where I'm focusing (x0x)
+  - (3-17-2020) I decided to remove the hamburger menu from the mobile view.
+  Like I said yesterday, I just didn't like the collapse animation. Maybe 
+  it's because my laptop is rather underpowered (it's a $200 HP Stream
+  laptop - I didn't have a lot of money to spend), but it also pushed page
+  content around to make room by default, and I don't like that in a navbar.
+  I'm sure there's ways to make it pop-over real nice with "modern" tech but
+  I'm not on to React yet, so I settled on the simple solution: Plain Old
+  Buttons.
+    I finally made the recipe search results into something more than just
+  plain links. I'm going with Bootstrap cards for now, because I'm going 
+  with just Bootstrap for now, and cards are the easiest/most complete thing
+  that can I can set to a fixed width and wrap in Bootstrap layout classes
+  to automatically lay out the rows depending on how wide the viewer's 
+  window is. For now the cards are 350px wide, but in the future I'd like
+  to ask the browser for the viewport width and adjust the cards size slightly
+  so there isn't a huge amount of white space when the screen is near to a 
+  multiple of 1.5x card width, but as long as everything stays centered I 
+  guess it'll be fine.
+    Also for the record, getting the cards to align and center correctly was 
+  a real pain the rear, fiddling with the padding and margins on the cards
+  and the container divs. Part of it was my fault, because the layout I've
+  been patching together as I go was a real mess, but also partly because
+  the Bootstrap spacing utility classes measure in rems, so I had to figure
+  out which needed padding and which needed auto-margin, which meant actually
+  using my brain. Ugh.
+    Other minor changes: changed the un/favoriting action in the UserProfile
+  controller to redirect back instead of to recipe, so you can favorite right
+  from the search results (there's a button the card, will be a little heart
+  eventually). Still no AJAX, which is coming, but for now the redirect-back
+  is good enough since the browser remembers your filter selections. Had a
+  weird problem with the favorite button the recipe#show view, it was putting
+  a nonce instead of the recipe ID into the form hidden input but stopped
+  after I fiddled with it, even though I ended up changing nothing. Weird.
   - (3-16-2020) Focusing on mobile styling, fiddling with buttons and stuff. 
   Tried putting profile/login/signup links into a collapsible hamburger on 
   mobile, but the animation feels clunky and shifts all the content down to

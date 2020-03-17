@@ -14,6 +14,9 @@ class SearchController < ApplicationController
   def query
     @q = params[:query]
     @results = Recipe.search_names(params[:query])
+    if user_signed_in?
+      @favorites = UserProfile.find(current_user.user_profile.id).favorites
+    end
 
     # only filter results by checked boxes if boxes were actually checked
     # - hack to fix top search bar and filter submit button technically
@@ -41,7 +44,11 @@ class SearchController < ApplicationController
     end
     
     @total = Recipe.all.count
-    puts @filter
+    unless @filter.nil?
+      @filter = "Filters: " + @filter.join(", ")
+    else
+      @filter = ""
+    end
     
   end
 

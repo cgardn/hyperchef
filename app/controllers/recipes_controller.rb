@@ -152,7 +152,5 @@ class RecipesController < ApplicationController
         @favorites = UserProfile.find(current_user.user_profile.id).favorites
       end
     end
-
-
   
 end

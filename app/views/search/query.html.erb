@@ -1,11 +1,12 @@
-<div class ="row">
-  <div class="col-md-4 mt-3">
+<% content_for :title, "Search - " %>
+<div class ="row mx-auto">
+  <div class="col-12 mt-3">
     
     <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
       <div class="col-12 text-center mb-2">
         <%= fForm.text_field :query, placeholder: "Search", value: @q,
                                      class: "mr-1" %>
-        <%= fForm.submit "Go", class: "ml-1" %>
+        <%= fForm.submit "Go" %>
       </div>
       <div class="col-12 text-center mb-3"> 
         <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#filterModal">Filter Results</button>
@@ -57,18 +58,19 @@
     <% end %>
 
   </div>
-  <div class="col-md-8 col-12">
-    <%= @results.count %> of <%= @total %> recipes<br>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div><%= @results.count %> of <%= @total %> recipes</div>
     <% unless @q.nil? || @q == "" %>
-      Search: <%= @q %><br>
+      <div>Search: <%= @q %></div>
     <% end %>
-    <% unless @filter.nil? %>
-      Filters: <% @filter.each do |t| %><%= " #{t}" %> <% end %>
-    <% end %>
-    <hr>
-
-    <% @results.each do |r| %>
-      <%= render 'shared/recipe_link', rec: r %><br>
-    <% end %>
+    <div><%= @filter %></div>
   </div>
+</div>
+<hr>
+<div class="row col-12 p-0 mx-auto">
+  <% @results.each do |r| %>
+    <%= render 'shared/recipe_link', rec: r %>
+  <% end %>
 </div>
