@@ -56,7 +56,7 @@ puts "Creating Recipes..."
 
   i = nil
   while i == nil
-    i = Array.new(5) {rand(1..Ingredient.all.length-1)}.uniq!
+    i = Array.new(rand(1..15)) {rand(1..Ingredient.all.length-1)}.uniq!
   end
   e = nil
   while e == nil
@@ -86,6 +86,10 @@ puts "Creating Recipes..."
     r.actions[n] = {title: Faker::Lorem.sentence(word_count: rand(1..4)),
                     body: Faker::Lorem.paragraph(sentence_count: rand(1..5))}
   end
+
+  r.prep_time = rand(5..30)
+  r.cook_time = rand(0..300)
+
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
   r.save
 end

@@ -3,15 +3,25 @@ Big Idea: The google of recipes.
 area below for TODOs and near-future planning
 search (xHDJx) for design journal
 
-Immediate TODOs:
+Pre-Launch:
   - update status bar code on recipe cards to actually reflect time and ingredient count
-  - Pull recipe favorite-button-form out of both show view and card and make it a partial, or make it a plain link somehow
-  - probably time to think about AJAX responses to the favorite button and whatever else
-  Styling:
-    - add visual tag icons/system in lower-left space of recipe card
-    - 360px minimum width for mobile, target 350px wide cards, for golden ratio then 350 -> 216
-  Search page:
+  - style recipe show page
+ !- paginate search results
+  - verify all user-facing pages work as expected, and are visually consistent
+  - put on Heroku and fill it up with at least all the Hello fresh recipes, plus
+    Cassi's recipes, and whatever else I can find - hopefully at least 50, ideally
+    100+
+  - make my account and make sure it's admin
+  - make sure all the other unused routes are actually removed from routing file, and
+    associated view templates and controller actions are removed/inaccessible.
 
+Post-Launch (v1.1):
+  - test coverage of at least all the controller actions and user stories
+  - refactor list:
+    - Pull recipe favorite-button-form out of both show view and card and make it a partial
+      - used in multiple places, on recipe card and at top of recipe show page
+    - Time to think about AJAX responses to the favorite button and whatever else
+  Search page (old notes):
     - need clarity about having to press "go" to apply filters, maybe put search button below filter modal button and rename filter
       modal button to say something like "Advanced search" or something, though that would imply that its separate from the main
       search and probably cause confusion when closing the modal with selected checkboxes doesn't do anything
@@ -21,6 +31,22 @@ Immediate TODOs:
     - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
       etc. does this require extra db columns on tag models?
     - I'd like a way to easily and helpfully allow positive and negative searches, so easy to include tomatoes and exclude wheat/gluten
+
+Polish (v1.2):
+  - time: card must show total time from "I want to cook" to "I'm eating food"
+        : show page can break out hands-on vs hands-off cooking, possibly add as badge
+  - add visual badges, probably in place of view button, possibly changing recipe card size from horizontal Golden Ratio to vertial,
+    maintaining 350px width. However, horizontal evokes more childhood-tv-set nostalgia.
+      : needs other way to make card clickable if I'm going to remove the view button, or make view button a little smaller and
+        squeeze icons above it, but I want text badges or something for clarity
+        -- main badges are meat-free, vegan, gluten free, paleo?, hands-off (i.e. mostly in oven), one-pot/one-dish
+
+Progression (v2):
+  - menu planning and grocery list generation
+
+The Big Time (v3):
+  - lessons + techniques section
+  - animated title page
 
 
 !! New features - user profiles, building grocery lists !!
@@ -197,14 +223,32 @@ add ability to edit what gram quantities are displayed as on recipe edit page
       want to.
 
 HYPERCHEF! Design journal (xHDJx)
-- x0x Where my head's at right now
-- x1x What it looks like
-- x2x Monetization ideas
-- x3x Unsorted data scheme ideas
-- x4x Unsorted ideas for things I want to be able to do
-- x5x Data Schema (in rails model terms)
+- x0x Important design notes that have no other home
+- x1x Where my head's at right now
+- x2x What it looks like
+- x3x Monetization ideas
+- x4x Unsorted data scheme ideas
+- x5x Unsorted ideas for things I want to be able to do
+- x6x Data Schema (in rails model terms)
 
-Where my head's at right now/running log of where I'm focusing (x0x)
+Important design notes that have no other home (x0x)
+  - Recipe Cards:
+    - 360px minimum width for mobile, target 350px wide cards, for golden ratio then 350 -> 216
+
+Where my head's at right now/running log of where I'm focusing (x1x)
+  - (3-19-2020 extra thoughts) While figuring out the recipe card, I 
+  thought of several more visual badges I want to add in the form of
+  recipe tags (which trigger the badges?). Besides vegetarian/meat-free, 
+  vegan, gluten-free, I'll also have paleo, hands-off (meaning most of
+  the time is in the oven or something, less than 10 minutes of hands-on
+  prep time), and one-pot (meaning everything gets put in a single pot, 
+  limited cleanup). Or maybe I'll go right with a limited cleanup badge?
+  Either way, the badges and such are probably for version 2, after launch,
+  test coverage, and the first major refactor.
+  - (3-19-2020 UPDATE) D'oh - quick update, I forgot to add the links
+  to the recipe cards that actually let you view the dang recipe! And
+  I forgot about styling the show page! oops....take everything I said and
+  add another 3-5 hours haha
   - (3-19-2020) OK! After a lot of trial and error over the last few days,
   now there's a (relativey) consistent look-and-feel to the UI (going for
   a vaguely-SNES-retro-game feel, just enough to appeal to the kind of people
@@ -326,7 +370,7 @@ Where my head's at right now/running log of where I'm focusing (x0x)
               ingredients and plain-language instructions, but any prose
               or creative descriptions and obviously photos are copywritten.
 
-What it looks like: (x1x)
+What it looks like: (x2x)
   - Simple interface with just a search bar and a slideshow of movies and/or
   images behind, big colorful food pictures, people having fun cooking at home,
   stuff like that
@@ -342,7 +386,7 @@ What it looks like: (x1x)
   - For registered users/subscribers, also a library of easy-to-follow cooking
   lessons with pictures and everything, and links to recipes.
 
-Monetization: (x2x)
+Monetization: (x3x)
   - I'd prefer no ads, if possible
   - subscription service for the lessons and fancy 3rd-party service
   integrations, very low, like $10 per year
@@ -355,7 +399,7 @@ Monetization: (x2x)
   - partnerships with sponsored ingredients and equipment (probably better
   deals than affiliate links, but requires large audience I bet)
 
-Unsorted ideas for the data scheme: (x3x)
+Unsorted ideas for the data scheme: (x4x)
   - 2 basic data units:
     + ingredients (onions, chicken, cardamom)
     + techniques (sear, chop, strain, bake, saute, etc)
@@ -376,13 +420,13 @@ Unsorted ideas for the data scheme: (x3x)
   displayed in the user's chosen measurement system (defaults set by country).
     + calculated from a list of recipes selected by user
 
-Unsorted functions and ideas / things I want to be able to do (x4x)
+Unsorted functions and ideas / things I want to be able to do (x5x)
   - site-wide messages for logged-in users, set to expire after arbitrary
   amount of time
     + but not a full-blown user messaging system, that's not necessary
     + basically fancy flash messages
 
-Data Schema (in rails model terms) (x5x)
+Data Schema (in rails model terms) (x6x)
   "-" = column in database
   "+" = association in model definition
   (out of date as of 3-16-2020 -> models have grown)

@@ -116,6 +116,24 @@ class Recipe < ApplicationRecord
     return num
   end
 
+  def get_ingredient_score
+    # ingredient counts will always be at least 1
+    # max ingredients among all recipes is probably in the 15-20 range?
+    count = ingredients.count
+    return ((9.0*((count - 1.0)/(15.0-1.0))) + 1.0).floor.to_i
+  end
+
+  def get_time_score
+    # time score is from "I want to eat" to "I'm now eating"
+    # minimum probably in the 5-10 minutes range (salads)
+    # max probably in the 4-5 hour range (crock-pot meals on high)
+    # we'll take the sum of cook+prep time (always in minutes) and 
+    # normalize to the 1-10 range out of 5-300 minutes
+    # - linear transformation of a variable
+    # -> (newMax - newMin) * (x - oldMin)/(oldMax-oldMin) + newMin
+    time = prep_time + cook_time
+    return ((9.0*((time - 5.0)/(300.0-5.0))) + 1.0).floor.to_i
+  end
 
   serialize :actions, Hash
 end

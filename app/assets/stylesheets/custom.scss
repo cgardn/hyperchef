@@ -113,6 +113,19 @@ td {
   background:url("notfavorite_down.png");
 }
 
+a.view-button {
+  background:url("view_recipe_up.png");
+  height: 67px;
+  width: 170px;
+  border: none;
+}
+a.btn.view-button:hover {
+  background:url("view_recipe_down.png");
+  height: 67px;
+  width: 170px;
+  border: none;
+}
+
 .text-right {
   text-align: right;
 }

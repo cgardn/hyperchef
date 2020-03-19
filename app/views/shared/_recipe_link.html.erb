@@ -6,17 +6,15 @@
     <%= image_tag("skill_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
     </p>
     <p class="card-text">
-    <%= image_tag("ingredients_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+    <%= image_tag("ingredients_title.png") %><%= image_tag("progressindicator_#{rec.get_ingredient_score}") %>
     </p>
     <p class="card-text">
-    <%= image_tag("time_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+    <%= image_tag("time_title.png") %><%= image_tag("progressindicator_#{rec.get_time_score}") %>
     </p>
     <p class="card-text">
     <div class="row">
       <div class="col-6">
-        <ul class="card-text-color pl-3">
-        <!-- reserved for visual tags -->
-      </ul>
+        <%= link_to "", rec, class: "btn view-button" %>
       </div>
       <div class="col-6 text-right">
     <% if user_signed_in? %>
