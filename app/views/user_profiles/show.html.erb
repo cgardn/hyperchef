@@ -8,7 +8,7 @@
   <th>Favorite Recipes:<th>
 <% @user_profile.favorites.each do |f| %>
   <tr>
-    <td class="font-lg"><%= render 'shared/recipe_link', rec: f %></td>
+    <td class="font-lg"><%= render 'shared/recipe_link_text', rec: f %></td>
   </tr>
 <% end %>
 </table>

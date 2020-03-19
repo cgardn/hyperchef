@@ -1,31 +1,37 @@
-<div class="card mb-4 mx-auto" style="width: 350px;">
-  <%= link_to image_tag(rec.get_image_path), rec, class: "card-image-top" %>
-  <div class="card-body">
-    <h4 class="card-title"><%= rec.name %></h4>
-    <h6 class="card-subtitle text-muted"><%= rec.origin %></h6>
+<div class="card mb-4 mx-auto border-dark" style="width: 350px;">
+  <%= image_tag("card_background.png", class: "card-img") %>
+  <div class="card-img-overlay">
+    <h4 class="card-title card-color text-center"><%= rec.name %></h4>
     <p class="card-text">
-    Prep: <%= rec.prep_time %> minutes
-    <br>
-    Cook: <%= rec.cook_time %> minutes
+    <%= image_tag("skill_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
     </p>
-    <div class="card-footer">
-      <% if user_signed_in? %>
-        <% unless @favorites.include?(rec) %>
-          <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
-            <%= favForm.hidden_field :addFavID, value: rec.id %>
-            <%= favForm.submit "Favorite", class: "btn btn-dark active" %>
-          <% end %>
-        <% else %>
-          <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
-            <%= favForm.hidden_field :addFavID, value: rec.id %>
-            <%= favForm.submit "Un-favorite", class: "btn btn-dark active" %>
-          <% end %>
+    <p class="card-text">
+    <%= image_tag("ingredients_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+    </p>
+    <p class="card-text">
+    <%= image_tag("time_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+    </p>
+    <p class="card-text align-content-right">
+    <% if user_signed_in? %>
+      <% unless @favorites.include?(rec) %>
+        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
+          <%= favForm.hidden_field :addFavID, value: rec.id %>
+          <div class="text-right unfavorite-button">
+          <%= favForm.submit "" %>
+          </div>
         <% end %>
       <% else %>
-        <%= link_to "Sign-in to save this recipe!",
-            new_user_session_path,
-            class: "btn btn-dark active" %>
+        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
+          <%= favForm.hidden_field :addFavID, value: rec.id %>
+          <div class="text-right favorite-button">
+          <%= favForm.submit "" %>
+          </div>
+        <% end %>
       <% end %>
-    </div>
+    <% else %>
+      <%= link_to image_tag("notfavorite_up.png", size: "47x67"),
+          new_user_session_path %>
+    <% end %>
+    </p>
   </div>
 </div>

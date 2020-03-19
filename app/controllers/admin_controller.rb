@@ -3,6 +3,7 @@ class AdminController < ApplicationController
 
   def index
     @recipes = Recipe.all
+    @favorites = []
     @rType = RecipeType.new
     @rTypes = RecipeType.all
     @ingredients = Ingredient.all

@@ -7,6 +7,17 @@
 
   <%= rForm.label :author %>
   <%= rForm.text_field :author%>
+
+  (Times in minutes)
+  <%= rForm.label :cook_time %>
+  <%= rForm.number_field :cook_time %>
+
+  <%= rForm.label :prep_time %>
+  <%= rForm.number_field :prep_time %>
+
+  <%= rForm.label :card_image_path %>
+  <%= rForm.text_field :card_image_path %>
+
   <hr>
   Recipe Tags:<br>
   <% RecipeType.all.each do |rt| %>

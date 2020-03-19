@@ -108,6 +108,14 @@ class Recipe < ApplicationRecord
     return "recipe_card_image_default.png"
   end
 
+  def get_difficulty
+    num = ((actions.count/15.0)*10.floor).to_i
+    if num < 1
+      num = 1
+    end
+    return num
+  end
+
 
   serialize :actions, Hash
 end

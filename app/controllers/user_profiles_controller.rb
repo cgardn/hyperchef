@@ -92,7 +92,11 @@ class UserProfilesController < ApplicationController
     def correct_user
       # only correct user can see profile while logged in
       unless user_signed_in? and UserProfile.find(params[:id]).user == current_user
-        redirect_to("/search")
+        if user_signed_in?
+          redirect_to(user_profile_path(current_user))
+        else
+          redirect_to("/")
+        end
       end
     end
 

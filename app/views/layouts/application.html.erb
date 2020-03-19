@@ -24,7 +24,7 @@
       <div class="row text-center align-items-center w-100">
         <div class="col-12">
         <% flash.each do |msg_type, msg| %>
-          <%= content_tag(:div, msg, class: "alert alert-#{msg_type}", class: "text-light") %>
+          <%= content_tag(:div, msg, class: "alert alert-#{msg_type} text-light") %>
         <% end %>
         </div>
       </div>

@@ -60,6 +60,10 @@ class RecipesController < ApplicationController
     @recipe.origin = recipe_params[:origin]
     @recipe.author = recipe_params[:author]
 
+    @recipe.cook_time = recipe_params[:cook_time]
+    @recipe.prep_time = recipe_params[:prep_time]
+    @recipe.card_image_path = recipe_params[:card_image_path]
+
     # Setting Recipe Type tag list
     @recipe.recipe_types.delete_all
 
@@ -141,6 +145,8 @@ class RecipesController < ApplicationController
 
     def recipe_params
       params.require(:recipe).permit(:name, :origin, :author,
+                                     :prep_time, :cook_time,
+                                     :card_image_path,
                                      rTypes: [:selected],
                                      equipment: [:selected],
                                      :ingredients => {},
