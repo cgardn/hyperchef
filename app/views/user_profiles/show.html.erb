@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to "Change Email/Password", edit_user_registration_path %> |
-<%= link_to 'Back to Search', '/search' %>
+<%= link_to "Change Email/Password", edit_user_registration_path, class: "btn btn-primary" %> |
+<%= link_to 'Back to Search', '/search', class: "btn btn-primary" %>
 
 <br><br>
 <table>
   <th>Favorite Recipes:<th>
 <% @user_profile.favorites.each do |f| %>
   <tr>
-    <td class="font-lg"><%= render 'shared/recipe_link_text', rec: f %></td>
+    <td class="font-lg"><%= render 'shared/recipe_link', rec: f %></td>
   </tr>
 <% end %>
 </table>

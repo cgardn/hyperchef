@@ -7,20 +7,9 @@ Immediate TODOs:
   - update status bar code on recipe cards to actually reflect time and ingredient count
   - Pull recipe favorite-button-form out of both show view and card and make it a partial, or make it a plain link somehow
   - probably time to think about AJAX responses to the favorite button and whatever else
-  - also time to think about launching and finding images
   Styling:
-    - instead of images, which requires sourcing free pics of every recipe or cooking+photographing them myself, maybe 
-      there could be a video-game-UI-ish system of showing at a glance which recipes have which tags/attributes, like
-      meat/vegan/gluten-free, difficulty, time required, hands-on vs hands-off (too close to difficulty probably), with
-      a little tooltip or popover near top explaining the grid, and also allowing people to filter along the same things
-      as well as by ingredient (i.e. visual tag system should match recipe tags, ingredients can be their own advanced search
-      thing). That way people can quickly scan for what they want, and sort by whatever tag they want (like increasing difficulty,
-      ascending/descending prep time or cook time or total time, etc).
+    - add visual tag icons/system in lower-left space of recipe card
     - 360px minimum width for mobile, target 350px wide cards, for golden ratio then 350 -> 216
-    - recipe cards on search result should have a couple points of relavent data: cook time, room for whether you have it favorited, etc
-    - design cards to have a specific fixed minimum width, and then design the media breakpoints around at most 1-wide columns with filter down 
-      left side
-      + filters stay where they are, cards-per-row expands as window expands, hopefully with plain Bootstrap
   Search page:
 
     - need clarity about having to press "go" to apply filters, maybe put search button below filter modal button and rename filter
@@ -216,6 +205,46 @@ HYPERCHEF! Design journal (xHDJx)
 - x5x Data Schema (in rails model terms)
 
 Where my head's at right now/running log of where I'm focusing (x0x)
+  - (3-19-2020) OK! After a lot of trial and error over the last few days,
+  now there's a (relativey) consistent look-and-feel to the UI (going for
+  a vaguely-SNES-retro-game feel, just enough to appeal to the kind of people
+  who spend a lot of time at home and want to learn to cook, but don't feel
+  like the typical Instagram/influencer cooking world appeals to their
+  aesthetic, aka...me lol). I mentioned yesterday about settling on 350px
+  wide Bootstrap cards, and I spent half the day yesterday fiddling with
+  pixel art editors (mtpaint and GraphicsGale) to put together some 
+  images to serve as UI elements. I'm using free art from two amazing
+  game artists, KenneyNL and (food art guy from ItchIO, !!! INCLUDE LINKS !!!).
+  After another hour or two getting the link visited+hover styles right and
+  fixing a couple missed pixels on some of the images, I think I'm finally
+  ready to launch!!! Well, soft-launch at least. I'm not going full
+  announcement mode until after I have the site up on Heroku and full of at 
+  least 100 recipes. That's going to take a while though, since typing 
+  everything in takes a while, plus I have to add all the tags and ingredients
+  as well. The admin pages for entering and editing recipes/ingredients/tags
+  are totally unstyled, but no one will ever see them but me so I'm not that
+  worried. Also, I'm not sure what the "correct" way to add myself an admin
+  account is, I guess just going into the console and manually setting the
+  admin attribute? I already have it all set up to not accept changes to
+  the admin attribute anywhere, so I guess as long as no one gains control
+  of my dev laptop and gets my SSL keys they can't make themselves admin, 
+  but I'd have bigger problems by then anyway (like an attacker with that much
+  control could just nuke the whole site with heroku destroy). 
+  I'm pretty noobish with security stuff still, which is part of why I'm 
+  learning Rails first and using Devise for auth and accounts - they handle
+  all the basic stuff for you.
+  Other than that, we're almost there! I'd also like to add a subtitle to the main page,
+  something like "recipes without the fluff" (but more punny), but I'm not
+  sure if that's too much visual clutter. I guess we'll see. 
+  I've been avoiding launch as long as possible, partly because I'm 
+  going to have to spend the $7 a month plus domain costs, and partly because
+  once it's live making changes won't be so consequence-free as they are now.
+  But I guess that's part of the process! Time to get used to updating live
+  sites, especially since Hyperchef is supposed to be my main portfolio project. 
+  After that it's just one more day for a quick resume site with Sinatra and
+  then it'll be time to start blasting it all over the internet and find out
+  how many things I've done wrong! Can't wait! :)
+
   - (3-18-2020) Added new recipe columns to edit page (prep time, cook time,
   card image name). Probably going to remove all of that and do a visual
   grid/thing to show at a glance the recipe stats - meat, vegan, overall
