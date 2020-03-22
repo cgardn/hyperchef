@@ -61,7 +61,8 @@
 </div>
 <div class="row">
   <div class="col-12">
-    <div><%= @results.count %> of <%= @total %> recipes</div>
+    
+    <div>Showing <%= @results.count %> of <%= @total %> recipes</div>
     <% unless @q.nil? || @q == "" %>
       <div>Search: <%= @q %></div>
     <% end %>

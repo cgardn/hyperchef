@@ -34,13 +34,29 @@ class SearchController < ApplicationController
           |n| n[:selected] == "0" }.pluck(:selected)
       end
 
-      out = []
+      filteredResults = []
       @results.each do |r|
         if (r.all_tags & @filter).length == @filter.length
-          out.push(r)
+          filteredResults.push(r)
         end
       end
-      @results = out
+
+=begin
+      # Paginating the matching results
+      pageSize = 20 # magic for now
+      paginatedResults = []
+      c = filteredResults.count
+      lastPage = c % pageSize)
+      numPages = (lastPage == 0 ? (c-lastPage)/pageSize : ((c-lastPage)/pageSize)+1)
+      numPages.times do |n|
+        paginatedResults.push(filteredResults[0+(pageNum*pageSize)..(pageSize-1)+(pageNum*pageSize))
+      end
+
+      @results = paginatedResults
+      @numPages = numPages
+      @currentPage = 0
+=end
+      @results = filteredResults
     end
     
     @total = Recipe.all.count

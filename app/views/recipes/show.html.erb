@@ -5,25 +5,26 @@
 
 <div class="row">
   <div class="col text-center">
-<% if user_signed_in? %>
-  <% unless @favorites.include?(@recipe) %>
-    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
-      <%= favForm.hidden_field :addFavID, value: @recipe.id %>
-      <%= favForm.submit "Favorite", class: "btn btn-dark active" %>
+    <% if user_signed_in? %>
+      <% unless @favorites.include?(@recipe) %>
+        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
+          <%= favForm.hidden_field :addFavID, value: @recipe.id %>
+          <%= favForm.submit "Save this recipe", class: "btn btn-dark active" %>
+        <% end %>
+      <% else %>
+        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
+          <%= favForm.hidden_field :addFavID, value: @recipe.id %>
+          <%= favForm.submit "Un-save this recipe", class: "btn btn-primary active" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= link_to "Sign-in to save this recipe!",
+          new_user_session_path,
+          class: "btn btn-primary active" %>
     <% end %>
-  <% else %>
-    <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
-      <%= favForm.hidden_field :addFavID, value: @recipe.id %>
-      <%= favForm.submit "Un-favorite", class: "btn btn-dark active" %>
-    <% end %>
-  <% end %>
-<% else %>
-  <%= link_to "Sign-in to save this recipe!",
-    new_user_session_path,
-    class: "btn btn-dark active" %>
-<% end %>
+  </div>
 </div>
-</div>
+
 <hr>
 
 <div class="row">
@@ -31,11 +32,13 @@
     <h4>Equipment you'll need</h4>
     <br>
     <% @recipe.equipment.each do |e| %>
-      <%= link_to e.name, e.affiliate_link %><br>
+      <%= link_to e.name, e.affiliate_link, target: "_blank" %><br>
     <% end %>
   </div>
 </div>
-<hr>
+
+<hr><br>
+
 <div class="row">
   <div class="col">
     <h4>Ingredients:</h4>
@@ -49,17 +52,20 @@
       <% end %>
     </table>
     <% if params[:convert] == "true" %>
-      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-secondary btn-sm active" %>
+      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-primary btn-sm active" %>
     <% else %>
-      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-dark active" %>
+      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-primary active" %>
     <% end %>
   </div>
 </div>
 
-<br><hr><br>
+<hr><br>
 
-Steps:<br>
-<% @recipe.actions.sort.each do |s| %>
-  <b><%= s[1][:title] %></b>:
-  <%= s[1][:body] %><br>
+<h4>Steps:</h4>
+<br>
+<% @recipe.actions.sort.each_with_index do |s,n| %>
+  <h5><%= n+1 %>: <%= s[1][:title] %></h5>
+  <p class="font-md">
+  <%= s[1][:body] %>
+  <p>
 <% end %>

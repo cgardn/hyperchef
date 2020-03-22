@@ -7,6 +7,8 @@
     <a class="nav-link ingredients" id="ingredients-tab" data-toggle="tab" href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link equipment" id="equipment-tab" data-toggle="tab" href="#equipment" role="tab" aria-controls="equipment" aria-selected="false">Equipment</a>
+  <li class="nav-item">
     <a class="nav-link rTypes" id="rTypes-tab" data-toggle="tab" href="#rTypes" role="tab" aria-controls="rTypes" aria-selected="false">R-Tags</a>
   </li>
   <li class="nav-item">
@@ -32,6 +34,8 @@
     </div>
 
     <div class="tab-pane" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab"><%= render 'ingredients/index' %></div>
+
+    <div class="tab-pane" id="equipment" role="tabpanel" aria-labelledby="ingredients-tab"><%= render 'equipment/index' %></div>
 
     <div class="tab-pane" id="rTypes" role="tabpanel" aria-labelledby="rTypes-tab"><%= render 'shared/recipe_type_form' %></div>
 

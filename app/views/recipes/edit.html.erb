@@ -15,8 +15,15 @@
   <%= rForm.label :prep_time %>
   <%= rForm.number_field :prep_time %>
 
+  Difficulty from 1-10, based on technique difficulty and how many things
+  are happening at once
+  <%= rForm.label :difficulty %>
+  <%= rForm.number_field :difficulty %>
+
+  Can leave this blank, not using the images on recipe cards for now
   <%= rForm.label :card_image_path %>
   <%= rForm.text_field :card_image_path %>
+
 
   <hr>
   Recipe Tags:<br>

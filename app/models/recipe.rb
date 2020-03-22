@@ -109,16 +109,17 @@ class Recipe < ApplicationRecord
   end
 
   def get_difficulty
-    num = ((actions.count/15.0)*10.floor).to_i
-    if num < 1
-      num = 1
-    end
-    return num
+    # This should probably be just a column on the recipe itself
+    # - a heuristic based on things like how carefully you need to
+    #   follow the recipe (meringue, souffle, most baking), and how
+    #   many things you're managing at once
+    return difficulty
   end
 
   def get_ingredient_score
     # ingredient counts will always be at least 1
     # max ingredients among all recipes is probably in the 15-20 range?
+    # - so we normalize on 15 ingredients
     count = ingredients.count
     return ((9.0*((count - 1.0)/(15.0-1.0))) + 1.0).floor.to_i
   end

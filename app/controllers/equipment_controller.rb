@@ -11,7 +11,7 @@ class EquipmentController < ApplicationController
   def create
     @equipment = Equipment.new(equipment_params)
     if @equipment.save
-      redirect_to equipment_index_path
+      redirect_to admin_path
     else
       render :new
     end

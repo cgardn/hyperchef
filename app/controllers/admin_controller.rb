@@ -7,6 +7,7 @@ class AdminController < ApplicationController
     @rType = RecipeType.new
     @rTypes = RecipeType.all
     @ingredients = Ingredient.all
+    @equipment = Equipment.all
     @iTag = IngredientTag.new
     @iTags = IngredientTag.all
   end

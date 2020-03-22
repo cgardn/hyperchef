@@ -4,11 +4,9 @@
 <%= link_to 'Back to Search', '/search', class: "btn btn-primary" %>
 
 <br><br>
-<table>
-  <th>Favorite Recipes:<th>
-<% @user_profile.favorites.each do |f| %>
-  <tr>
-    <td class="font-lg"><%= render 'shared/recipe_link', rec: f %></td>
-  </tr>
-<% end %>
-</table>
+<h3>Saved Recipes</h3>
+<div class="row col-12 p-0 mx-auto">
+  <% @user_profile.favorites.each do |f| %>
+    <%= render 'shared/recipe_link', rec: f %>
+  <% end %>
+</div>

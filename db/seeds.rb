@@ -89,6 +89,7 @@ puts "Creating Recipes..."
 
   r.prep_time = rand(5..30)
   r.cook_time = rand(0..300)
+  r.difficulty = rand(1..10)
 
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
   r.save
