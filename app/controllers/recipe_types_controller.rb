@@ -14,7 +14,7 @@ class RecipeTypesController < ApplicationController
   def update
     @rType = RecipeType.find(params[:id])
     @rType.update_attributes(name: rType_params[:tag])
-    redirect_to recipe_types_path
+    redirect_to admin_path
   end
 
   private

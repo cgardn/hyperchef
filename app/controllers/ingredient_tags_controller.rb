@@ -10,10 +10,8 @@ class IngredientTagsController < ApplicationController
     @tag = IngredientTag.new
     @tag.name = tag_params[:tag]
     if @tag.save!
-      flash[:info] = "Tag created!"
-      redirect_to ingredient_tags_path
+      redirect_to admin_path
     else
-      flash[:warning] = "Error saving tag"
       render :new
     end
   end
@@ -26,14 +24,13 @@ class IngredientTagsController < ApplicationController
   def update
     @tag = IngredientTag.find(params[:id])
     @tag.update_attributes(name: tag_params[:tag])
-    redirect_to ingredient_tags_path
+    redirect_to admin_path
   end
 
   def destroy
     @tag = IngredientTag.find(params[:id])
     @tag.delete
-    flash[:warning] = "Tag deleted"
-    redirect_to ingredient_tags_path
+    redirect_to admin_path
   end
 
   private

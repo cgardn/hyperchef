@@ -43,7 +43,7 @@ class Recipe < ApplicationRecord
   def ing_quants(convert = false, multiplier = 1)
     if convert.nil?
       convert = false
-    elsif convert = "true"
+    elsif convert == "true"
       convert = true
     end
     out = {}

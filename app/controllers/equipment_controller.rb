@@ -27,7 +27,7 @@ class EquipmentController < ApplicationController
     @equipment.affiliate_link = equipment_params[:affiliate_link]
 
     if @equipment.save
-      redirect_to equipment_index_path
+      redirect_to admin_path
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class EquipmentController < ApplicationController
   def destroy
     @equipment = Equipment.find(params[:id])
     @equipment.delete
-    redirect_to equipment_index_path
+    redirect_to admin_path
   end
 
   private

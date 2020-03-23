@@ -118,8 +118,7 @@ class RecipesController < ApplicationController
     end
     @recipe.actions = newActionHash
     if @recipe.save
-      flash[:info] = "Updated recipe!"
-      redirect_to recipes_path
+      redirect_to admin_path
     else
       render :edit
     end
@@ -128,7 +127,7 @@ class RecipesController < ApplicationController
   def destroy
     @recipe = Recipe.find_by(name: params[:name])
     @recipe.delete
-    redirect_to recipes_path
+    redirect_to admin_path
   end
 
   private

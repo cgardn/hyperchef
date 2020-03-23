@@ -11,7 +11,7 @@ class IngredientsController < ApplicationController
   def create
     @ingredient = Ingredient.new(ingredient_params)
     if @ingredient.save
-      redirect_to ingredients_path
+      redirect_to admin_path
     else
       render :new
     end
@@ -38,7 +38,7 @@ class IngredientsController < ApplicationController
     end
     
     if @ingredient.save!
-      redirect_to ingredients_path 
+      redirect_to admin_path
     else
       render :edit
     end
@@ -47,8 +47,7 @@ class IngredientsController < ApplicationController
   def destroy
     @ingredient = Ingredient.find(params[:id])
     @ingredient.delete
-    flash[:warning] = "Ingredient deleted"
-    redirect_to ingredients_path
+    redirect_to admin_path
   end
 
   private
