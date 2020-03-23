@@ -11,7 +11,20 @@ class IngredientsController < ApplicationController
   end
 
   def create
-    @ingredient = Ingredient.new(ingredient_params)
+    @ingredient = Ingredient.new
+
+    # Setting params manually, since tags are on a join table
+    #   and one-step mass-assignment doesn't work
+    @ingredient.name = ingredient_params[:name]
+    @ingredient.caloriespergram = ingredient_params[:caloriespergram]
+    @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
+
+    # Setting tag list
+    ingredient_params[:iTags].each do |it|
+      unless it[:selected] == "0"
+        @ingredient.ingredient_tags << IngredientTag.find_by(name: it[:selected])
+      end
+    end
     if @ingredient.save!
       redirect_to admin_path
     else
