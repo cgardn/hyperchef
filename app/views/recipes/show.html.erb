@@ -63,9 +63,10 @@
 
 <h4>Steps:</h4>
 <br>
-<% @recipe.actions.sort.each_with_index do |s,n| %>
-  <h5><%= n+1 %>: <%= s[1][:title] %></h5>
+
+<% @recipe.actions.sort.each_with_index do |k,n| %>
+  <h5><%= n+1 %>: <%= k[1][0] %></h5>
   <p class="font-md">
-  <%= s[1][:body] %>
+  <%= k[1][1] %>
   <p>
 <% end %>

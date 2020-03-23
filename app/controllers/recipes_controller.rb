@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+
   before_action :clean_params_ingredients, only: [:update, :create]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
   before_action :set_user_profile, only: [:show]
@@ -101,20 +102,17 @@ class RecipesController < ApplicationController
     # - putting all new steps in fresh Hash, preserves existing steps if
     #   there's any errors with parsing the params
     newActionHash = {}
-    recipe_params[:actions].each do |a|
+    recipe_params[:actions].each_with_index do |a, n|
       # skip blank steps - form has 20 empty slots, workaround until
       #   proper UI for recipe creation
       if a[:body] == ""
         next
       end
-      # Handling multiple steps with the same order number
-      #if newActionHash.keys.include?(a[:order])
-      #  newActionHash[(a[:order].to_i+1).to_s] = { title: a[:title],
-      #                                    body: a[:body] }
-      #else
+=begin
       newActionHash[a[:order]] = { title: a[:title],
                                           body: a[:body] }
-      #end
+=end
+      newActionHash[n] = [ a[:title], a[:body] ]
     end
     @recipe.actions = newActionHash
     if @recipe.save

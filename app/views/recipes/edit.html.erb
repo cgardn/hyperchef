@@ -2,25 +2,32 @@
   <%= rForm.label :name %>
   <%= rForm.text_field :name %>
 
+  <br>
   <%= rForm.label :origin %>
   <%= rForm.text_field :origin %>
 
+  <br>
   <%= rForm.label :author %>
   <%= rForm.text_field :author%>
 
+  <br>
   (Times in minutes)
   <%= rForm.label :cook_time %>
   <%= rForm.number_field :cook_time %>
 
+  <br>
   <%= rForm.label :prep_time %>
   <%= rForm.number_field :prep_time %>
 
+  <br>
   Difficulty from 1-10, based on technique difficulty and how many things
   are happening at once
+  <br>
   <%= rForm.label :difficulty %>
   <%= rForm.number_field :difficulty %>
 
   Can leave this blank, not using the images on recipe cards for now
+  <br>
   <%= rForm.label :card_image_path %>
   <%= rForm.text_field :card_image_path %>
 
@@ -72,16 +79,13 @@
 
   Steps:
   <br>
-  <% @recipe.actions.keys.each do |k| %>
+  <% @recipe.actions.each_with_index do |a,n| %>
     <%= rForm.label("Title: ") %>
-    <%= rForm.text_field("[actions][][title]", value: @recipe.actions[k][:title]) %>
-    <%= rForm.label("Step: #{k.to_i + 1}") %>
-    <!--
-    <%= rForm.number_field("[actions][][order]", value: (k.to_i)+1) %>
-    -->
+    <%= rForm.text_field("[actions][][title]", value: a[1][0]) %>
+    <%= rForm.label("Step: #{n+1}") %>
     <br>
     <%= rForm.label("Body: ") %>
-    <%= rForm.text_area("[actions][][body]", value: @recipe.actions[k][:body], size: "80x5") %>
+    <%= rForm.text_area("[actions][][body]", value: a[1][1], size: "80x5") %>
     <br><br>
   <% end %>
 

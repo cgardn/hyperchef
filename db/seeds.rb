@@ -82,9 +82,9 @@ puts "Creating Recipes..."
     r.recipe_types << RecipeType.find(types[n])
   end
 
-  rand(10).times do |n|
-    r.actions[n] = {title: Faker::Lorem.sentence(word_count: rand(1..4)),
-                    body: Faker::Lorem.paragraph(sentence_count: rand(1..5))}
+  rand(2..15).times do |n|
+    r.actions[n] = [Faker::Lorem.sentence(word_count: rand(1..4)),
+                    Faker::Lorem.paragraph(sentence_count: rand(1..5))]
   end
 
   r.prep_time = rand(5..30)
@@ -92,31 +92,31 @@ puts "Creating Recipes..."
   r.difficulty = rand(1..10)
 
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
-  r.save
+  r.save!
 end
 
 # Creating users
 puts "Creating admin"
-u = User.new(email: "admin@test.gov", password: "password", password_confirmation: "password", admin: true)
-p = UserProfile.new
-p.user = u
+u = User.new(email: "admin@test.gov", password: "passwordasdf", password_confirmation: "passwordasdf", admin: true)
+profile = UserProfile.new
+profile.user = u
 rand(1..10).times do |n|
-  p.favorites << Recipe.find(rand(1..53))
+  profile.favorites << Recipe.find(rand(1..53))
 end
-p.save
-u.save
+profile.save
+u.save!
 puts "done."
 
 puts "Creating 50 users"
 50.times do |n|
   puts "#{n}..."
-  u = User.new(email: Faker::Internet.email, password: "password", password_confirmation: "password")
-  p = UserProfile.new
-  p.user = u
+  u = User.new(email: Faker::Internet.email, password: "passwordasdf", password_confirmation: "passwordasdf")
+  profile = UserProfile.new
+  profile.user = u
   rand(1..10).times do |n|
-    p.favorites << Recipe.find(rand(1..53))
+    profile.favorites << Recipe.find(rand(1..53))
   end
-  p.save
+  profile.save
   u.save
 end
 puts "done."
