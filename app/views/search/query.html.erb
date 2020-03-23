@@ -4,7 +4,7 @@
     
     <%= form_with(url: "/search", method: "get", local: true) do |fForm| %>
       <div class="col-12 text-center mb-2">
-        <%= fForm.text_field :query, placeholder: "Search", value: @q,
+        <%= fForm.text_field :query, placeholder: " Search", value: @q,
                                      class: "mr-1" %>
         <%= fForm.submit "Go" %>
       </div>
@@ -24,12 +24,14 @@
               <h5>Recipe tags:</h5>
               <div class="font-sm">
                 <% RecipeType.all.each do |rt| %>
-                  <% if @filter && @filter.include?(rt[:name]) %>
-                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
-                  <% else %>
-                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
+                  <% if rt.recipes.count > 0 %>
+                    <% if @filter && @filter.include?(rt[:name]) %>
+                      <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
+                    <% else %>
+                      <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
+                    <% end %>
+                    <%= fForm.label rt[:name] %>
                   <% end %>
-                  <%= fForm.label rt[:name] %>
                   <br>
                 <% end %>
               </div>
@@ -38,12 +40,14 @@
               <h5>Ingredient tags:</h5>
               <div class="font-sm">
               <% IngredientTag.all.each do |it| %>
-                <% if @filter && @filter.include?(it[:name]) %>
-                  <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
-                <% else %>
-                  <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
+                <% if it.ingredients.count > 0 %>
+                  <% if @filter && @filter.include?(it[:name]) %>
+                    <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
+                  <% else %>
+                    <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
+                  <% end %>
+                  <%= fForm.label it[:name] %>
                 <% end %>
-                <%= fForm.label it[:name] %>
                 <br>
               <% end %>
               </div>

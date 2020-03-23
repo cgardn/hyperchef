@@ -1,5 +1,5 @@
 <%= form_with(url: "/search", method: "get", local: true) do |sForm| %>
   <%= sForm.hidden_field :rTypes, value: "" %>
   <%= sForm.hidden_field :iTags, value: "" %>
-  <%= sForm.text_field :query, placeholder: "search for food" %><%= sForm.submit "Go!" %>
+  <%= sForm.text_field :query, placeholder: " search for food" %><%= sForm.submit "Go!" %>
 <% end %>

@@ -39,6 +39,9 @@ Post-Launch (v1.1):
     - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
       etc. does this require extra db columns on tag models?
     - I'd like a way to easily and helpfully allow positive and negative searches, so easy to include tomatoes and exclude wheat/gluten
+    - better way to search for and selectively include/exclude specific ingredients (cinnamon, garlic, etc) - 
+    - diet-specific pre-made filters? (Jainist-friendly: no meat/roots/etc, Paleo, Gluten-free, Vegan, etc)
+      - can define the rules at the model level with hashes of disallowed ingredients and/or tags, and then create the category tags on the fly
 
 Polish (v1.2):
   - time: card must show total time from "I want to cook" to "I'm eating food"
