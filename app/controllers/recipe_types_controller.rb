@@ -11,6 +11,16 @@ class RecipeTypesController < ApplicationController
     @rTypes = RecipeType.all.order(created_at: :desc)
   end
 
+  def create
+    @rType = RecipeType.new
+    @rType.name = rType_params[:tag]
+    if @rType.save!
+      redirect_to admin_path
+    else
+      render :new
+    end
+  end
+
   def update
     @rType = RecipeType.find(params[:id])
     @rType.update_attributes(name: rType_params[:tag])

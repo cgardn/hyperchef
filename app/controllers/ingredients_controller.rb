@@ -1,4 +1,5 @@
 class IngredientsController < ApplicationController
+  before_action :lookup_ingredient, except: [:index, :new, :create]
 
   def index
     @ingredients = Ingredient.all
@@ -6,6 +7,7 @@ class IngredientsController < ApplicationController
 
   def new
     @ingredient = Ingredient.new
+    @tags = @ingredient.all_tags
   end
 
   def create
@@ -18,12 +20,10 @@ class IngredientsController < ApplicationController
   end
 
   def edit
-    @ingredient = Ingredient.find(params[:id])
     @tags = @ingredient.all_tags
   end
 
   def update
-    @ingredient = Ingredient.find(params[:id])
     @ingredient.name = ingredient_params[:name]
     @ingredient.caloriespergram = ingredient_params[:caloriespergram]
     @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
@@ -45,12 +45,15 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    @ingredient = Ingredient.find(params[:id])
     @ingredient.delete
     redirect_to admin_path
   end
 
   private
+    def lookup_ingredient
+      @ingredient = Ingredient.find(params[:id])
+    end
+
     def ingredient_params
       params.require(:ingredient).permit(:name, :caloriespergram, :is_liquid,
                                          iTags: [:selected] )

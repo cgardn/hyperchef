@@ -1,0 +1,23 @@
+<%= form_with(model: @ingredient, local: true, method: "patch") do |iForm| %>
+  Tags:<br>
+  <% IngredientTag.all.each do |it| %>
+    <% if @tags.include?(it[:name]) %>
+      <%= iForm.check_box("iTags[]selected", {checked: true}, it[:name], "0") %>
+    <% else %>
+      <%= iForm.check_box("iTags[]selected", {}, it[:name], "0") %>
+    <% end %>
+    <%= iForm.label(it[:name]) %>
+  <% end %>
+  <br><hr>
+  
+  <%= iForm.label :name %>
+  <%= iForm.text_field :name %>
+
+  <%= iForm.label "Calories per 100g" %>
+  <%= iForm.number_field :caloriespergram %>
+
+  <%= iForm.label "Liquid?" %>
+  <%= iForm.check_box :is_liquid %>
+
+  <%= iForm.submit "Submit" %> 
+<% end %>
