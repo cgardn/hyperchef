@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
 
+  before_action :auth_user, except: [:show]
   before_action :clean_params_ingredients, only: [:update, :create]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
   before_action :set_user_profile, only: [:show]
@@ -135,6 +136,12 @@ class RecipesController < ApplicationController
   end
 
   private
+
+    def auth_user
+      unless user_signed_in? && current_user.is_admin?
+        redirect_to root_url
+      end
+    end
 
     def clean_params_ingredients
       @fresh_ing = {}
