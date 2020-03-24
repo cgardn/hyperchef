@@ -40,7 +40,8 @@ class RecipesController < ApplicationController
   def edit
     @tags = @recipe.all_tags
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
-    @iQuants = @recipe.ing_quants
+    @iQuants = @recipe.edit_quants
+    @allIngredients = Ingredient.all
     @eNames = @recipe.equipment.map{ |e| e[:name] }
 
     # if less than 20 steps, add blank steps until 20

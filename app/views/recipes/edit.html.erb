@@ -1,35 +1,43 @@
 <%= form_with(model: @recipe, local: true) do |rForm| %>
-  <%= rForm.label :name %>
-  <%= rForm.text_field :name %>
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <%= rForm.label :name %>
+      <%= rForm.text_field :name %>
+      <br>
+  
+      <%= rForm.label :origin %>
+      <%= rForm.text_field :origin %>
+      <br>
 
-  <br>
-  <%= rForm.label :origin %>
-  <%= rForm.text_field :origin %>
+      <%= rForm.label :author %>
+      <%= rForm.text_field :author%>
+    </div>
+    <div class="col-6 col-md-4">
+      (Times in minutes)
+      <br>
 
-  <br>
-  <%= rForm.label :author %>
-  <%= rForm.text_field :author%>
+      <%= rForm.label :cook_time %>
+      <%= rForm.number_field :cook_time %>
+      <br>
 
-  <br>
-  (Times in minutes)
-  <%= rForm.label :cook_time %>
-  <%= rForm.number_field :cook_time %>
+      <%= rForm.label :prep_time %>
+      <%= rForm.number_field :prep_time %>
+      <br>
+    </div>
 
-  <br>
-  <%= rForm.label :prep_time %>
-  <%= rForm.number_field :prep_time %>
+    <div class="col-md-4">
+      Difficulty from 1-10, based on technique difficulty and how many things
+      are happening at once
+      <%= rForm.label :difficulty %>
+      <%= rForm.number_field :difficulty %>
+      <br>
 
-  <br>
-  Difficulty from 1-10, based on technique difficulty and how many things
-  are happening at once
-  <br>
-  <%= rForm.label :difficulty %>
-  <%= rForm.number_field :difficulty %>
-
-  Can leave this blank, not using the images on recipe cards for now
-  <br>
-  <%= rForm.label :card_image_path %>
-  <%= rForm.text_field :card_image_path %>
+      Can leave this blank, not using the images on recipe cards for now
+      <br>
+      <%= rForm.label :card_image_path %>
+      <%= rForm.text_field :card_image_path %>
+    </div>
+  </div>
 
 
   <hr>
@@ -62,7 +70,7 @@
   <hr>
   Ingredients:<br>
   <table>
-  <% Ingredient.all.each do |i| %>
+    <% @allIngredients.each do |i| %>
     <tr>
 
       <% if @iNames.include?(i[:name]) %>

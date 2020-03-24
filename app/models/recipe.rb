@@ -40,6 +40,17 @@ class Recipe < ApplicationRecord
     ingquant.save
   end
 
+  def edit_quants
+    out = {}
+    join_ingredients_recipes.each do |i|
+      ingredient = Ingredient.find(i.ingredient_id)
+      out[ingredient.name] = [i.quantity_in_grams, ingredient.is_liquid]
+    end
+    out
+  end
+
+
+
   def ing_quants(convert = false, multiplier = 1)
     if convert.nil? || convert == "false"
       convert = false
