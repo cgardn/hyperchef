@@ -37,7 +37,8 @@ Pre-Launch:
     - put a bright color on the save/un-save button
     - re-do card graphics with less anti-aliasing (makes it too fuzzy)
     - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
-    - fix wrong ingredient quantities loading into recipe#edit for admin
+    + fix wrong ingredient quantities loading into recipe#edit for admin
+    - fix filter checkboxes still reserving a blank line, even if they're not loaded due to no recipes using those tags
 
     
   - fill up live version with at least all the Hello fresh recipes, plus

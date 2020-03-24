@@ -10,12 +10,18 @@ require 'faker'
 
 # Creating recipe and ingredient tags - must be done first to assign to actual ingredients/recipes
 puts "Creating tags..."
-rTypes = RecipeType.create([{name: "salad"},{name: "pastry"},{name: "dinner"},{name: "lunch"},
-                            {name: "breakfast"},{name: "quick & easy"},{name: "rice bowls"}])
-iTags = IngredientTag.create([{name: "poultry"},{name: "meat"},{name: "red meat"},
-                              {name: "vegetable"},{name: "starch"},{name: "root"},
-                              {name: "grain"},{name: "leafy greens"},{name: "spice"},
-                              {name: "herb"},{name: "liquid"},{name: "fruit"},{name: "citrus"}])
+rTypes = RecipeType.create([{name: "unused tester"}, {name: "salad"},
+                            {name: "pastry"},{name: "dinner"},{name: "lunch"},
+                            {name: "breakfast"},{name: "quick & easy"},
+                            {name: "rice bowls"}])
+
+iTags = IngredientTag.create([{name: "unused ingredient tag"},
+                              {name: "poultry"},{name: "meat"},
+                              {name: "red meat"},{name: "vegetable"},
+                              {name: "starch"},{name: "root"},{name: "grain"},
+                              {name: "leafy greens"},{name: "spice"},
+                              {name: "herb"},{name: "liquid"},{name: "fruit"},
+                              {name: "citrus"}])
 puts "done."
 
 # Creating ingredients
@@ -30,7 +36,7 @@ puts "Creating ingredients..."
   i = Ingredient.create({name: Faker::Food.unique.ingredient, caloriespergram: rand(100), is_liquid: b_liquid})
   tags = nil
   while tags == nil || tags.length < 3
-    tags = Array.new(rand(3..4)) {rand(1..iTags.length-1)}.uniq!
+    tags = Array.new(rand(3..4)) {rand(2..iTags.length-1)}.uniq!
   end
   tags.length.times do |n|
     i.ingredient_tags << IngredientTag.find(tags[n])
@@ -76,7 +82,7 @@ puts "Creating Recipes..."
 
   types = nil
   while types == nil
-    types = Array.new(rand(2..rTypes.length)) {rand(1..rTypes.length-1)}.uniq!
+    types = Array.new(rand(2..rTypes.length)) {rand(2..rTypes.length-1)}.uniq!
   end
   types.length.times do |n|
     r.recipe_types << RecipeType.find(types[n])
