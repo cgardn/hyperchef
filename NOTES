@@ -17,15 +17,26 @@ Pre-Launch:
   + put on Heroku
   + make my account and make sure it's admin
  !! verify all user-facing pages work as expected, and are visually consistent
-    - fix unit conversion (200g becomes 14 lbs)
-    - add serving-size to recipe views, and include in multiplier/unit conversion
+    + fix unit conversion (200g becomes 14 lbs)
+      + i forgot to convert from metric base to imperial base before collecting units
+        so a 200g portion became 200oz->12.5 lbs, instead of 7oz
+    + add serving-size changer to recipe views, and include in multiplier/unit conversion
+      - requires converting base quantities to single serving in recipes
+      + swapped plain link for small form, had to fiddle with the model func a bit but we
+        got there in the end
     - add way to have a quantity of "1 unit/piece" for things like potatoes and chicken breasts.
-      These single units are ignored during unit conversion
-    - recipe#show add background for steps
-    - fix recipe#show equipment link color (lighter)
-    - fix recipe#show jumbotron text color (should be dark)
+      - These single units should be ignored during unit conversion
+      - option during recipe creation?
+    - recipe#show add background image for steps (visual clarity, gradient lightness at bottom
+      gets too close to light text)
+    + fix recipe#show equipment link color (lighter)
+      + changed to buttons for now, proper layout instead of stacked <br>'s
+    + fix recipe#show jumbotron text color (should be dark)
+      + added bootstrap 'text-dark' class just to that jumbotron element
     - consider a sidebar/non-modal for desktop mode (probably lg and above, md is for tablets)
     - put a bright color on the save/un-save button
+    - re-do card graphics with less anti-aliasing (makes it too fuzzy)
+    - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
 
     
   - fill up live version with at least all the Hello fresh recipes, plus

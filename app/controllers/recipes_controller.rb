@@ -29,7 +29,12 @@ class RecipesController < ApplicationController
   def show
     @tags = @recipe.all_tags
     @ingredients = @recipe.ingredients
-    @quants = @recipe.ing_quants(params[:convert], 1)
+
+    @quants = @recipe.ing_quants(
+                      params[:convert],
+                      params[:servings].nil? ? 1.0 : params[:servings].to_f)
+    # picking :selected for select tag
+    params[:convert] ? @chosen = "Imperial" : @chosen = "Metric"
   end
 
   def edit

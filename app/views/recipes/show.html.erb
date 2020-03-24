@@ -1,5 +1,5 @@
 <% content_for :title, "#{@recipe.name} - " %>
-<div class="text-center jumbotron">
+<div class="text-center text-dark jumbotron">
   <%= @recipe.name %>
 </div>
 
@@ -28,33 +28,35 @@
 <hr>
 
 <div class="row">
-  <div class="col">
+  <div class="col-12">
     <h4>Equipment you'll need</h4>
-    <br>
     <% @recipe.equipment.each do |e| %>
-      <%= link_to e.name, e.affiliate_link, target: "_blank" %><br>
+      <%= link_to e.name, e.affiliate_link, target: "_blank", class: "btn btn-primary active mb-1" %>
     <% end %>
   </div>
 </div>
-
-<hr><br>
-
+<hr>
 <div class="row">
-  <div class="col">
+  <div class="col-12">
     <h4>Ingredients:</h4>
-    <br>
     <table>
       <% @quants.each do |iq| %>
         <tr>
-          <td class="font-md"><%= "#{iq[1]}" %>
-          <td class="font-md"><%= "#{iq[0]}" %>
+          <td class="font-md"><%= "#{iq[1]}" %></td>
+          <td></td>
+          <td class="font-md"><%= "#{iq[0]}" %></td>
         </tr>
       <% end %>
     </table>
-    <% if params[:convert] == "true" %>
-      <%= link_to "Convert to metric", @recipe, method: "get", class: "btn btn-primary btn-sm active" %>
-    <% else %>
-      <%= link_to "Convert to imperial", recipe_path(convert: true), method: :get, class: "btn btn-sm btn-primary active" %>
+    <%= form_with(url: recipe_path, method: "get", local: true) do |cForm| %>
+      <%= cForm.label "Servings: " %>
+      <%= cForm.number_field :servings, value: 1 %>
+      
+      <%= cForm.select(:convert,
+            options_for_select([["Metric", false], ["Imperial", true]], selected: @chosen)) %>
+      <%= cForm.submit("Change",
+        class: "btn btn-primary btn-sm active",
+        name: nil) %>
     <% end %>
   </div>
 </div>

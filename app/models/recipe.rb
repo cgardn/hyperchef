@@ -41,11 +41,15 @@ class Recipe < ApplicationRecord
   end
 
   def ing_quants(convert = false, multiplier = 1)
-    if convert.nil?
+    if convert.nil? || convert == "false"
       convert = false
     elsif convert == "true"
       convert = true
     end
+    puts "Convert: "
+    p convert
+    puts "Multiplier: "
+    p multiplier
     out = {}
 
     join_ingredients_recipes.each do |i|
@@ -68,25 +72,44 @@ class Recipe < ApplicationRecord
     #     of 50 mL. The user requests 4-person serving size and imperial
     #     units.
     #     baseQuant = 50mL, isLiquid = true, multiplier = 4, convert = true
+    #
+    #     q = baseQuant * servings
+    #     convert to imperial if necessary: g to oz, ml to tsp.
+    #       (round tsp to nearest 1/4 cup, if below 1/4 cup round to nearest tbsp
+    #        if below 1 tbsp, round to nearest tsp)
+    #     then sort into larger units with modulo div
+    #
+    #     50 mL * 4 servings = 200mL
+    #     convert to Imperial? yes -> 200 mL = 40.8 tsp
+    #     sort into larger units:
+    #       40.8 tsp = 0.84 cups, round to 0.75 cups
     #     
     # conversions[isLiquid][convertToImperial?]
-    conversions = {true => {true => [
+
+    q = baseQuant * multiplier
+    
+    conversions = {true => {true =>  [0.203,
+                                     [
                                       {:factor => 48, :unit => "cups"},
                                       {:factor => 3, :unit => "Tbsp"},
-                                      {:factor => 1, :unit => "tsp"} ],
-                            false => [
+                                      {:factor => 1, :unit => "tsp"} ]],
+                            false => [1,
+                                     [
                                       {:factor => 1000, :unit => "liters"},
-                                      {:factor => 1, :unit => "mL"} ] },
-                  false => {true => [
+                                      {:factor => 1, :unit => "mL"} ]] },
+                   false => {true => [0.035,
+                                     [
                                       {:factor => 16, :unit => "lbs"},
-                                      {:factor => 1, :unit => "oz"} ],
-                            false => [
+                                      {:factor => 1, :unit => "oz"} ]],
+                            false => [1,
+                                     [
                                       {:factor => 1000, :unit => "kg"},
-                                      {:factor => 1, :unit => "g"} ] } }
+                                      {:factor => 1, :unit => "g"} ]] } }
 
     q = baseQuant * multiplier + 0.0
+    q = conversions[isLiquid][convert][0] * q 
     out = []
-    conversions[isLiquid][convert].each do |c|
+    conversions[isLiquid][convert][1].each do |c|
       out.append([(q - q%c[:factor])/c[:factor], c[:unit]])
       q = (q+0.0) % c[:factor]
     end
