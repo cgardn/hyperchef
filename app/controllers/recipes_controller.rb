@@ -138,7 +138,7 @@ class RecipesController < ApplicationController
   private
 
     def auth_user
-      unless user_signed_in? && current_user.is_admin?
+      unless user_signed_in? && current_user.admin?
         redirect_to root_url
       end
     end
