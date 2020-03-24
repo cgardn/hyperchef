@@ -5,13 +5,13 @@
     <p class="card-text">
     <%= image_tag("skill_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
     </p>
-    <p class="card-text">
+    <p class="card-text mb-2">
     <%= image_tag("ingredients_title.png") %><%= image_tag("progressindicator_#{rec.get_ingredient_score}") %>
     </p>
-    <p class="card-text">
+    <p class="card-text mb-2">
     <%= image_tag("time_title.png") %><%= image_tag("progressindicator_#{rec.get_time_score}") %>
     </p>
-    <p class="card-text">
+    <p class="card-text mb-2">
     <div class="row">
       <div class="col-6">
         <%= link_to "", rec, class: "btn view-button" %>
