@@ -38,7 +38,12 @@ Pre-Launch:
     - re-do card graphics with less anti-aliasing (makes it too fuzzy)
     - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
     + fix wrong ingredient quantities loading into recipe#edit for admin
-    - fix filter checkboxes still reserving a blank line, even if they're not loaded due to no recipes using those tags
+    + fix filter checkboxes still reserving a blank line, even if they're not loaded due to no recipes using those tags
+      + it was an extra line break outside of the checkbox conditional, so the line was broken once for 
+        every tag whether it got included in the final modal or not
+    - ingredient edit page "back to list" should go back to admin#ingredients, not to ingredient#index
+      - probably redirect all the endpoints for recipe/ingredient/tag indexes to the admin page in routing 
+        file and disable the controller functions
 
     
   - fill up live version with at least all the Hello fresh recipes, plus
@@ -70,6 +75,8 @@ Post-Launch (v1.1):
       - can define the rules at the model level with hashes of disallowed ingredients and/or tags, and then create the category tags on the fly
 
 Polish (v1.2):
+  - filters should have +/- instead of checkbox, some way to selectively include, exclude, or do nothing with each item
+    - so users can specifically exclude pork for example
   - time: card must show total time from "I want to cook" to "I'm eating food"
         : show page can break out hands-on vs hands-off cooking, possibly add as badge
   - add visual badges, probably in place of view button, possibly changing recipe card size from horizontal Golden Ratio to vertical,
