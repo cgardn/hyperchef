@@ -43,14 +43,14 @@ class IngredientsController < ApplicationController
     @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
 
     # Setting new units hash (new as of 3-27-2020)
-    @ingredient.units = { 'imperial_show' => [ params[:imperial_show_num],
-                                                params[:imperial_show_unit] ],
-                           'imperial_list' => [ params[:imperial_list_num],
-                                                params[:imperial_list_unit] ],
-                           'metric_show' => [ params[:metric_show_num],
-                                              params[:metric_show_unit] ],
-                           'metric_list' => [ params[:metric_list_num],
-                                              params[:metric_list_unit] ] }
+    @ingredient.units = { 'imperial_show' => [ ingredient_params[:imperial_show_num],
+                                                ingredient_params[:imperial_show_unit] ],
+                           'imperial_list' => [ ingredient_params[:imperial_list_num],
+                                                ingredient_params[:imperial_list_unit] ],
+                           'metric_show' => [ ingredient_params[:metric_show_num],
+                                              ingredient_params[:metric_show_unit] ],
+                           'metric_list' => [ ingredient_params[:metric_list_num],
+                                              ingredient_params[:metric_list_unit] ] }
 
     # Setting tag list
     @ingredient.ingredient_tags.delete_all
