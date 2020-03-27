@@ -39,13 +39,17 @@ Pre-Launch:
     - put a bright color on the save/un-save button
     - re-do card graphics with less anti-aliasing (makes it too fuzzy)
     - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
+      - look for N+1 queries, if time permits then make a programmatic way to check database calls in the code?
+        seems complicated and time-consuming, maybe save the profiling for after launch
     + fix wrong ingredient quantities loading into recipe#edit for admin
     + fix filter checkboxes still reserving a blank line, even if they're not loaded due to no recipes using those tags
       + it was an extra line break outside of the checkbox conditional, so the line was broken once for 
         every tag whether it got included in the final modal or not
-    - ingredient edit page "back to list" should go back to admin#ingredients, not to ingredient#index
-      - probably redirect all the endpoints for recipe/ingredient/tag indexes to the admin page in routing 
+    + ingredient edit page "back to list" should go back to admin#ingredients, not to ingredient#index
+      ~ probably redirect all the endpoints for recipe/ingredient/tag indexes to the admin page in routing 
         file and disable the controller functions
+      + good for now, it goes back to '/admin', not sure how to get it to select the ingredients tab specifically,
+        /admin#ingredients brings you to just the tab panel with no tabs above it
 
     
   - fill up live version with at least all the Hello fresh recipes, plus
@@ -53,6 +57,13 @@ Pre-Launch:
     100+. Find recipes from all our cookbooks if I have to.
   - make sure all the other unused routes are actually removed from routing file, and
     associated view templates and controller actions are removed/inaccessible.
+  - double check random non-admin users and non-signed-in users can't access anything besides the following:
+    * search#index
+    * search#query
+    * recipe#show
+    * profiles stuff
+    - everything else that isn't also used by admin should be removed from files and routes, and redirected in the
+      routing file
 
 Post-Launch (v1.1):
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters

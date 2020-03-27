@@ -28,10 +28,9 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @tags = @recipe.all_tags
     @ingredients = @recipe.ingredients
 
-    # picking :selected for select tag
+    # picking :selected for unit select tag
     unless params[:convert].nil?
       if params[:convert] == "false"
         @unit_selector = "imperial_show"
@@ -49,7 +48,7 @@ class RecipesController < ApplicationController
   end
 
   def edit
-    @tags = @recipe.all_tags
+    @rTypes = @recipe.recipe_types.pluck(:name)
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @allIngredients = Ingredient.all.sort_by{ |ing| ing.name }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
