@@ -43,7 +43,7 @@
   <div class="row">
     <div class="col-12">
       <h4>Recipe Tags:</h4>
-      <% @allRTypes.all.each do |rt| %>
+      <% RecipeType.all.each do |rt| %>
         <% @rTypes.include?(rt[:name]) ? @chk = true : @chk = false %>
         <%= check_box_tag("recipe[rTypes][]selected",
                            value=rt[:name],
