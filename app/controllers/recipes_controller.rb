@@ -1,7 +1,6 @@
 class RecipesController < ApplicationController
 
   before_action :auth_user, except: [:show]
-  #before_action :clean_params_ingredients, only: [:update, :create]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
   before_action :set_user_profile, only: [:show]
 
@@ -102,27 +101,10 @@ class RecipesController < ApplicationController
 
     # Setting ingredients list
     @recipe.ingredients.delete_all
-   # copy the above recipe_params[:ingredients] for checkboxes, but drop
-    # the selected=="0" from here and also remove from above, don't need
-    # it now that I'm using check_box_tag on everything, none of the 
-    # unselected ones come through
     
     recipe_params[:ingredients].each do |i|
       @recipe.ingredients << Ingredient.find_by(name: i[:selected])
     end
-=begin
-    @fresh_ing.keys.each do |key|
-
-      # Need to create a Join_Ingredients_Recipes directly here
-      #   since the join model has an extra attribute (quantity)
-      jir = JoinIngredientsRecipe.new
-      jir.recipe = @recipe
-      jir.ingredient = Ingredient.find_by(name: key)
-      jir.quantity_in_grams = @fresh_ing[key]
-      jir.save
-
-    end
-=end
 
     # Setting action steps hash
     # - putting all new steps in fresh Hash, preserves existing steps if
@@ -134,10 +116,7 @@ class RecipesController < ApplicationController
       if a[:body] == ""
         next
       end
-=begin
-      newActionHash[a[:order]] = { title: a[:title],
-                                          body: a[:body] }
-=end
+
       newActionHash[n] = [ a[:title], a[:body] ]
     end
     @recipe.actions = newActionHash
@@ -160,16 +139,6 @@ class RecipesController < ApplicationController
       unless user_signed_in? && current_user.admin?
         redirect_to root_url
       end
-    end
-
-    def clean_params_ingredients
-      @fresh_ing = {}
-      recipe_params[:ingredients].keys.each do |key|
-        unless recipe_params[:ingredients][key] == ""
-          @fresh_ing[key] = recipe_params[:ingredients][key]
-        end
-      end
-      @fresh_ing
     end
 
     def recipe_params

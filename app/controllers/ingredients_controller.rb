@@ -17,7 +17,6 @@ class IngredientsController < ApplicationController
     #   and one-step mass-assignment doesn't work
     @ingredient.name = ingredient_params[:name]
     @ingredient.caloriespergram = ingredient_params[:caloriespergram]
-    @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
 
     # Setting tag list
     ingredient_params[:iTags].each do |it|
@@ -39,8 +38,6 @@ class IngredientsController < ApplicationController
   def update
     @ingredient.name = ingredient_params[:name]
     @ingredient.caloriespergram = ingredient_params[:caloriespergram]
-    # old, probably not needed with units hash below
-    @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
 
     # Setting new units hash (new as of 3-27-2020)
     @ingredient.units = { 'imperial_show' => [ ingredient_params[:imperial_show_num],
@@ -79,7 +76,8 @@ class IngredientsController < ApplicationController
     end
 
     def ingredient_params
-      params.require(:ingredient).permit(:name, :caloriespergram, :is_liquid,
+      params.require(:ingredient).permit(:name,
+                                         :caloriespergram,
                                          :imperial_show_num,
                                          :imperial_show_unit,
                                          :imperial_list_num,
