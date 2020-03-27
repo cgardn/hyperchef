@@ -27,21 +27,35 @@ puts "done."
 # Creating ingredients
 puts "Creating ingredients..."
 
-100.times do 
+imperial_units = ['oz', 'tsp']
+metric_units = ['g', 'mL']
+
+50.times do 
   b_liquid = false
   if rand(2) == 1
     b_liquid = true
   end
 
-  i = Ingredient.create({name: Faker::Food.unique.ingredient, caloriespergram: rand(100), is_liquid: b_liquid})
+  i = Ingredient.new({name: Faker::Food.unique.ingredient, caloriespergram: rand(100), is_liquid: b_liquid})
+
+  u = {}
+  u['imperial_show'] = [rand(1..10), imperial_units[rand(imperial_units.length)]]
+  u['imperial_list'] = [rand(1..10), imperial_units[rand(imperial_units.length)]]
+  u['metric_show'] = [rand(1..10), metric_units[rand(metric_units.length)]]
+  u['metric_list'] = [rand(1..10), metric_units[rand(metric_units.length)]]
+  i.units = u
+  i.save
+  
   tags = nil
   while tags == nil || tags.length < 3
     tags = Array.new(rand(3..4)) {rand(2..iTags.length-1)}.uniq!
   end
+
   tags.length.times do |n|
     i.ingredient_tags << IngredientTag.find(tags[n])
   end
 end
+
 
 puts "done."
 
@@ -113,8 +127,8 @@ profile.save
 u.save!
 puts "done."
 
-puts "Creating 50 users"
-50.times do |n|
+puts "Creating 20 users"
+20.times do |n|
   puts "#{n}..."
   u = User.new(email: Faker::Internet.email, password: "passwordasdf", password_confirmation: "passwordasdf")
   profile = UserProfile.new

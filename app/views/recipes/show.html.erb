@@ -40,20 +40,22 @@
   <div class="col-12">
     <h4>Ingredients:</h4>
     <table>
-      <% @quants.each do |iq| %>
+      <% @ingredients.each do |i| %>
         <tr>
-          <td class="font-md"><%= "#{iq[1]}" %></td>
+          <td class="font-md"><%= i.units[ @unit_selector ][0]*@servings.to_f %></td>
           <td></td>
-          <td class="font-md"><%= "#{iq[0]}" %></td>
+          <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
+          <td></td>
+          <td class="font-md"><%= i.name %></td>
         </tr>
       <% end %>
     </table>
     <%= form_with(url: recipe_path, method: "get", local: true) do |cForm| %>
       <%= cForm.label "Servings: " %>
-      <%= cForm.number_field :servings, value: 1 %>
+      <%= cForm.number_field :servings, value: @servings %>
       
       <%= cForm.select(:convert,
-            options_for_select([["Metric", false], ["Imperial", true]], selected: @chosen)) %>
+            options_for_select([["Metric", true], ["Imperial", false]], selected: @chosen)) %>
       <%= cForm.submit("Change",
         class: "btn btn-primary btn-sm active",
         name: nil) %>

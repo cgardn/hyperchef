@@ -73,6 +73,15 @@ Post-Launch (v1.1):
     - better way to search for and selectively include/exclude specific ingredients (cinnamon, garlic, etc) - 
     - diet-specific pre-made filters? (Jainist-friendly: no meat/roots/etc, Paleo, Gluten-free, Vegan, etc)
       - can define the rules at the model level with hashes of disallowed ingredients and/or tags, and then create the category tags on the fly
+  - notes section on either recipes, or ingredients, or both - so I can include things like "I prefer gala apples" on a generic "apple" 
+    ingredient, keeping the ingredients list simpler but allowing for some customization and one-off thoughts, instead of 100 different apples
+  - bulk assigning of tags to ingredients, for quickly adding a new tag to many things
+    - i.e. clicking a tag should show a list of ingredients using it with checkboxes, and have an associated controller action for bulk 
+      updating that tag on all checked/unchecked ingredients
+    - probably best to pull up list of all ingredients with that tag first, then take param list separately, and go through original list
+      one at a time - if original is not in param list, remove tag. if original is in param list, pop that one from param list and go next.
+      after going through all originals, anything left in param list is new additions to that tag, go through each of those and add the tag
+      two loops in a row, O(n)?
 
 Polish (v1.2):
   - filters should have +/- instead of checkbox, some way to selectively include, exclude, or do nothing with each item

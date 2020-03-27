@@ -5,6 +5,8 @@ class Ingredient < ApplicationRecord
   has_many :join_ingredients_recipes
   has_many :recipes, through: :join_ingredients_recipes
 
+  serialize :units, Hash
+
   def all_tags
     tags = []
     ingredient_tags.each do |it|
@@ -12,6 +14,8 @@ class Ingredient < ApplicationRecord
     end
     tags
   end
+
+
 
   def base_unit
     {true => "mL", false => "g"}[is_liquid]

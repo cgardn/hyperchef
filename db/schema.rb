@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_170949) do
+ActiveRecord::Schema.define(version: 2020_03_26_201712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2020_03_22_170949) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_liquid", default: false
+    t.string "units", default: "", null: false
   end
 
   create_table "join_equipment_recipes", force: :cascade do |t|
