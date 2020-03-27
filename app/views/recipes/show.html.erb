@@ -28,21 +28,21 @@
 <hr>
 
 <div class="row">
-  <div class="col-12">
+  <div class="col-12 bg-secondary border border-secondary rounded py-3">
     <h4>Equipment you'll need</h4>
     <% @recipe.equipment.each do |e| %>
-      <%= link_to e.name, e.affiliate_link, target: "_blank", class: "btn btn-primary active mb-1" %>
+      <%= link_to e.name, e.affiliate_link, target: "_blank", class: "btn btn-dark active mb-1" %>
     <% end %>
   </div>
 </div>
 <hr>
 <div class="row">
-  <div class="col-12 bg-secondary border border-secondary rounded pb-3">
+  <div class="col-12 bg-secondary border border-secondary rounded py-3">
     <h4>Ingredients:</h4>
     <table>
       <% @ingredients.each do |i| %>
         <tr>
-          <td class="font-md"><%= i.units[ @unit_selector ][0]*@servings.to_f %></td>
+          <td class="font-md"><%= i.units[ @unit_selector ][0].to_i*@servings.to_f %></td>
           <td></td>
           <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
           <td></td>
@@ -66,7 +66,7 @@
 <hr>
 
 <div class="row">
-  <div class="col-12 bg-secondary border border-secondary rounded">
+  <div class="col-12 bg-secondary border border-secondary rounded pt-3">
     <h4>Steps:</h4>
     <br>
 

@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
 
   before_action :auth_user, except: [:show]
-  before_action :clean_params_ingredients, only: [:update, :create]
+  #before_action :clean_params_ingredients, only: [:update, :create]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
   before_action :set_user_profile, only: [:show]
 
@@ -52,8 +52,7 @@ class RecipesController < ApplicationController
   def edit
     @tags = @recipe.all_tags
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
-    @iQuants = @recipe.edit_quants
-    @allIngredients = Ingredient.all
+    @allIngredients = Ingredient.all.sort_by{ |ing| ing.name }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
 
     # if less than 20 steps, add blank steps until 20
@@ -103,7 +102,15 @@ class RecipesController < ApplicationController
 
     # Setting ingredients list
     @recipe.ingredients.delete_all
+   # copy the above recipe_params[:ingredients] for checkboxes, but drop
+    # the selected=="0" from here and also remove from above, don't need
+    # it now that I'm using check_box_tag on everything, none of the 
+    # unselected ones come through
     
+    recipe_params[:ingredients].each do |i|
+      @recipe.ingredients << Ingredient.find_by(name: i[:selected])
+    end
+=begin
     @fresh_ing.keys.each do |key|
 
       # Need to create a Join_Ingredients_Recipes directly here
@@ -115,6 +122,7 @@ class RecipesController < ApplicationController
       jir.save
 
     end
+=end
 
     # Setting action steps hash
     # - putting all new steps in fresh Hash, preserves existing steps if
@@ -170,7 +178,7 @@ class RecipesController < ApplicationController
                                      :card_image_path,
                                      rTypes: [:selected],
                                      equipment: [:selected],
-                                     :ingredients => {},
+                                     ingredients: [:selected],
                                      actions: [:title, :order, :body])
     end
 

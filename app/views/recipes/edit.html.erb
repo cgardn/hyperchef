@@ -39,67 +39,67 @@
     </div>
   </div>
 
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <h4>Recipe Tags:</h4>
+      <% RecipeType.all.each do |rt| %>
+        <% @tags.include?(rt[:name]) ? @chk = true : @chk = false %>
+        <%= check_box_tag("recipe[rTypes][]selected",
+                           value=rt[:name],
+                           checked=@chk) %>
+        <%= rForm.label(rt[:name]) %>
+      <% end %>
 
   <hr>
-  Recipe Tags:<br>
-  <% RecipeType.all.each do |rt| %>
-    <% if @tags.include?(rt[:name]) %>
-      <%= check_box_tag("recipe[rTypes][]selected",
-                               value=rt[:name],
-                               checked=true) %>
-    <% else %>
-      <%= check_box_tag("recipe[rTypes][]selected",
-                               value=rt[:name],
-                               checked=false) %>
-    <% end %>
-    <%= rForm.label(rt[:name]) %>
-  <% end %>
-  <br><hr>
-  Equipment:<br>
-  <% Equipment.all.each do |e| %>
-    <% if @eNames.include?(e[:name]) %>
-      <%= check_box_tag("recipe[equipment][]selected",
-                        value=e[:name], checked=true) %>
-    <% else %>
-      <%= check_box_tag("recipe[equipment][]selected",
-                        value=e[:name], checked=false) %>
-    <% end %>
-    <%= rForm.label(e[:name]) %>
-  <% end %>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>Equipment:</h4>
+      <% Equipment.all.each do |e| %>
+        <% @eNames.include?(e[:name]) ? @chk = true : @chk = false %>
+        <%= check_box_tag("recipe[equipment][]selected",
+                          value=e[:name],
+                          checked=@chk) %>
+        <%= rForm.label(e[:name]) %>
+      <% end %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>Ingredients:</h4>
+      <% @allIngredients.each do |i| %>
+        <span>
+            <% @iNames.include?(i[:name]) ? @chk = true : @chk = false %>
+            <%= check_box_tag("recipe[ingredients][]selected", 
+                               value=i[:name], checked=@chk) %>
+        </span>
+        <span>
+          <%= rForm.label(i[:name]) %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
   <br>
   <hr>
-  Ingredients:<br>
-  <table>
-    <% @allIngredients.each do |i| %>
-    <tr>
 
-      <% if @iNames.include?(i[:name]) %>
-        <td><%= number_field_tag("recipe[ingredients]#{i[:name]}", @iQuants[i[:name]][0]) %></td>
-      <% else %>
-        <td><%= number_field_tag("recipe[ingredients]#{i[:name]}") %></td>
-      <% end %>
-      <td><%= {true => "mL", false => "g"}[i.is_liquid] %></td>
-      <td><%= rForm.label(i[:name]) %></td>
-    </tr>
-  <% end %>
-  </table>
-  <hr>
-  New Ingredients:<br>
-  <table>
-  <% @allIngredients.each do |i| %>
-
-  <% end %>
-
-  Steps:
+  <h4>Steps:</h4>
   <br>
   <% @recipe.actions.each_with_index do |a,n| %>
-    <%= rForm.label("Title: ") %>
-    <%= rForm.text_field("[actions][][title]", value: a[1][0]) %>
-    <%= rForm.label("Step: #{n+1}") %>
-    <br>
-    <%= rForm.label("Body: ") %>
-    <%= rForm.text_area("[actions][][body]", value: a[1][1], size: "80x5") %>
-    <br><br>
+    <div class="row">
+      <div class="col-12">
+        <%= rForm.label("Title: ") %>
+        <%= rForm.text_field("[actions][][title]", value: a[1][0]) %>
+        <%= rForm.label("Step: #{n+1}") %>
+        <br>
+        <%= rForm.label("Body: ") %>
+        <%= rForm.text_area("[actions][][body]", value: a[1][1], size: "80x5") %>
+      </div>
+    </div>
   <% end %>
 
   <%= rForm.submit "Submit changes" %>

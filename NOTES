@@ -24,11 +24,13 @@ Pre-Launch:
       - requires converting base quantities to single serving in recipes
       + swapped plain link for small form, had to fiddle with the model func a bit but we
         got there in the end
-    - add way to have a quantity of "1 unit/piece" for things like potatoes and chicken breasts.
-      - These single units should be ignored during unit conversion
-      - option during recipe creation?
-    - recipe#show add background image for steps (visual clarity, gradient lightness at bottom
+    + add way to have a quantity of "1 unit/piece" for things like potatoes and chicken breasts.
+      + These single units should be ignored during unit conversion
+      ~ option during recipe creation?
+      + completed with new unit hash attribute
+    + recipe#show add background image for steps (visual clarity, gradient lightness at bottom
       gets too close to light text)
+      + not an image though, just a bg-secondary on the div
     + fix recipe#show equipment link color (lighter)
       + changed to buttons for now, proper layout instead of stacked <br>'s
     + fix recipe#show jumbotron text color (should be dark)
@@ -60,6 +62,7 @@ Post-Launch (v1.1):
     - Pull recipe favorite-button-form out of both show view and card and make it a partial
       - used in multiple places, on recipe card and at top of recipe show page
     - Time to think about AJAX responses for the favorite button and whatever else
+    - can probably make the recipe edit page even more compact, all the checkbox sections look pretty similar
   Search page (old notes):
     - need clarity about having to press "go" to apply filters, maybe put search button below filter modal button and rename filter
       modal button to say something like "Advanced search" or something, though that would imply that its separate from the main
