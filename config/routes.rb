@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   delete '/user_profiles/favorites/:id', to: 'user_profiles#remove_favorite_recipe'
 
   resources :ingredients, except: [:show]
+  post '/ingredients/:id', to: 'ingredients#update'
   resources :actions, except: [:index, :show]
   resources :equipment, except: [:index]
   resources :ingredient_tags

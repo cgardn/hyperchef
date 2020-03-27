@@ -43,10 +43,10 @@ class RecipesController < ApplicationController
       end
     else
       @unit_selector = "imperial_show"
-      @chosen = "Imperial"
+      @chosen = "false"
     end
 
-    params[:servings].nil? ? @servings = 1.0 : @servings = params[:servings].to_i
+    params[:servings].nil? ? @servings = 1 : @servings = params[:servings].to_i
   end
 
   def edit

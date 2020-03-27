@@ -39,7 +39,18 @@ class IngredientsController < ApplicationController
   def update
     @ingredient.name = ingredient_params[:name]
     @ingredient.caloriespergram = ingredient_params[:caloriespergram]
+    # old, probably not needed with units hash below
     @ingredient.is_liquid = {"0" => false, "1" => true}[ingredient_params[:is_liquid]]
+
+    # Setting new units hash (new as of 3-27-2020)
+    @ingredient.units = { 'imperial_show' => [ params[:imperial_show_num],
+                                                params[:imperial_show_unit] ],
+                           'imperial_list' => [ params[:imperial_list_num],
+                                                params[:imperial_list_unit] ],
+                           'metric_show' => [ params[:metric_show_num],
+                                              params[:metric_show_unit] ],
+                           'metric_list' => [ params[:metric_list_num],
+                                              params[:metric_list_unit] ] }
 
     # Setting tag list
     @ingredient.ingredient_tags.delete_all
@@ -69,6 +80,14 @@ class IngredientsController < ApplicationController
 
     def ingredient_params
       params.require(:ingredient).permit(:name, :caloriespergram, :is_liquid,
-                                         iTags: [:selected] )
+                                         :imperial_show_num,
+                                         :imperial_show_unit,
+                                         :imperial_list_num,
+                                         :imperial_list_unit,
+                                         :metric_show_num,
+                                         :metric_show_unit,
+                                         :metric_list_num,
+                                         :metric_list_unit,
+                                         iTags: [:selected])
     end
 end
