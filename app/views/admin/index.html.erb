@@ -24,9 +24,10 @@
       <table>
       <% @recipes.each do |r| %>
         <tr>
-          <td><%= render 'shared/recipe_link_text', rec: r %></td>
-          <td><%= link_to "Edit", edit_recipe_path(r) %></td>
-          <td><%= link_to "Delete", r, method: "get", 
+          <td><%= r.name %></td>
+          <td><%= link_to "Show", r, class: "text-light" %></td>
+          <td><%= link_to "Edit", edit_recipe_path(r), class: "text-light" %></td>
+          <td><%= link_to "Delete", r, method: "get", class: "text-light",
             data: { confirm: "Delete?" } %></td>
         </tr>
       <% end %>
