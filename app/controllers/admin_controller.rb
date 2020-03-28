@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :admin_user, only: [:index]
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.all.sort_by{ |obj| obj.name }
     @favorites = []
     @rType = RecipeType.new
     @rTypes = RecipeType.all
