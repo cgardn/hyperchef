@@ -27,12 +27,12 @@
     </th>
     <tr>
       <td><%= iForm.label "show" %></td>
-      <td><%= iForm.number_field :imperial_show_num, value: @ingredient.units['imperial_show'][0] %></td>
+      <td><%= iForm.number_field :imperial_show_num, value: @ingredient.units['imperial_show'][0], step: :any %></td>
       <td><%= iForm.text_field :imperial_show_unit, value: @ingredient.units['imperial_show'][1] %></td>
     </tr>
     <tr>
       <td><%= iForm.label "list" %></td>
-      <td><%= iForm.number_field :imperial_list_num, value: @ingredient.units['imperial_list'][0] %></td>
+      <td><%= iForm.number_field :imperial_list_num, value: @ingredient.units['imperial_list'][0], step: :any %></td>
       <td><%= iForm.text_field :imperial_list_unit, value: @ingredient.units['imperial_list'][1] %></td>
     </tr>
   </table>
@@ -43,12 +43,12 @@
     </th>
     <tr>
       <td><%= iForm.label "show" %></td>
-      <td><%= iForm.number_field :metric_show_num, value: @ingredient.units['metric_show'][0] %></td>
+      <td><%= iForm.number_field :metric_show_num, value: @ingredient.units['metric_show'][0], step: :any %></td>
       <td><%= iForm.text_field :metric_show_unit, value: @ingredient.units['metric_show'][1] %></td>
     </tr>
     <tr>
       <td><%= iForm.label "list" %></td>
-      <td><%= iForm.number_field :metric_list_num, value: @ingredient.units['metric_list'][0] %></td>
+      <td><%= iForm.number_field :metric_list_num, value: @ingredient.units['metric_list'][0], step: :any %></td>
       <td><%= iForm.text_field :metric_list_unit, value: @ingredient.units['metric_list'][1] %></td>
     </tr>
   </table>

@@ -42,7 +42,7 @@
     <table>
       <% @ingredients.each do |i| %>
         <tr>
-          <td class="font-md"><%= i.units[ @unit_selector ][0].to_i*@servings.to_f %></td>
+          <td class="font-md"><%= i.units[ @unit_selector ][0]*@servings.to_f %></td>
           <td></td>
           <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
           <td></td>
