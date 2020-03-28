@@ -6,7 +6,7 @@ class AdminController < ApplicationController
     @favorites = []
     @rType = RecipeType.new
     @rTypes = RecipeType.all
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.all.sort_by{ |obj| obj.name }
     @equipment = Equipment.all
     @iTag = IngredientTag.new
     @iTags = IngredientTag.all

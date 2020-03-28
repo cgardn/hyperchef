@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   before_action :lookup_ingredient, except: [:index, :new, :create]
 
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.all.sort_by{ |obj| obj.name }
   end
 
   def new
