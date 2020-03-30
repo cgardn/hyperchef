@@ -24,7 +24,7 @@ class RecipesController < ApplicationController
     @eNames = @recipe.equipment.map{ |e| e[:name] }
     @rTypes = @recipe.recipe_types.all
     @tags = []
-    @allIngredients = Ingredient.all
+    @allIngredients = Ingredient.all.sort_by{ |ing| ing.name }
     render :edit
   end
 
