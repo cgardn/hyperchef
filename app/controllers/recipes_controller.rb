@@ -22,6 +22,7 @@ class RecipesController < ApplicationController
     end
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
+    @rTypes = @recipe.recipe_types.all
     @tags = []
     @allIngredients = Ingredient.all
     render :edit

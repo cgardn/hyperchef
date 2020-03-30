@@ -8,6 +8,7 @@ class IngredientsController < ApplicationController
   def new
     @ingredient = Ingredient.new
     @tags = @ingredient.all_tags
+    @ingredient.units = @ingredient.empty_units
   end
 
   def create
@@ -24,6 +25,18 @@ class IngredientsController < ApplicationController
         @ingredient.ingredient_tags << IngredientTag.find_by(name: it[:selected])
       end
     end
+
+    # Setting new units hash (new as of 3-27-2020)
+    @ingredient.units = { 
+      'imperial_show' => [ ingredient_params[:imperial_show_num].to_f,
+                           ingredient_params[:imperial_show_unit] ],
+      'imperial_list' => [ ingredient_params[:imperial_list_num].to_f,
+                           ingredient_params[:imperial_list_unit] ],
+      'metric_show' => [ ingredient_params[:metric_show_num].to_f,
+                         ingredient_params[:metric_show_unit] ],
+      'metric_list' => [ ingredient_params[:metric_list_num].to_f,
+                         ingredient_params[:metric_list_unit] ] }
+
     if @ingredient.save!
       redirect_to admin_path
     else

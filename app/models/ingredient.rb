@@ -15,6 +15,13 @@ class Ingredient < ApplicationRecord
     tags
   end
 
+  def empty_units
+    { 'imperial_show' => [0.0, ""],
+      'imperial_list' => [0.0, ""],
+      'metric_show' => [0.0, ""],
+      'metric_list' => [0.0, ""] }
+  end
+
   def base_unit
     {true => "mL", false => "g"}[is_liquid]
   end

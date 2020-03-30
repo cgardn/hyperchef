@@ -36,6 +36,7 @@ Pre-Launch:
     + fix recipe#show jumbotron text color (should be dark)
       + added bootstrap 'text-dark' class just to that jumbotron element
     - consider a sidebar/non-modal for desktop mode (probably lg and above, md is for tablets)
+      - at least change the order of the filter button and the "go" button
     - put a bright color on the save/un-save button
     - re-do card graphics with less anti-aliasing (makes it too fuzzy)
     - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
@@ -52,9 +53,9 @@ Pre-Launch:
         /admin#ingredients brings you to just the tab panel with no tabs above it
 
     
-  - fill up live version with at least all the Hello fresh recipes, plus
+  - fill up live version with at least 10-15 Hello fresh recipes, plus
     Cassi's recipes, and whatever else I can find - hopefully at least 50, ideally
-    100+. Find recipes from all our cookbooks if I have to.
+    100+ eventually depending on how long it takes. Find recipes from all our cookbooks if I have to.
   - make sure all the other unused routes are actually removed from routing file, and
     associated view templates and controller actions are removed/inaccessible.
   - double check random non-admin users and non-signed-in users can't access anything besides the following:
@@ -64,6 +65,8 @@ Pre-Launch:
     * profiles stuff
     - everything else that isn't also used by admin should be removed from files and routes, and redirected in the
       routing file
+  - set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
+    will set up mailing list type things much later
 
 Post-Launch (v1.1):
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
@@ -74,6 +77,8 @@ Post-Launch (v1.1):
       - used in multiple places, on recipe card and at top of recipe show page
     - Time to think about AJAX responses for the favorite button and whatever else
     - can probably make the recipe edit page even more compact, all the checkbox sections look pretty similar
+  - give users ability to save custom ingredient amounts on favorited recipes
+  - give admin a way to add invisible "fudge factor" on individual ingredients on individual recipes, if needed
   Search page (old notes):
     - need clarity about having to press "go" to apply filters, maybe put search button below filter modal button and rename filter
       modal button to say something like "Advanced search" or something, though that would imply that its separate from the main
@@ -303,8 +308,52 @@ HYPERCHEF! Design journal (xHDJx)
 Important design notes that have no other home (x0x)
   - Recipe Cards:
     - 360px minimum width for mobile, target 350px wide cards, for golden ratio then 350 -> 216
+    - be aware of padding and margin, those extra couple pixels can cause an ugly overflow of the base images
 
 Where my head's at right now/running log of where I'm focusing (x1x)
+  - (3-30-2020) Been a while since the last update, but finally almost ready
+  to launch! Lots of fiddling with small things that keep falling through the
+  cracks, or things I hadn't thought of before it broke something. For example,
+  I updated the way ingredient quantities are recorded, now each ingredient has
+  a standard 1-person serving size attached in 2 different ways: 1 "show" 
+  amount/unit that appears on the recipe, and 1 "list" amount that will get
+  summed into the grocery list when I eventually get to that feature. This way
+  a recipe can call for "2 carrots" but the grocery list will still tell you
+  5 lbs of carrots instead of asking for 16 individual carrots. This is a
+  little less flexible than the old way, but much faster for defining new
+  recipes, and much less data to worry about - amounts are calculated off
+  the ingredient serving size definitions instead of living on their own
+  table. Farther down the road I'm going to add a "fudge factor" for adjusting
+  individual ingredients on individual recipes for those that need it, but 
+  most recipes use the same amount of a particular ingredient for a given
+  number of servings, like carrots or potatoes or oil. I'll also allow users to 
+  save customized amounts of ingredients on favorited recipes, giving people
+  another reason to sign up.
+  Progress feels slow even though I'm checking things off the list every day.
+  However I've reached a minor milestone - I'm finally adding more things to the
+  "post-release" To-Do list than the "gotta do this right now" list. All I have
+  left is adding some more actual content, a few minor style/color things,
+  tidying up the routing file, and setting up emails for signup confirmations
+  and password resets. After that I'm gonna announce to friends and family,
+  and MAYBE re-do the card graphics without anti-aliasing, or maybe with a
+  proper font that has a pixelated look, since the anti-aliasing on the fixed
+  width graphics is looking a little fuzzy on larger screens.
+  Oh, I'll also need to set up a resume site and cleanup the git tree to make
+  the Hyperchef/recipesabc repo public for job applications.
+  After it's live I'll be diving in to basic test coverage, and some kind of
+  log filtering so I can see errors at a glance. Or at least, get a little 
+  more familiar with Heroku's log functionality.
+  On a personal note,
+  The coronavirus pandemic got me down a bit - it's hard to focus and stay
+  excited about getting a new job while everyone else is scrambling to keep
+  theirs. Honestly I'm a little worried about downsizing happening right when
+  I start looking in a week or two, and more worried about a huge glut of 
+  people coming out of bootcamps started during the quarantine. I think that's
+  just my paranoia talking, though - no one is me but me, so I'll just keep on
+  plugging away at Hyperchef and focus on building skills instead of 
+  worrying about competition - going forward I still think there's only going
+  to be more webdev work than less, so I'm sure there's a place for me out
+  there somewhere!
   - (3-19-2020 extra thoughts) While figuring out the recipe card, I 
   thought of several more visual badges I want to add in the form of
   recipe tags (which trigger the badges?). Besides vegetarian/meat-free, 
