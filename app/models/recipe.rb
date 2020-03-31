@@ -180,7 +180,7 @@ class Recipe < ApplicationRecord
     # - linear transformation of a variable
     # -> (newMax - newMin) * (x - oldMin)/(oldMax-oldMin) + newMin
     time = prep_time + cook_time
-    return (((10.0-1.0)*((time - 5.0)/(300.0-5.0))) + 1.0).floor.to_i
+    return (((10.0-1.0)*((time - 5.0)/(75.0-5.0))) + 1.0).floor.to_i
   end
 
   serialize :actions, Hash
