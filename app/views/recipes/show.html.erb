@@ -52,12 +52,18 @@
     </table>
     <%= form_with(url: recipe_path, method: "get", local: true) do |cForm| %>
       <%= cForm.label "Servings: " %>
-      <%= cForm.number_field :servings, value: @servings %>
+      <%= cForm.select(:convert, (1..12), value: @servings) %>
       
-      <%= cForm.select(:convert,
-            options_for_select([["Metric", true], ["Imperial", false]], selected: @chosen)) %>
+      <% if @chosen == "true" %>
+        <%= cForm.radio_button :convert, true, checked: true %> Metric
+        <%= cForm.radio_button :convert, false %> Imperial
+      <% else %>
+        <%= cForm.radio_button :convert, true %> Metric
+        <%= cForm.radio_button :convert, false, checked: true %> Imperial
+      <% end %>
+
       <%= cForm.submit("Change",
-        class: "btn btn-primary btn-sm active",
+        class: "btn btn-dark btn-sm active",
         name: nil) %>
     <% end %>
   </div>

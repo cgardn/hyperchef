@@ -1,42 +1,63 @@
 <div class="card mb-4 mx-auto" style="width: 350px;">
   <%= image_tag("card_background.png", class: "card-img") %>
-  <div class="card-img-overlay pt-2">
+  <div class="card-img-overlay pt-2 d-flex flex-column">
+
     <h4 class="card-title card-text-color text-center"><%= rec.name %></h4>
-    <p class="card-text mb-2">
-    <%= image_tag("skill_title.png") %><%= image_tag("progressindicator_#{rec.get_difficulty}") %>
-    </p>
-    <p class="card-text mb-2">
-    <%= image_tag("ingredients_title.png") %><%= image_tag("progressindicator_#{rec.get_ingredient_score}") %>
-    </p>
-    <p class="card-text mb-2">
-    <%= image_tag("time_title.png") %><%= image_tag("progressindicator_#{rec.get_time_score}") %>
-    </p>
-    <div class="row mt-3">
+
+    <div class="row align-items-start">
+      <div class="col-4 card-text justify-content-start mb-2">
+        <%= image_tag("skill_title.png") %>
+      </div>
+      <div class="col-8 card-text justify-content-end mb-2">
+        <%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+      </div>
+    </div>
+
+    <div class="row align-items-start">
+      <div class="col-4 card-text justify-content-start mb-2">
+        <%= image_tag("ingredients_title.png") %>
+      </div>
+      <div class="col-8 card-text justify-content-end mb-2">
+        <%= image_tag("progressindicator_#{rec.get_ingredient_score}") %>
+      </div>
+    </div>
+
+    <div class="row align-items-start">
+      <div class="col-4 card-text justify-content-start mb-2">
+        <%= image_tag("time_title.png") %>
+      </div>
+      <div class="col-8 card-text justify-content-end mb-2">
+        <%= image_tag("progressindicator_#{rec.get_time_score}") %>
+      </div>
+    </div>
+
+    <div class="row mt-auto">
       <div class="col-6">
         <%= link_to "", rec, class: "btn view-button" %>
       </div>
       <div class="col-6 text-right">
-    <% if user_signed_in? %>
-      <% unless @favorites.include?(rec) %>
-        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
-          <%= favForm.hidden_field :addFavID, value: rec.id %>
-          <span class="unfavorite-button">
-          <%= favForm.submit "" %>
-          </span>
+        <% if user_signed_in? %>
+          <% unless @favorites.include?(rec) %>
+            <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "post", local: true) do |favForm| %>
+              <%= favForm.hidden_field :addFavID, value: rec.id %>
+              <span class="unfavorite-button">
+                <%= favForm.submit "" %>
+              </span>
+            <% end %>
+          <% else %>
+            <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
+              <%= favForm.hidden_field :addFavID, value: rec.id %>
+              <span class="favorite-button">
+                <%= favForm.submit "" %>
+              </span>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= link_to image_tag("notfavorite_up.png", size: "47x67"),
+              new_user_session_path %>
         <% end %>
-      <% else %>
-        <%= form_with(url: "/user_profiles/favorites/#{current_user.user_profile.id}", method: "delete", local: true) do |favForm| %>
-          <%= favForm.hidden_field :addFavID, value: rec.id %>
-          <span class="favorite-button">
-          <%= favForm.submit "" %>
-          </span>
-        <% end %>
-      <% end %>
-    <% else %>
-      <%= link_to image_tag("notfavorite_up.png", size: "47x67"),
-          new_user_session_path %>
-    <% end %>
       </div>
     </div>
+
   </div>
 </div>
