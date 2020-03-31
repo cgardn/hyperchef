@@ -142,6 +142,17 @@ class Recipe < ApplicationRecord
     return "recipe_card_image_default.png"
   end
 
+  def get_bartype(score)
+    # returns a string specifying the class of bootstrap progress bar
+    # - based on bootstrap colors for progress bars
+    # - 1-4 green
+    # - 5-7 yellow
+    # - 8-10 red
+    ['success','success','success','success',
+     'warning','warning','warning',
+     'danger','danger','danger'][score-1]
+  end
+
   def get_difficulty
     # This should probably be just a column on the recipe itself
     # - a heuristic based on things like how carefully you need to
@@ -161,13 +172,15 @@ class Recipe < ApplicationRecord
   def get_time_score
     # time score is from "I want to eat" to "I'm now eating"
     # minimum probably in the 5-10 minutes range (salads)
-    # max probably in the 4-5 hour range (crock-pot meals on high)
+    # max probably in the 60-70 minute range for most normal meals
+    # - long crockpot meals will come later
     # we'll take the sum of cook+prep time (always in minutes) and 
-    # normalize to the 1-10 range out of 5-300 minutes
+    # normalize to the 1-10 range out of 5-75 minutes
+    # - (1 hour bake with 15 minutes prep)
     # - linear transformation of a variable
     # -> (newMax - newMin) * (x - oldMin)/(oldMax-oldMin) + newMin
     time = prep_time + cook_time
-    return ((9.0*((time - 5.0)/(300.0-5.0))) + 1.0).floor.to_i
+    return (((10.0-1.0)*((time - 5.0)/(300.0-5.0))) + 1.0).floor.to_i
   end
 
   serialize :actions, Hash

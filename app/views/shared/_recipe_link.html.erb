@@ -2,32 +2,38 @@
   <%= image_tag("card_background.png", class: "card-img") %>
   <div class="card-img-overlay pt-2 d-flex flex-column">
 
-    <h4 class="card-title card-text-color text-center"><%= rec.name %></h4>
+    <h4 class="card-title card-text-color text-center mb-4"><%= rec.name %></h4>
 
     <div class="row align-items-start">
-      <div class="col-4 card-text justify-content-start mb-2">
-        <%= image_tag("skill_title.png") %>
+      <div class="col-4 card-text justify-content-start mb-2 pr-0">
+        Skill:
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
-        <%= image_tag("progressindicator_#{rec.get_difficulty}") %>
+        <div class="progress">
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_difficulty) %>" role="progressbar" style="width: <%= rec.get_difficulty*10 %>%"></div>
+        </div>
       </div>
     </div>
 
     <div class="row align-items-start">
-      <div class="col-4 card-text justify-content-start mb-2">
-        <%= image_tag("ingredients_title.png") %>
+      <div class="col-4 card-text justify-content-start mb-2 pr-0">
+        Ingredients:
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
-        <%= image_tag("progressindicator_#{rec.get_ingredient_score}") %>
+        <div class="progress">
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_ingredient_score) %>" role="progressbar" style="width: <%= rec.get_ingredient_score*10 %>%"></div>
+        </div>
       </div>
     </div>
 
     <div class="row align-items-start">
-      <div class="col-4 card-text justify-content-start mb-2">
-        <%= image_tag("time_title.png") %>
+      <div class="col-4 card-text justify-content-start mb-2 pr-0">
+        Time:
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
-        <%= image_tag("progressindicator_#{rec.get_time_score}") %>
+        <div class="progress">
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_time_score) %>" role="progressbar" style="width: <%= rec.get_time_score*10 %>%"></div>
+        </div>
       </div>
     </div>
 

@@ -42,7 +42,7 @@
     <table>
       <% @ingredients.each do |i| %>
         <tr>
-          <td class="font-md"><%= i.units[ @unit_selector ][0]*@servings.to_f %></td>
+          <td class="font-md"><%= i.units[ @unit_selector ][0].to_f*@servings.to_f %></td>
           <td></td>
           <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
           <td></td>
@@ -52,7 +52,7 @@
     </table>
     <%= form_with(url: recipe_path, method: "get", local: true) do |cForm| %>
       <%= cForm.label "Servings: " %>
-      <%= cForm.select(:convert, (1..12), value: @servings) %>
+      <%= cForm.select(:servings, (1..12), selected: @servings) %>
       
       <% if @chosen == "true" %>
         <%= cForm.radio_button :convert, true, checked: true %> Metric

@@ -35,10 +35,13 @@ Pre-Launch:
       + changed to buttons for now, proper layout instead of stacked <br>'s
     + fix recipe#show jumbotron text color (should be dark)
       + added bootstrap 'text-dark' class just to that jumbotron element
-    - consider a sidebar/non-modal for desktop mode (probably lg and above, md is for tablets)
-      - at least change the order of the filter button and the "go" button
-    - put a bright color on the save/un-save button
-    - re-do card graphics with less anti-aliasing (makes it too fuzzy)
+    ~ consider a sidebar/non-modal for desktop mode (probably lg and above, md is for tablets)
+      + at least change the order of the filter button and the "go" button
+      + changed order of filter and go button, re-did the text to make it hopefully more clear
+    ? put a bright color on the save/un-save button
+    + re-do card graphics with less anti-aliasing (makes it too fuzzy)
+      + Removed images for text, replaced with regular text since it's pretty close
+      + placed progress bar images with bootstrap progress bars, cleaner and easier to size correctly
     - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
       - look for N+1 queries, if time permits then make a programmatic way to check database calls in the code?
         seems complicated and time-consuming, maybe save the profiling for after launch
@@ -71,7 +74,9 @@ Pre-Launch:
 Post-Launch (v1.1):
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
   - filter buttons still need you to press Go, should probably auto-filter when you close the filter modal
+    - at least the order is more sensible now, filters are above the search button
   - test coverage of at least all the controller actions and user stories
+    - bare minimum, check for all pages loading without errors so i know when i broke a page
   - refactor list:
     - Pull recipe favorite-button-form out of both show view and card and make it a partial
       - used in multiple places, on recipe card and at top of recipe show page
