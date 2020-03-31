@@ -1,5 +1,5 @@
 class IngredientTagsController < ApplicationController
-  before_action :auth_admin
+  before_action :admin_user
 
   def index
     @iTag = IngredientTag.new
@@ -39,7 +39,7 @@ class IngredientTagsController < ApplicationController
     params.require(:ingredient_tag).permit(:tag)
   end
 
-  def auth_admin
+  def admin_user
     unless user_signed_in? and current_user.admin == true
       redirect_to root_url
     end

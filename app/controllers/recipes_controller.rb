@@ -1,21 +1,10 @@
 class RecipesController < ApplicationController
 
-  before_action :auth_user, except: [:show]
+  before_action :admin_user, except: [:show]
   before_action :set_recipe, only: [:new, :show, :edit, :update]
   before_action :set_user_profile, only: [:show]
 
-  def set_recipe
-    if params[:slug]
-      @recipe = Recipe.find_by(slug: params[:slug])
-    else
-      @recipe = Recipe.new
-    end
-  end
 
-  def index
-    @recipes = Recipe.all
-  end
-  
   def new
     20.times do |n|
       @recipe.actions[(n+1).to_s] = {title: "", body: ""}
@@ -135,7 +124,7 @@ class RecipesController < ApplicationController
 
   private
 
-    def auth_user
+    def admin_user
       unless user_signed_in? && current_user.admin?
         redirect_to root_url
       end
@@ -154,6 +143,14 @@ class RecipesController < ApplicationController
     def set_user_profile
       if user_signed_in?
         @favorites = UserProfile.find(current_user.user_profile.id).favorites
+      end
+    end
+
+    def set_recipe
+      if params[:slug]
+        @recipe = Recipe.find_by(slug: params[:slug])
+      else
+        @recipe = Recipe.new
       end
     end
   

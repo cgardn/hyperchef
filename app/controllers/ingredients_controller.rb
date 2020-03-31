@@ -1,5 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :lookup_ingredient, except: [:index, :new, :create]
+  before_action :admin_user
 
   def index
     @ingredients = Ingredient.all.sort_by{ |obj| obj.name }
@@ -85,6 +86,13 @@ class IngredientsController < ApplicationController
   end
 
   private
+
+    def admin_user
+      unless user_signed_in? and current_user.admin == true
+        redirect_to root_url
+      end
+    end
+
     def lookup_ingredient
       @ingredient = Ingredient.find(params[:id])
     end

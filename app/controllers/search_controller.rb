@@ -3,16 +3,7 @@ class SearchController < ApplicationController
   def index
   end
 
-  def browse
-    @tags = RecipeType.all.order(name: :desc)
-  end
-
-  def browse_query
-    @recipes = RecipeType.find_by(name: params[:id]).recipes
-  end
-
   def query
-    @q = params[:query]
     @results = Recipe.search_names(params[:query])
     if user_signed_in?
       @favorites = UserProfile.find(current_user.user_profile.id).favorites

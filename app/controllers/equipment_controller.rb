@@ -1,4 +1,5 @@
 class EquipmentController < ApplicationController
+  before_action :admin_user
 
   def index
     @equipment = Equipment.all
@@ -43,5 +44,11 @@ class EquipmentController < ApplicationController
   
     def equipment_params
       params.require(:equipment).permit(:name, :affiliate_link)
+    end
+
+    def admin_user
+      unless user_signed_in? and current_user.admin == true
+        redirect_to root_url
+      end
     end
 end

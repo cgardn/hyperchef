@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The change you wanted was rejected (422)</title>
+  <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   .rails-default-error-page {
@@ -23,7 +23,7 @@
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
+    border-top: #25A0FF solid 4px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
     background-color: white;
@@ -32,9 +32,15 @@
   }
 
   .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
+    font-size: 8em;
+    color: #222;
+    line-height: 1em;
+  }
+  
+  .rails-default-error-page h2 {
+    font-size: 5em;
+    color: #222;
+    line-height: 1em;
   }
 
   .rails-default-error-page div.dialog > p {
@@ -55,13 +61,12 @@
 </head>
 
 <body class="rails-default-error-page">
-  <!-- This file lives in public/422.html -->
+  <h2>┻━┻ ヘ╰( •̀ε•́ ╰)</h2>
   <div class="dialog">
     <div>
-      <h1>The change you wanted was rejected.</h1>
-      <p>Maybe you tried to change something you didn't have access to.</p>
+      <h3>You tried to make a change, but it was rejected.</h3>
+      <p>Click back and try again, but be careful this time!</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
   </div>
 </body>
 </html>

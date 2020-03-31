@@ -7,8 +7,6 @@ Rails.application.routes.draw do
 
   root to: 'search#index'
   get '/search', to: 'search#query'
-  get '/browse', to: 'search#browse'
-  get '/browse/:id', to: 'search#browse_query'
 
   get '/admin', to: 'admin#index'
 
@@ -22,7 +20,6 @@ Rails.application.routes.draw do
 
   resources :ingredients, except: [:show]
   post '/ingredients/:id', to: 'ingredients#update'
-  resources :actions, except: [:index, :show]
   resources :equipment, except: [:index]
   resources :ingredient_tags
   resources :recipe_types
