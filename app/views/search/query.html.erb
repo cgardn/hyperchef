@@ -24,17 +24,12 @@
 
             <h5>Recipe tags:</h5>
             <div class="font-sm">
-              <% RecipeType.all.each do |rt| %>
-                <% if rt.recipes.count > 0 %>
-                  <% if @filter && @filter.include?(rt[:name]) %>
-                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=true) %>
-                  <% else %>
-                    <%= check_box_tag("rTypes[]selected", rt[:name], checked=false) %>
-                  <% end %>
-                  <%= fForm.label rt[:name] %>
-                  <br>
-                <% end %>
+              <% @rType_inuse.each do |rt| %>
+                <% @checked_filters.include?(rt) ? @chk = true : @chk = false %>
+                <%= check_box_tag("rTypes[]selected", rt, checked=@chk) %>
+                <%= fForm.label rt %>
               <% end %>
+              <br>
             </div>
             <br>
 

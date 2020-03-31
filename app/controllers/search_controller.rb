@@ -32,23 +32,15 @@ class SearchController < ApplicationController
         end
       end
 
-=begin
-      # Paginating the matching results
-      pageSize = 20 # magic for now
-      paginatedResults = []
-      c = filteredResults.count
-      lastPage = c % pageSize)
-      numPages = (lastPage == 0 ? (c-lastPage)/pageSize : ((c-lastPage)/pageSize)+1)
-      numPages.times do |n|
-        paginatedResults.push(filteredResults[0+(pageNum*pageSize)..(pageSize-1)+(pageNum*pageSize))
-      end
-
-      @results = paginatedResults
-      @numPages = numPages
-      @currentPage = 0
-=end
       @results = filteredResults
     end
+
+    @filter.nil? ? @filter = [] : @filter
+
+    # RecipeTypes in use, for filter modal
+    @rType_inuse = RecipeType.joins(:recipes).uniq.pluck(:name)
+    @checked_filters = @rType_inuse & @filter
+
     
     @total = Recipe.all.count
     unless @filter.nil?

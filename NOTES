@@ -56,18 +56,19 @@ Pre-Launch:
         /admin#ingredients brings you to just the tab panel with no tabs above it
 
     
-  - fill up live version with at least 10-15 Hello fresh recipes, plus
+  ~ fill up live version with at least 10-15 Hello fresh recipes, plus
     Cassi's recipes, and whatever else I can find - hopefully at least 50, ideally
     100+ eventually depending on how long it takes. Find recipes from all our cookbooks if I have to.
-  - make sure all the other unused routes are actually removed from routing file, and
+  + make sure all the other unused routes are actually removed from routing file, and
     associated view templates and controller actions are removed/inaccessible.
-  - double check random non-admin users and non-signed-in users can't access anything besides the following:
+  + double check random non-admin users and non-signed-in users can't access anything besides the following:
     * search#index
     * search#query
     * recipe#show
     * profiles stuff
-    - everything else that isn't also used by admin should be removed from files and routes, and redirected in the
+    + everything else that isn't also used by admin should be removed from files and routes, and redirected in the
       routing file
+    + added admin auth to all non-user controller actions, removed a bunch of unused controller actions and routes from file
   - set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
     will set up mailing list type things much later
 
@@ -316,6 +317,32 @@ Important design notes that have no other home (x0x)
     - be aware of padding and margin, those extra couple pixels can cause an ugly overflow of the base images
 
 Where my head's at right now/running log of where I'm focusing (x1x)
+  - (3-31-2020) Very close to launch! fixed up some styling stuff Cassi+Micah
+  pointed out yesterday: metric/imperial on recipe#show are now radio buttons,
+  and serving size is a dropdown of options. Also changed main search bar+filter
+  modal button order so you're not going back up from filter button to search 
+  button. Hopefully that makes it clear enough until I can add all the JS stuff.
+  Now I'm refactoring all the database calls in the search controller. N+1 
+  doesn't quite capture it, more like N+5. For example, in order to find which
+  recipe tags needed to be pre-checked in the filter modal (because the user 
+  checked them and searched), I was calling RecipeType.all.each, and THEN 
+  calling each RecipeType's recipe association, then iterating through each
+  of those recipes and comparing to a list of the user's selected filters from
+  the params hash! All of this in the view!!! So each of 8 RecipeTypes * dozens
+  of recipes each, and a database hit for each. It was the first way I thought
+  of doing it, but now every search with at least 1 filter checked 
+  triggers a comparison of each tag on each recipe, and that's called 
+  through ActiveRecord associations too so 100 recipes * a dozen
+  ingredients * a half dozen ingredient tags = roughly 12 billion
+  database calls.
+  We're getting there, though - just replacing the RecipeType call with a
+  .joins saved 10-12ms, I can't even imagine how much time is going to be
+  saved when I tidy up the ingredient tags.
+  After that, I'll be adding some more recipes, but not too many since this
+  is just a portfolio thing anyways, maybe 10 total, and then I'll be working
+  on my personal website and starting the job hunt. I'll also be diving into
+  Rails JS and React at the same time, so look forward to improvements on the
+  UI front and new projects as well in the coming weeks.
   - (3-30-2020) Been a while since the last update, but finally almost ready
   to launch! Lots of fiddling with small things that keep falling through the
   cracks, or things I hadn't thought of before it broke something. For example,
