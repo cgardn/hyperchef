@@ -343,6 +343,8 @@ Where my head's at right now/running log of where I'm focusing (x1x)
   on my personal website and starting the job hunt. I'll also be diving into
   Rails JS and React at the same time, so look forward to improvements on the
   UI front and new projects as well in the coming weeks.
+  UPDATE: actually measured improvement: 15 calls at 27ms total, down to one
+  call at 5.5ms! For ingredient tags
   - (3-30-2020) Been a while since the last update, but finally almost ready
   to launch! Lots of fiddling with small things that keep falling through the
   cracks, or things I hadn't thought of before it broke something. For example,

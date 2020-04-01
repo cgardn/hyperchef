@@ -39,9 +39,20 @@ class SearchController < ApplicationController
 
     # RecipeTypes in use, for filter modal
     @rType_inuse = RecipeType.joins(:recipes).uniq.pluck(:name)
-    @checked_filters = @rType_inuse & @filter
+    @checked_rTypes = @rType_inuse & @filter
 
+    # Ingredient tags in use
+    @iTags_inuse = IngredientTag.joins(:ingredients).uniq.pluck(:name)
+    @checked_iTags = @iTags_inuse & @filter
     
+    # Collecting scores for the recipe cards in one
+    #   database call
+    ids = @results.pluck(:id)
+    puts "-------------------------"
+    puts ids
+    puts "-------------------------"
+    Recipe.all.pluck(:prep_time, :cook_time).map{ |x,y| x+y }
+
     @total = Recipe.all.count
     unless @filter.nil?
       @filter = "Filters: " + @filter.join(", ")

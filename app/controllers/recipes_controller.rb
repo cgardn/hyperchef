@@ -68,6 +68,25 @@ class RecipesController < ApplicationController
 
     @recipe.cook_time = recipe_params[:cook_time]
     @recipe.prep_time = recipe_params[:prep_time]
+
+    # most meals between 5 and 75 minutes
+    # 5 for salads
+    # 75 for 1-hour bake + 15-min prep
+    # normalize on 10-100 for progress bars
+    @recipe.time_score = @recipe.normalize(
+      @recipe.cook_time + @recipe.prep_time,
+      5.0, 75.0, 10.0, 100.0).to_i
+
+    # ingredients max around 15-20, so 
+    # normalize on 10-100 for progress bars
+    @recipe.ingredient_score = @recipe.normalize(
+      recipe_params[:ingredients].count,
+      1.0, 15.0, 10.0, 100.0).to_i
+
+    # difficulty recorded from 1-10,
+    # multiplied by 10 for bar width
+    @recipe.difficulty = recipe_params[:difficulty]
+
     @recipe.card_image_path = recipe_params[:card_image_path]
 
     # Setting Recipe Type tag list
@@ -132,7 +151,7 @@ class RecipesController < ApplicationController
 
     def recipe_params
       params.require(:recipe).permit(:name, :origin, :author,
-                                     :prep_time, :cook_time,
+                                     :prep_time, :cook_time, :difficulty,
                                      :card_image_path,
                                      rTypes: [:selected],
                                      equipment: [:selected],

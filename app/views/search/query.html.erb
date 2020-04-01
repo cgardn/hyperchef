@@ -25,7 +25,7 @@
             <h5>Recipe tags:</h5>
             <div class="font-sm">
               <% @rType_inuse.each do |rt| %>
-                <% @checked_filters.include?(rt) ? @chk = true : @chk = false %>
+                <% @checked_rTypes.include?(rt) ? @chk = true : @chk = false %>
                 <%= check_box_tag("rTypes[]selected", rt, checked=@chk) %>
                 <%= fForm.label rt %>
               <% end %>
@@ -35,17 +35,11 @@
 
             <h5>Ingredient tags:</h5>
             <div class="font-sm">
-              <% IngredientTag.all.each do |it| %>
-              <% if it.ingredients.count > 0 %>
-                <% if @filter && @filter.include?(it[:name]) %>
-                  <%= check_box_tag("iTags[]selected", it[:name], checked=true) %>
-                <% else %>
-                    <%= check_box_tag("iTags[]selected", it[:name], checked=false) %>
-                <% end %>
-                <%= fForm.label it[:name] %>
-                <br>
+              <% @iTags_inuse.each do |it| %>
+                <% @checked_iTags.include?(it) ? @chk = true : @chk = false %>
+                <%= check_box_tag("iTags[]selected", it, checked=@chk) %>
+                <%= fForm.label it %>
               <% end %>
-            <% end %>
             </div>
           </div>
           <div class="modal-footer">

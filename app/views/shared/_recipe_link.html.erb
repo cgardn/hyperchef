@@ -10,7 +10,7 @@
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
         <div class="progress">
-          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_difficulty) %>" role="progressbar" style="width: <%= rec.get_difficulty*10 %>%"></div>
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.difficulty) %>" role="progressbar" style="width: <%= rec.difficulty*10 %>%"></div>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
         <div class="progress">
-          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_ingredient_score) %>" role="progressbar" style="width: <%= rec.get_ingredient_score*10 %>%"></div>
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.ingredient_score/10) %>" role="progressbar" style="width: <%= rec.ingredient_score %>%"></div>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       </div>
       <div class="col-8 card-text justify-content-end mb-2">
         <div class="progress">
-          <div class="progress-bar bg-<%= rec.get_bartype(rec.get_time_score) %>" role="progressbar" style="width: <%= rec.get_time_score*10 %>%"></div>
+          <div class="progress-bar bg-<%= rec.get_bartype(rec.time_score/10) %>" role="progressbar" style="width: <%= rec.time_score %>%"></div>
         </div>
       </div>
     </div>

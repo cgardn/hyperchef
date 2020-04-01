@@ -49,8 +49,6 @@ class Recipe < ApplicationRecord
     out
   end
 
-
-
   def ing_quants(convert = false, multiplier = 1)
     if convert.nil? || convert == "false"
       convert = false
@@ -153,34 +151,8 @@ class Recipe < ApplicationRecord
      'danger','danger','danger'][score-1]
   end
 
-  def get_difficulty
-    # This should probably be just a column on the recipe itself
-    # - a heuristic based on things like how carefully you need to
-    #   follow the recipe (meringue, souffle, most baking), and how
-    #   many things you're managing at once
-    return difficulty
-  end
-
-  def get_ingredient_score
-    # ingredient counts will always be at least 1
-    # max ingredients among all recipes is probably in the 15-20 range?
-    # - so we normalize on 15 ingredients
-    count = ingredients.count
-    return ((9.0*((count - 1.0)/(15.0-1.0))) + 1.0).floor.to_i
-  end
-
-  def get_time_score
-    # time score is from "I want to eat" to "I'm now eating"
-    # minimum probably in the 5-10 minutes range (salads)
-    # max probably in the 60-70 minute range for most normal meals
-    # - long crockpot meals will come later
-    # we'll take the sum of cook+prep time (always in minutes) and 
-    # normalize to the 1-10 range out of 5-75 minutes
-    # - (1 hour bake with 15 minutes prep)
-    # - linear transformation of a variable
-    # -> (newMax - newMin) * (x - oldMin)/(oldMax-oldMin) + newMin
-    time = prep_time + cook_time
-    return (((10.0-1.0)*((time - 5.0)/(75.0-5.0))) + 1.0).floor.to_i
+  def normalize(input, oldMin, oldMax, newMin, newMax)
+    newMin + (newMax - newMin)*( (input - oldMin)/(oldMax - oldMin) )
   end
 
   serialize :actions, Hash

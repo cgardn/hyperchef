@@ -111,6 +111,14 @@ puts "Creating Recipes..."
   r.cook_time = rand(0..45)
   r.difficulty = rand(1..10)
 
+  r.time_score = r.normalize(
+    r.cook_time + r.prep_time,
+    5.0, 75.0, 10.0, 100.0).to_i
+
+  r.ingredient_score = r.normalize(
+    r.ingredients.count,
+    1.0, 15.0, 10.0, 100.0).to_i
+
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
   r.save!
 end
