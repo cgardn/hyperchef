@@ -5,8 +5,9 @@ class SearchController < ApplicationController
 
   def query
     @results = Recipe.search_names(params[:query])
+
     if user_signed_in?
-      @favorites = UserProfile.find(current_user.user_profile.id).favorites
+      @favorites = Recipe.all.eager_load(:user_profiles).where("user_id = ?", current_user.user_profile.id)
     end
 
     # only filter results by checked boxes if boxes were actually checked
@@ -35,6 +36,10 @@ class SearchController < ApplicationController
       @results = filteredResults
     end
 
+    # Preload all recipes in results here somehow, to avoid N+1 in view
+    #  when building cards
+
+
     @filter.nil? ? @filter = [] : @filter
 
     # RecipeTypes in use, for filter modal
@@ -47,11 +52,6 @@ class SearchController < ApplicationController
     
     # Collecting scores for the recipe cards in one
     #   database call
-    ids = @results.pluck(:id)
-    puts "-------------------------"
-    puts ids
-    puts "-------------------------"
-    Recipe.all.pluck(:prep_time, :cook_time).map{ |x,y| x+y }
 
     @total = Recipe.all.count
     unless @filter.nil?

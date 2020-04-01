@@ -345,6 +345,26 @@ Where my head's at right now/running log of where I'm focusing (x1x)
   UI front and new projects as well in the coming weeks.
   UPDATE: actually measured improvement: 15 calls at 27ms total, down to one
   call at 5.5ms! For ingredient tags
+  UPDATE 2: Fixing the recipe database call extravaganza took a bit more 
+  thinking, and we're only halfway there, but part of it was the visual
+  progress bars. I was calculating them once for each recipe in every 
+  query, when really the 3 scores only change when the recipe is
+  created or updated. I learned an important lesson - only recalculate
+  things when they have changed and need to be recalculated, otherwise
+  you're just wasting cycles. So now there's 2 extra columns on the Recipe
+  table, one for time_score and one for ingredient_score, and now, hopefully,
+  I'll be able to pull all the values out of the database at once with a single
+  query each time I construct a search#query view. Next on the chopping block:
+  recipe card images!
+  UPDATE 3: OK so I know this is pretty basic, but I'm still proud of it: 
+  The last big N+1 I had was pulling the logged-in user's favorites list
+  for determining the state of the "Favorite this" button. The original
+  implementation was just pulling the list of UserProfile.favorites for
+  the logged-in user, and then lazy-loading each recipe one database-call
+  at a time in the view. I figured out how to use #eager_load and #where to 
+  pull all the user's favorite recipes at once, which cut the total load 
+  pageload time almost in half! It's extra long because of all the extra
+  dev-environment baggage, but it's still a benefit. Progress!
   - (3-30-2020) Been a while since the last update, but finally almost ready
   to launch! Lots of fiddling with small things that keep falling through the
   cracks, or things I hadn't thought of before it broke something. For example,
