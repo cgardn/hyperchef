@@ -129,7 +129,7 @@ class RecipesController < ApplicationController
     end
     @recipe.actions = newActionHash
     if @recipe.save
-      redirect_to root_url
+      redirect_to admin_path
     else
       render :edit
     end
