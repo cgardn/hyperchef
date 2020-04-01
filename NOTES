@@ -42,9 +42,11 @@ Pre-Launch:
     + re-do card graphics with less anti-aliasing (makes it too fuzzy)
       + Removed images for text, replaced with regular text since it's pretty close
       + placed progress bar images with bootstrap progress bars, cleaner and easier to size correctly
-    - eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
-      - look for N+1 queries, if time permits then make a programmatic way to check database calls in the code?
+    + eager loading on database calls, instead of pulling ingredients for recipe#show one at a time, for example
+      + look for N+1 queries, if time permits then make a programmatic way to check database calls in the code?
         seems complicated and time-consuming, maybe save the profiling for after launch
+      + I did it! Not for the admin views, but for user-facing views all the N+1's were fixed with eager loading
+        and .joins.
     + fix wrong ingredient quantities loading into recipe#edit for admin
     + fix filter checkboxes still reserving a blank line, even if they're not loaded due to no recipes using those tags
       + it was an extra line break outside of the checkbox conditional, so the line was broken once for 
@@ -71,6 +73,7 @@ Pre-Launch:
     + added admin auth to all non-user controller actions, removed a bunch of unused controller actions and routes from file
   - set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
     will set up mailing list type things much later
+  - fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
