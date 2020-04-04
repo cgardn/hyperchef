@@ -1,48 +1,21 @@
 require 'test_helper'
 
 class UserProfilesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @user_profile = user_profiles(:one)
-  end
-
-  test "should get index" do
-    get user_profiles_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_user_profile_url
-    assert_response :success
-  end
-
-  test "should create user_profile" do
-    assert_difference('UserProfile.count') do
-      post user_profiles_url, params: { user_profile: {  } }
-    end
-
-    assert_redirected_to user_profile_url(UserProfile.last)
-  end
-
-  test "should show user_profile" do
-    get user_profile_url(@user_profile)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_user_profile_url(@user_profile)
-    assert_response :success
-  end
-
-  test "should update user_profile" do
-    patch user_profile_url(@user_profile), params: { user_profile: {  } }
-    assert_redirected_to user_profile_url(@user_profile)
-  end
-
-  test "should destroy user_profile" do
-    assert_difference('UserProfile.count', -1) do
-      delete user_profile_url(@user_profile)
-    end
-
-    assert_redirected_to user_profiles_url
-  end
+  # User profiles in this app are only join tables holding references
+  # to favorite recipes. This is because I'm using Devise for user accounts
+  # and I wanted to keep the devise stuff "pure."
+  #
+  # To that end, the only thing that should be tested here is #show, since
+  # that's the page that lists favorites. Even user_profile creation is 
+  # handled in the users controller (the only code I added to devise)
+  # deletion of user profile tested in user also
+  # setup do
+  #   @profile = user_profiles(:userprofile)
+  # end
+  # 
+  #   test "should show user_profile" do
+  #     puts user_profile_url(@profile)
+  #     get user_profile_url(@profile)
+  #     assert_response :success
+  #   end
 end

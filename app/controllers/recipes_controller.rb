@@ -136,7 +136,7 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    @recipe = Recipe.find_by(name: params[:name])
+    @recipe = Recipe.find_by(slug: params[:slug])
     @recipe.delete
     redirect_to admin_path
   end
@@ -150,7 +150,7 @@ class RecipesController < ApplicationController
     end
 
     def recipe_params
-      params.require(:recipe).permit(:name, :origin, :author,
+      params.require(:recipe).permit(:slug, :name, :origin, :author,
                                      :prep_time, :cook_time, :difficulty,
                                      :card_image_path,
                                      rTypes: [:selected],

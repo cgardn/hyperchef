@@ -27,7 +27,7 @@
           <td><%= r.name %></td>
           <td><%= link_to "Show", r, class: "text-light" %></td>
           <td><%= link_to "Edit", edit_recipe_path(r), class: "text-light" %></td>
-          <td><%= link_to "Delete", r, method: "get", class: "text-light",
+          <td><%= link_to "Delete", r, method: "delete", class: "text-light",
             data: { confirm: "Delete?" } %></td>
         </tr>
       <% end %>
