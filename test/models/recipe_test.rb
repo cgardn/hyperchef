@@ -19,7 +19,6 @@ class RecipeTest < ActiveSupport::TestCase
       ingredient_score: 0,
       rTypes: [],
       equipment: [],
-      ingredients: [] } }
+      ingredients: [] )
   end
-
-
+end
