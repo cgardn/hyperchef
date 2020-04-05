@@ -27,6 +27,12 @@ class RecipeTypesController < ApplicationController
     redirect_to admin_path
   end
 
+  def destroy
+    @rType = RecipeType.find(params[:id])
+    @rType.delete
+    redirect_to admin_path
+  end
+
   private
   def rType_params
     params.require(:recipe_type).permit(:tag)

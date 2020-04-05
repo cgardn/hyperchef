@@ -15,7 +15,6 @@ Pre-Launch:
     -> so far it's pretty dang fast actually
   ~ probably make search results a partial and use it in the user's favorites list
     -> fixed user profile results list to match query page
-    - and/or add a "only favorites" option to the search filters
   + put on Heroku
   + make my account and make sure it's admin
  !! verify all user-facing pages work as expected, and are visually consistent
@@ -78,6 +77,7 @@ Pre-Launch:
   - fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - add a "only favorites" option to the search filters
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
   - filter buttons still need you to press Go, should probably auto-filter when you close the filter modal
     - at least the order is more sensible now, filters are above the search button

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :ingredients, except: [:show]
   post '/ingredients/:id', to: 'ingredients#update'
-  resources :equipment, except: [:index]
+  resources :equipment, except: [:index, :show]
   resources :ingredient_tags
   resources :recipe_types
   

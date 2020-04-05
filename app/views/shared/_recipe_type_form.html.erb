@@ -13,7 +13,7 @@
     <tr>
       <td><%= link_to rt.name, edit_recipe_type_path(rt) %></td>
       <td><%= rt.recipes.count %></td>
-      <td><%= link_to "Delete", rt, method: :delete %></td>
+      <td><%= link_to "Delete", rt, method: :delete, data: {confirm: "Delete #{rt.name}?"} %></td>
     </tr>
   <% end %>
 </table>
