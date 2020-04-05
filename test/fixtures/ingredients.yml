@@ -1,0 +1,5 @@
+ingredient:
+  name: "carrots"
+  is_liquid: false
+  caloriespergram: 100
+  units: ""
