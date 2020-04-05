@@ -6,8 +6,10 @@ search (xHDJx) for design journal
 Pre-Launch:
   + update status bar code on recipe cards to actually reflect time and ingredient count
     -> difficulty is a column on recipes now, have to manually set it
+
   + style recipe show page
     - lightly styled, good enough for now
+
   ? paginate search results
     -> wait until I can see live production speeds, apparently dev mode adds a lot of hot-reloading support that slows everything down
     -> so far it's pretty dang fast actually
@@ -184,9 +186,6 @@ style+format everything
   - add background gifs/movies of cooking+food to front page
     -- edit together some stock footage and put it on the home page
   - add big graphic above search bar
-    -- pixel art? animated chipmunk chef hero guy?
-      - dream: keep sky-blue background, add green-grass/kitchen tile floor, pixel-chef-warrior swings in and fights vegetables with spatula/knife
-              while wearing toque, ends with star wars-style holding spatula to sky while chef's jacket flaps around him, stays there
   - replace recipe, ingredient, and equipment links with bootstrap cards (change partials)
 fix super long urls for searches -> put a block in the routing file for this route, can use Rack things to parse query strings
   - UPDATE sorta fixed by using 'check_box_tag' instead of 'formBuilder.check_box', removing the default behavior of sending empty boxes
@@ -195,14 +194,13 @@ fix super long urls for searches -> put a block in the routing file for this rou
 --- Post Soft-Launch
 add a bunch of recipes
 ---
-add user profile model for saving recipes
-add ability to save recipes to your profile
-  - all the little parts, like the 'save/favorite' button/icon or whatever,
-      the columns in the user profile model, plus the routes and functions to connect it all
-add grocery list function (save or <3 a recipe and it goes on the one list, that list also generates a grocery list)
-- eventually have multiple named custom lists
+- add grocery list function (save or <3 a recipe and it goes on the one list,
+  that list also generates a grocery list)
+  - eventually have multiple named custom lists
 
 Things I did, and how
+* added user profile model for saving recipes
+* added ability to save recipes to your profile
 * removed hamburger menu from mobile view, replaced with a couple of buttons for Profile/Logout or Login/Signup depending on whether
   you're logged in or not
 * replaced all URL ids with the recipe's name, subbing hyphens for spaces (ex: /recipes/10 -> recipes/chicken-milanese)
@@ -234,33 +232,21 @@ Things I did, and how
     - all quantities for all recipes are stored in either grams or mL depending on wet or dry ingredient, then converted
       from grams to US dry ounces, and from mL to US teaspoons. The amounts are then broken down with modulo division
       into kilos/grams, liters/mL, pounds/ounces, and cups/tablespoons/teaspoons, and formatted for display
+* Styled with Bootstrap and some modified game UI graphics
 ---
 
 TODOs:
 
-add ability to edit what gram quantities are displayed as on recipe edit page
 + Weird Behavior/Bugs
   - Admin panel: clicking a tag to edit brings me to the edit page for that tag, not staying inside the admin panel. Need AJAX?
   - Search results sidebar behavior: add one-click way to remove the search query (like show the query with a little 'x' next to it or something
     + basically, clarify the behavior for getting exactly the search you want, so you know exactly at a glance what the search will be when you
       press 'filter'
-  - Recipe edit flow: if two steps have the same order number, it pushes
-    everything up by 1 to preserve order. Better would be rejecting the
-    edit, putting error in flash, and re-rendering the form. Even better
-    still would be somehow doing this with model-level validations, if
-    possible (or maybe an #update before-action).
-    + Also could use a way to check for gaps in the order and fix them
-      (i.e. if the steps have turned into 1-3-5-6-7, correct it into 1-2-3-4-5
-      while preserving original order)
-    + Eventuall I want to make this drag-and-drop anyways, or at least 
-      Steam-style numbers with up/down clicky boxes
-  - Waaay too many database hits for a filter search
 
 + Refactoring
   - single shared form for each resource (if possible)
 
 + Features
-  - actual styling with Bootstrap
   - tabs or some other sort of show/hide for ingredient list, to allow many more things
   - allow filtering ingredients by category, maybe with mini-search bar?
   - JS for quick-search in-page
@@ -320,273 +306,7 @@ Important design notes that have no other home (x0x)
     - be aware of padding and margin, those extra couple pixels can cause an ugly overflow of the base images
 
 Where my head's at right now/running log of where I'm focusing (x1x)
-  - (4-4-2020) Spent the day working on test coverage, since I had basically
-  none (oops *_*). A little painful at first, but I'm getting the hang of it.
-  ~~Unfortunately~~ I was given the _opportunity_ to learn a bunch of things,
-  one of which is that I probably shouldn't require all attributes of a model
-  to be present in order to process an update. If only one attribute comes in,
-  as long as it's on the whitelist the app shouldn't get hung up on the 
-  attributes that aren't there. And manually typing in a bunch of params hashes
-  for testing model updating has made that painfully clear :). 
-
-  I also ran into an as-of-yet-unsolved problem with test fixtures - how do I
-  describe ActiveRecord associations in YAML? I'm sure there's some Railsy 
-  special syntax sauce that will let me do it, but I tried the "official" 
-  rubyguides way of id-less labelling and it didn't do squat. The problem lies
-  in the _header partial, the navbar. When you're logged in, the "Sign-in"
-  button is replaced with a "Profile" button, which for now just shows you a
-  list of all the recipes you've favorited (eventually that's where you'll make
-  meal plans and grocery lists and whatnot as well). That view creates the link
-  with a reference to current_user.user_profile, but user_profiles are a 
-  separate model from users, connected through a join table, and since I can't
-  figure out associations in the test fixtures, any testing that logs in and
-  then visits any page with the "Profile" link fails on account of not being
-  able to load current_user.user_profile and build the link.
-
-  Sigh. This means that I can't verify that the admin is allowed to do things 
-  like create/update/destroy recipes, ingredients, or whatever. I have to be
-  satisfied with only verifying that non-logged-in and non-admin users 
-  **can't** do those things, which is to say I'm not satisfied at all. In fact
-  I'm super bothered by it, but I spent quite a bit of time hunting through 
-  the tubes for answers and got nothing, so I'm moving on to finish the rest
-  of the tests and come back after. 
-
-  That said, I've only gotten through recipes and most of ingredients. I still
-  have equipment and both kinds of tags. Is this why people hate testing? I 
-  haven't even gotten to model testing yet, though thankfully Hyperchef is 
-  still 99% REST so that stuff should go quick when I get there.
-
-  Other than that, I continue to march toward launching. Still need to add 
-  roughly a billion more recipes to make it look real, not to mention that it
-  doesn't look anything like a "modern" recipe website with giant pictures of
-  food or anything, but hopefully that doesn't get in the way. I can always 
-  change it if I get a lot of "Soo....this is it, huh?"
-
-  - (3-31-2020) Very close to launch! fixed up some styling stuff Cassi+Micah
-  pointed out yesterday: metric/imperial on recipe#show are now radio buttons,
-  and serving size is a dropdown of options. Also changed main search 
-  bar+filter modal button order so you're not going back up from filter button 
-  to search button. Hopefully that makes it clear enough until I can add all 
-  the JS stuff.
-  Now I'm refactoring all the database calls in the search controller. N+1 
-  doesn't quite capture it, more like N+5. For example, in order to find which
-  recipe tags needed to be pre-checked in the filter modal (because the user 
-  checked them and searched), I was calling RecipeType.all.each, and THEN 
-  calling each RecipeType's recipe association, then iterating through each
-  of those recipes and comparing to a list of the user's selected filters from
-  the params hash! All of this in the view!!! So each of 8 RecipeTypes * dozens
-  of recipes each, and a database hit for each. It was the first way I thought
-  of doing it, but now every search with at least 1 filter checked 
-  triggers a comparison of each tag on each recipe, and that's called 
-  through ActiveRecord associations too so 100 recipes * a dozen
-  ingredients * a half dozen ingredient tags = roughly 12 billion
-  database calls.
-  We're getting there, though - just replacing the RecipeType call with a
-  .joins saved 10-12ms, I can't even imagine how much time is going to be
-  saved when I tidy up the ingredient tags.
-  After that, I'll be adding some more recipes, but not too many since this
-  is just a portfolio thing anyways, maybe 10 total, and then I'll be working
-  on my personal website and starting the job hunt. I'll also be diving into
-  Rails JS and React at the same time, so look forward to improvements on the
-  UI front and new projects as well in the coming weeks.
-  UPDATE: actually measured improvement: 15 calls at 27ms total, down to one
-  call at 5.5ms! For ingredient tags
-  UPDATE 2: Fixing the recipe database call extravaganza took a bit more 
-  thinking, and we're only halfway there, but part of it was the visual
-  progress bars. I was calculating them once for each recipe in every 
-  query, when really the 3 scores only change when the recipe is
-  created or updated. I learned an important lesson - only recalculate
-  things when they have changed and need to be recalculated, otherwise
-  you're just wasting cycles. So now there's 2 extra columns on the Recipe
-  table, one for time_score and one for ingredient_score, and now, hopefully,
-  I'll be able to pull all the values out of the database at once with a single
-  query each time I construct a search#query view. Next on the chopping block:
-  recipe card images!
-  UPDATE 3: OK so I know this is pretty basic, but I'm still proud of it: 
-  The last big N+1 I had was pulling the logged-in user's favorites list
-  for determining the state of the "Favorite this" button. The original
-  implementation was just pulling the list of UserProfile.favorites for
-  the logged-in user, and then lazy-loading each recipe one database-call
-  at a time in the view. I figured out how to use #eager_load and #where to 
-  pull all the user's favorite recipes at once, which cut the total load 
-  pageload time almost in half! It's extra long because of all the extra
-  dev-environment baggage, but it's still a benefit. Progress!
-  - (3-30-2020) Been a while since the last update, but finally almost ready
-  to launch! Lots of fiddling with small things that keep falling through the
-  cracks, or things I hadn't thought of before it broke something. For example,
-  I updated the way ingredient quantities are recorded, now each ingredient has
-  a standard 1-person serving size attached in 2 different ways: 1 "show" 
-  amount/unit that appears on the recipe, and 1 "list" amount that will get
-  summed into the grocery list when I eventually get to that feature. This way
-  a recipe can call for "2 carrots" but the grocery list will still tell you
-  5 lbs of carrots instead of asking for 16 individual carrots. This is a
-  little less flexible than the old way, but much faster for defining new
-  recipes, and much less data to worry about - amounts are calculated off
-  the ingredient serving size definitions instead of living on their own
-  table. Farther down the road I'm going to add a "fudge factor" for adjusting
-  individual ingredients on individual recipes for those that need it, but 
-  most recipes use the same amount of a particular ingredient for a given
-  number of servings, like carrots or potatoes or oil. I'll also allow users to
-  save customized amounts of ingredients on favorited recipes, giving people
-  another reason to sign up.
-  Progress feels slow even though I'm checking things off the list every day.
-  However I've reached a minor milestone - I'm finally adding more things to
-  the "post-release" To-Do list than the "gotta do this right now" list. All I 
-  have left is adding some more actual content, a few minor style/color things,
-  tidying up the routing file, and setting up emails for signup confirmations
-  and password resets. After that I'm gonna announce to friends and family,
-  and MAYBE re-do the card graphics without anti-aliasing, or maybe with a
-  proper font that has a pixelated look, since the anti-aliasing on the fixed
-  width graphics is looking a little fuzzy on larger screens.
-  Oh, I'll also need to set up a resume site and cleanup the git tree to make
-  the Hyperchef/recipesabc repo public for job applications.
-  After it's live I'll be diving in to basic test coverage, and some kind of
-  log filtering so I can see errors at a glance. Or at least, get a little 
-  more familiar with Heroku's log functionality.
-  On a personal note,
-  The coronavirus pandemic got me down a bit - it's hard to focus and stay
-  excited about getting a new job while everyone else is scrambling to keep
-  theirs. Honestly I'm a little worried about downsizing happening right when
-  I start looking in a week or two, and more worried about a huge glut of 
-  people coming out of bootcamps started during the quarantine. I think that's
-  just my paranoia talking, though - no one is me but me, so I'll just keep on
-  plugging away at Hyperchef and focus on building skills instead of 
-  worrying about competition - going forward I still think there's only going
-  to be more webdev work than less, so I'm sure there's a place for me out
-  there somewhere!
-  - (3-19-2020 extra thoughts) While figuring out the recipe card, I 
-  thought of several more visual badges I want to add in the form of
-  recipe tags (which trigger the badges?). Besides vegetarian/meat-free, 
-  vegan, gluten-free, I'll also have paleo, hands-off (meaning most of
-  the time is in the oven or something, less than 10 minutes of hands-on
-  prep time), and one-pot (meaning everything gets put in a single pot, 
-  limited cleanup). Or maybe I'll go right with a limited cleanup badge?
-  Either way, the badges and such are probably for version 2, after launch,
-  test coverage, and the first major refactor.
-  - (3-19-2020 UPDATE) D'oh - quick update, I forgot to add the links
-  to the recipe cards that actually let you view the dang recipe! And
-  I forgot about styling the show page! oops....take everything I said and
-  add another 3-5 hours haha
-  - (3-19-2020) OK! After a lot of trial and error over the last few days,
-  now there's a (relativey) consistent look-and-feel to the UI (going for
-  a vaguely-SNES-retro-game feel, just enough to appeal to the kind of people
-  who spend a lot of time at home and want to learn to cook, but don't feel
-  like the typical Instagram/influencer cooking world appeals to their
-  aesthetic, aka...me lol). I mentioned yesterday about settling on 350px
-  wide Bootstrap cards, and I spent half the day yesterday fiddling with
-  pixel art editors (mtpaint and GraphicsGale) to put together some 
-  images to serve as UI elements. I'm using free art from two amazing
-  game artists, KenneyNL and (food art guy from ItchIO, !!! INCLUDE LINKS !!!).
-  After another hour or two getting the link visited+hover styles right and
-  fixing a couple missed pixels on some of the images, I think I'm finally
-  ready to launch!!! Well, soft-launch at least. I'm not going full
-  announcement mode until after I have the site up on Heroku and full of at 
-  least 100 recipes. That's going to take a while though, since typing 
-  everything in takes a while, plus I have to add all the tags and ingredients
-  as well. The admin pages for entering and editing recipes/ingredients/tags
-  are totally unstyled, but no one will ever see them but me so I'm not that
-  worried. Also, I'm not sure what the "correct" way to add myself an admin
-  account is, I guess just going into the console and manually setting the
-  admin attribute? I already have it all set up to not accept changes to
-  the admin attribute anywhere, so I guess as long as no one gains control
-  of my dev laptop and gets my SSL keys they can't make themselves admin, 
-  but I'd have bigger problems by then anyway (like an attacker with that much
-  control could just nuke the whole site with heroku destroy). 
-  I'm pretty noobish with security stuff still, which is part of why I'm 
-  learning Rails first and using Devise for auth and accounts - they handle
-  all the basic stuff for you.
-  Other than that, we're almost there! I'd also like to add a subtitle to the main page,
-  something like "recipes without the fluff" (but more punny), but I'm not
-  sure if that's too much visual clutter. I guess we'll see. 
-  I've been avoiding launch as long as possible, partly because I'm 
-  going to have to spend the $7 a month plus domain costs, and partly because
-  once it's live making changes won't be so consequence-free as they are now.
-  But I guess that's part of the process! Time to get used to updating live
-  sites, especially since Hyperchef is supposed to be my main portfolio project. 
-  After that it's just one more day for a quick resume site with Sinatra and
-  then it'll be time to start blasting it all over the internet and find out
-  how many things I've done wrong! Can't wait! :)
-
-  - (3-18-2020) Added new recipe columns to edit page (prep time, cook time,
-  card image name). Probably going to remove all of that and do a visual
-  grid/thing to show at a glance the recipe stats - meat, vegan, overall
-  hands-on time required, difficulty (measured by number of steps), 
-  number ingredients required (binned/heuristic impact on difficulty),
-  rare/exotic ingredients required. Can do most of this through ingredient
-  tags and model functions, just need a sensible way of designing the 
-  indicator UI. I still want it to fit in a 350px wide card, but it can be 
-  longer than 216px, possibly making 350 the short side of the golden ratio.
-  (~566px)
-  - (3-17-2020) I decided to remove the hamburger menu from the mobile view.
-  Like I said yesterday, I just don't like the collapse animation. Maybe 
-  it's because my laptop is underpowered (it's a $200 HP Stream laptop
-  - I didn't have a lot of money to spend), but it also pushed page content
-  around to make room for the content, and I don't like that in a navbar.
-  I'm sure there's ways to make it pop-over real nice with "modern" tech but
-  I'm not on to React yet, so I settled on the simple solution: Plain Old
-  Buttons.
-    I finally made the recipe search results into something more than just
-  plain links. I'm going with Bootstrap cards for now, because I'm going 
-  with just Bootstrap for now, and cards are the easiest/most complete thing
-  that can I can set to a fixed width and wrap in Bootstrap layout classes
-  to automatically lay out the rows of cards depending on how wide the viewer's 
-  window is. For now the cards are 350px wide, but in the future I'd like
-  to ask the browser for the viewport width and adjust the cards size slightly
-  so there isn't a huge amount of white space when the screen width is near a 
-  multiple of 1.5x card width, but as long as everything stays centered I 
-  guess it'll be fine fixed at 350px.
-    Also for the record, getting the cards to align and center correctly was 
-  a real pain the rear, fiddling with the padding and margins on the cards
-  and the container divs. Part of it was my fault, because the layout I've
-  been patching together as I go was a real mess, but also partly because
-  the Bootstrap spacing utility classes measure in rems, so I had to figure
-  out which needed padding and which needed auto-margin, which meant actually
-  using my brain. Ugh.
-    Other minor changes: changed the un/favoriting action in the UserProfile
-  controller to redirect back instead of to the recipe show view, so you can 
-  favorite right from the search results (the card has a button, will be a small
-  heart eventually). Still no AJAX, which is coming, but for now redirect-back
-  is good enough since the browser remembers your filter selections. Had a
-  weird problem with the favorite button the recipe#show view, it was putting
-  a nonce instead of the recipe ID into the form hidden input but stopped
-  after I fiddled with it, even though I ended up changing nothing. Weird.
-  - (3-16-2020) Focusing on mobile styling, fiddling with buttons and stuff. 
-  Tried putting profile/login/signup links into a collapsible hamburger on 
-  mobile, but the animation feels clunky and shifts all the content down to
-  make it fit. I could probably tinker with the animation, maybe remove it, 
-  but that seems like a lot of work for what amounts to 4 buttons shown 2 
-  at a time at most (Profile | Logout, Login | Signup). I don't imagine there'd
-  ever be as extensive a side-menu as a place like Amazon, which is where I'm 
-  taking some mobile design queues from in terms of searchable database of 
-  items (well, recipes, but functionally similar just without cart+checkout).
-  Also I have some pretty strong opinions about UI and hiding things, so I
-  think it's best to just remove the hamburger and try to keep the buttons
-  clear and simple on the header. I also have an image that brings back to
-  the home page, and I'd like to add one for going back to the overall
-  browse screen too (a "back to search" or something.)
-  - (pre- 3-16-2020) Retroactive first entry. I've been working on this 
-  for about a month now, in place of The Odin Project's final Rails project
-  to replicate Facebook or some other social media site. I've probably spent
-  way more time on this than I would have on the final project, mainly due to
-  the more complicated data models I've put together for an efficient way of
-  representing recipes and their ingredients. I'm trying to avoid repetition
-  so each ingredient has a single entry in a table, and all recipes just 
-  reference that one thing. Recipes are basically just a set of text steps
-  and a lot of references to ingredients. Quantities of ingredients for a 
-  recipe are saved on the join model that connects recipes with ingredients.
-  I'm not sure if it's actually more efficient, because of my newness, 
-  but it seems pretty clever if I do say so myself.
-  + My main motivation behind this project is to follow the common advice of 
-  solving problems you have yourself. I also wanted to do something more 
-  original than just whatever TOP says to do for a final project, to make
-  myself stand out more. But mostly it's because I'm trying to learn to cook
-  more than just beans and rice, and my travels through the food side of the
-  internet have shown me that pretty much every recipe website is a train
-  wreck of ads and paragraphs of pointless prose about the author's personal
-  history with chicken stew.
-    (for me): also i looked up copyright on recipes, you can copy lists of
-              ingredients and plain-language instructions, but any prose
-              or creative descriptions and obviously photos are copywritten.
+  (moved to blog drafts folder - visit cgardn.github.io for latest)
 
 What it looks like: (x2x)
   - Simple interface with just a search bar and a slideshow of movies and/or
