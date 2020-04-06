@@ -9,6 +9,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'rspec'
 gem 'jquery-rails'
+gem 'figaro'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'

@@ -22,12 +22,11 @@ Pre-Launch:
       + i forgot to convert from metric base to imperial base before collecting units
         so a 200g portion became 200oz->12.5 lbs, instead of 7oz
     + add serving-size changer to recipe views, and include in multiplier/unit conversion
-      - requires converting base quantities to single serving in recipes
+      + requires converting base quantities to single serving in recipes
       + swapped plain link for small form, had to fiddle with the model func a bit but we
         got there in the end
     + add way to have a quantity of "1 unit/piece" for things like potatoes and chicken breasts.
       + These single units should be ignored during unit conversion
-      ~ option during recipe creation?
       + completed with new unit hash attribute
     + recipe#show add background image for steps (visual clarity, gradient lightness at bottom
       gets too close to light text)
@@ -39,7 +38,6 @@ Pre-Launch:
     ~ consider a sidebar/non-modal for desktop mode (probably lg and above, md is for tablets)
       + at least change the order of the filter button and the "go" button
       + changed order of filter and go button, re-did the text to make it hopefully more clear
-    ? put a bright color on the save/un-save button
     + re-do card graphics with less anti-aliasing (makes it too fuzzy)
       + Removed images for text, replaced with regular text since it's pretty close
       + placed progress bar images with bootstrap progress bars, cleaner and easier to size correctly
@@ -77,12 +75,17 @@ Pre-Launch:
   + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - log everything with delayed ActiveJobs or ActiveQueue or whatever it's called
+    - would be nice to make admin views that show graphs of visits and whats getting clicked on and stuff
+    - also would be nice to be able to see most active users, or at least broad user insights like what recipes get favorited the most, etc
+      - also bounce-rate and things like that
   - add a "only favorites" option to the search filters
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
   - filter buttons still need you to press Go, should probably auto-filter when you close the filter modal
     + at least the order is more sensible now, filters are above the search button
   ~ test coverage of at least all the controller actions and user stories
     + bare minimum, check for all pages loading without errors so i know when i broke a page
+      + this is done now, not full coverage but at i'll know if i broke something user-facing
 * - refactor list:
     - need a way to programatically fill the units hash on an ingredient, without having to type out "imperial_show" etc every place I make a new ingredient
     - i have to define an ingredient in the recipe model test, in order to test the recipe's unit conversion method?
@@ -118,6 +121,7 @@ Post-Launch (v1.1):
       one at a time - if original is not in param list, remove tag. if original is in param list, pop that one from param list and go next.
       after going through all originals, anything left in param list is new additions to that tag, go through each of those and add the tag
       two loops in a row, O(n)?
+  ? put a bright color on the save/un-save button / change button to image or something
 
 Polish (v1.2):
   - filters should have +/- instead of checkbox, some way to selectively include, exclude, or do nothing with each item
