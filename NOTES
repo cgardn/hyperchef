@@ -75,6 +75,7 @@ Pre-Launch:
   + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - tests for all the devise views and actions (if possible), also tests for email views and actions
   - log everything with delayed ActiveJobs or ActiveQueue or whatever it's called
     - would be nice to make admin views that show graphs of visits and whats getting clicked on and stuff
     - also would be nice to be able to see most active users, or at least broad user insights like what recipes get favorited the most, etc
