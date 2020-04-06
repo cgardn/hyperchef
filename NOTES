@@ -73,17 +73,20 @@ Pre-Launch:
       routing file
     + added admin auth to all non-user controller actions, removed a bunch of unused controller actions and routes from file
   - set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
-    will set up mailing list type things much later
-  - fix non-updating time_score and ingredient_score on production
+      - will set up mailing list type things much later
+  + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
   - add a "only favorites" option to the search filters
   - "back to search" button on recipe#show is a fresh search, doesn't save your filters
   - filter buttons still need you to press Go, should probably auto-filter when you close the filter modal
-    - at least the order is more sensible now, filters are above the search button
-  - test coverage of at least all the controller actions and user stories
-    - bare minimum, check for all pages loading without errors so i know when i broke a page
+    + at least the order is more sensible now, filters are above the search button
+  ~ test coverage of at least all the controller actions and user stories
+    + bare minimum, check for all pages loading without errors so i know when i broke a page
 * - refactor list:
+    - need a way to programatically fill the units hash on an ingredient, without having to type out "imperial_show" etc every place I make a new ingredient
+    - i have to define an ingredient in the recipe model test, in order to test the recipe's unit conversion method?
+      - something's in the wrong place, not sure if conversion func should go on ingredient or what (probably this)
     - remove old ing_quant code from recipe model, adapt text conversion func to work with new ingredient units (show/list)
     - remove old is_liquid bool from ingredient code and probably remove the column as well
       - maybe make an is_liquid function that just checks the unit type, if necessary? is it faster to have a database column?

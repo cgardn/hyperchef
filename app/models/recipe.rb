@@ -34,7 +34,7 @@ class Recipe < ApplicationRecord
     rt + it.flatten.uniq
   end
 
-  # used in db/seeds.rb
+  # not used
   def set_quantity(ing, amt)
     ingquant = join_ingredients_recipes.find_by(ingredient_id: Ingredient.find_by(name: ing))
     ingquant.quantity_in_grams = amt
@@ -135,14 +135,17 @@ class Recipe < ApplicationRecord
     out.reject{ |n| n[0] == 0}.map{ |x| [x[0].round, x[1]] }.join(' ')
   end
 
+  # not used
   def join_i(ing)
     join_ingredients_recipes.find_by(ingredient_id: ing.id)
   end
 
+  # not used, use slugs and separate name now
   def convert_name_for_title
     URI::decode(name.gsub('-', ' ').titleize)
   end
 
+  # not used, but might in the future
   def get_image_path
     unless card_image_path == ""
       return card_image_path
