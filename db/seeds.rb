@@ -88,7 +88,6 @@ puts "Creating Recipes..."
 
   i.length.times do |n|
     r.ingredients << Ingredient.find(i[n])
-    r.set_quantity(Ingredient.find(i[n]).name, rand(1000))
   end
   e.length.times do |n|
     r.equipment << Equipment.find(e[n])

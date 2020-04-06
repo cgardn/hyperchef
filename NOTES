@@ -83,7 +83,10 @@ Post-Launch (v1.1):
     - at least the order is more sensible now, filters are above the search button
   - test coverage of at least all the controller actions and user stories
     - bare minimum, check for all pages loading without errors so i know when i broke a page
-  - refactor list:
+* - refactor list:
+    - remove old ing_quant code from recipe model, adapt text conversion func to work with new ingredient units (show/list)
+    - remove old is_liquid bool from ingredient code and probably remove the column as well
+      - maybe make an is_liquid function that just checks the unit type, if necessary? is it faster to have a database column?
     - Pull recipe favorite-button-form out of both show view and card and make it a partial
       - used in multiple places, on recipe card and at top of recipe show page
     - Time to think about AJAX responses for the favorite button and whatever else

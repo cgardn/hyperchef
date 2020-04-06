@@ -34,12 +34,14 @@ class Recipe < ApplicationRecord
     rt + it.flatten.uniq
   end
 
+  # used in db/seeds.rb
   def set_quantity(ing, amt)
     ingquant = join_ingredients_recipes.find_by(ingredient_id: Ingredient.find_by(name: ing))
     ingquant.quantity_in_grams = amt
     ingquant.save
   end
 
+  # not used
   def edit_quants
     out = {}
     join_ingredients_recipes.each do |i|
@@ -49,6 +51,7 @@ class Recipe < ApplicationRecord
     out
   end
 
+  # not used
   def ing_quants(convert = false, multiplier = 1)
     if convert.nil? || convert == "false"
       convert = false
@@ -71,6 +74,13 @@ class Recipe < ApplicationRecord
     end
     out
   end
+
+  # can modify to use with new show_unit/list_unit system on ingredients,
+  #   call this from controller when building views for recipe#show as well as
+  #   grocery#show (grocery list not implemented yet)
+  #   - but the new show/list system has conversions baked in?
+  #   - still need to break down into larger units though, so I can adapt this
+  #     to that purpose using the ingredient's given unit ('mL', 'oz', etc)
 
   def build_text_units(baseQuant, isLiquid, multiplier = 1, convert = false)
     # Breaks a base quantity into appropriately sized measures, multiplying
