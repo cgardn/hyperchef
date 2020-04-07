@@ -75,6 +75,8 @@ Pre-Launch:
   + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - maybe get rid of ingredients count in recipe card? "Ingredients" is unclear - is it number of ingredients, how hard they are to work with, cost, etc?
+    - i can see a lot of people thinking it's rating ingredient cost, for example
   - tests for all the devise views and actions (if possible), also tests for email views and actions
   - log everything with delayed ActiveJobs or ActiveQueue or whatever it's called
     - would be nice to make admin views that show graphs of visits and whats getting clicked on and stuff
