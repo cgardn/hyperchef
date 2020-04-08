@@ -51,7 +51,7 @@ Pre-Launch:
       + it was an extra line break outside of the checkbox conditional, so the line was broken once for 
         every tag whether it got included in the final modal or not
     + ingredient edit page "back to list" should go back to admin#ingredients, not to ingredient#index
-      ~ probably redirect all the endpoints for recipe/ingredient/tag indexes to the admin page in routing 
+      + redirect all the endpoints for recipe/ingredient/tag indexes to the admin page in routing 
         file and disable the controller functions
       + good for now, it goes back to '/admin', not sure how to get it to select the ingredients tab specifically,
         /admin#ingredients brings you to just the tab panel with no tabs above it
@@ -70,11 +70,18 @@ Pre-Launch:
     + everything else that isn't also used by admin should be removed from files and routes, and redirected in the
       routing file
     + added admin auth to all non-user controller actions, removed a bunch of unused controller actions and routes from file
-  - set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
+  + set up emails the same way as the sample app, for signup confirmation/password recovery type stuff ONLY at first
       - will set up mailing list type things much later
   + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - way to programatically check all routes configured in the router against what's actually set up with views and actions
+  + replace filter 'X' at top right with another "close" button
+  - all actions that take in params should gracefully handle if they're not there (i.e. avoid calling methods on nil)
+  - better way of putting in steps - maybe make a partial that renders a markdown file, and make the steps one big markdown file.
+    - requires the ability to render a markdown file as a partial
+  - drafts of recipes, auto-saving of drafts while working
+  - something to ping the site to keep it on the Heroku free tier
   - maybe get rid of ingredients count in recipe card? "Ingredients" is unclear - is it number of ingredients, how hard they are to work with, cost, etc?
     - i can see a lot of people thinking it's rating ingredient cost, for example
   - tests for all the devise views and actions (if possible), also tests for email views and actions
@@ -83,8 +90,8 @@ Post-Launch (v1.1):
     - also would be nice to be able to see most active users, or at least broad user insights like what recipes get favorited the most, etc
       - also bounce-rate and things like that
   - add a "only favorites" option to the search filters
-  - "back to search" button on recipe#show is a fresh search, doesn't save your filters
-  - filter buttons still need you to press Go, should probably auto-filter when you close the filter modal
+  - BUG: "back to search" button on recipe#show is a fresh search, doesn't save your filters
+  - filter buttons still need you to press Go, should auto-filter when you close the filter modal
     + at least the order is more sensible now, filters are above the search button
   ~ test coverage of at least all the controller actions and user stories
     + bare minimum, check for all pages loading without errors so i know when i broke a page
@@ -98,6 +105,7 @@ Post-Launch (v1.1):
       - maybe make an is_liquid function that just checks the unit type, if necessary? is it faster to have a database column?
     - Pull recipe favorite-button-form out of both show view and card and make it a partial
       - used in multiple places, on recipe card and at top of recipe show page
+      - but the card has special graphics, how does that affect making it a partial?
     - Time to think about AJAX responses for the favorite button and whatever else
     - can probably make the recipe edit page even more compact, all the checkbox sections look pretty similar
   - give users ability to save custom ingredient amounts on favorited recipes
@@ -115,8 +123,9 @@ Post-Launch (v1.1):
     - better way to search for and selectively include/exclude specific ingredients (cinnamon, garlic, etc) - 
     - diet-specific pre-made filters? (Jainist-friendly: no meat/roots/etc, Paleo, Gluten-free, Vegan, etc)
       - can define the rules at the model level with hashes of disallowed ingredients and/or tags, and then create the category tags on the fly
-  - notes section on either recipes, or ingredients, or both - so I can include things like "I prefer gala apples" on a generic "apple" 
+  - introductory/explanatory notes section on either recipes, or ingredients, or both - so I can include things like "I prefer gala apples" on a generic "apple" 
     ingredient, keeping the ingredients list simpler but allowing for some customization and one-off thoughts, instead of 100 different apples
+    - also for recipes, a way of explaning some extra stuff, like that coq au vin is normally served with potato mash but I like baked/roasted potatoes as well
   - bulk assigning of tags to ingredients, for quickly adding a new tag to many things
     - i.e. clicking a tag should show a list of ingredients using it with checkboxes, and have an associated controller action for bulk 
       updating that tag on all checked/unchecked ingredients
@@ -129,6 +138,14 @@ Post-Launch (v1.1):
 Polish (v1.2):
   - filters should have +/- instead of checkbox, some way to selectively include, exclude, or do nothing with each item
     - so users can specifically exclude pork for example
+    - probably a job for more advanced UI like with React or something
+    - I would like tags to be shown in groups, like "vegetables," "meat," etc, and in each group there's the different ingredients that you can toggle to include
+      or exclude
+      - also I'd like the heading to be a toggle as well, so you can toggle all vegetables or all meat on and off
+      - at the very top there should be some quick-access meta-toggles for all the above mentioned categories, like vegan, paleo, pescetarian, etc.
+        - these are likely just toggling toggles, not directly sending params themselves - so a fully in-the-UI thing
+    - every filter toggle should be updated/maintained in the current session, and automatically rebuilt whenever filter is opened, preserving in case of browser
+      crash, accidentally clicking off the filter screen, or whatever
   - time: card must show total time from "I want to cook" to "I'm eating food"
         : show page can break out hands-on vs hands-off cooking, possibly add as badge
   - add visual badges, probably in place of view button, possibly changing recipe card size from horizontal Golden Ratio to vertical,
@@ -140,6 +157,7 @@ Polish (v1.2):
 
 Progression (v2):
   - menu planning and grocery list generation
+  - add sides as separate sub-recipes that can be added to customize recipes, start out as separate recipes (like roasting in the oven)
 
 The Big Time (v3):
   - lessons + techniques section
