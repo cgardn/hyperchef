@@ -35,24 +35,22 @@
     <% end %>
   </div>
 </div>
+
 <hr>
+
 <div class="row">
   <div class="col-12 bg-secondary border border-secondary rounded py-3">
     <h4>Ingredients:</h4>
-    <table>
-      <% @ingredients.each do |i| %>
-        <tr>
-          <td class="font-md"><%= i.units[ @unit_selector ][0].to_f*@servings.to_f %></td>
-          <td></td>
-          <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
-          <td></td>
-          <td class="font-md"><%= i.name %></td>
-        </tr>
-      <% end %>
+    <table id="ingredients-table">
+      <%= render 'ing-table' %>
     </table>
-    <%= form_with(url: recipe_path, method: "get", local: true) do |cForm| %>
+    <%= form_with(url: recipe_path, method: "get", id: "unit_form" ) do |cForm| %>
       <%= cForm.label "Servings: " %>
       <%= cForm.select(:servings, (1..12), selected: @servings) %>
+      <%= link_to "Metric", recipe_path, method: "get", id: "convert_true",
+          convert: true, remote: true, class: "btn btn-dark active" %>
+      <%= link_to "Imperial", recipe_path, method: "get", id: "convert_false",
+          convert: false, remote: true, class: "btn btn-dark active" %>
       
       <% if @chosen == "true" %>
         <%= cForm.radio_button :convert, true, checked: true %> Metric
@@ -62,9 +60,6 @@
         <%= cForm.radio_button :convert, false, checked: true %> Imperial
       <% end %>
 
-      <%= cForm.submit("Change",
-        class: "btn btn-dark btn-sm active",
-        name: nil) %>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,9 @@
+<% @ingredients.each do |i| %>
+  <tr>
+    <td class="font-md"><%= i.units[ @unit_selector ][0].to_f*@servings.to_f %></td>
+    <td></td>
+    <td class="font-md"><%= i.units[ @unit_selector ][1] %></td>
+    <td></td>
+    <td class="font-md"><%= i.name %></td>
+  </tr>
+<% end %>

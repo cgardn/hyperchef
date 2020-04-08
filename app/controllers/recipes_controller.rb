@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @ingredients = @recipe.ingredients
+    @ingredients = @recipe.ingredients.sort_by{ |obj| obj.name }
 
     # picking :selected for unit select tag
     unless params[:convert].nil?
@@ -35,6 +35,11 @@ class RecipesController < ApplicationController
     end
 
     params[:servings].nil? ? @servings = 1 : @servings = params[:servings].to_i
+
+    respond_to do |f|
+      f.html 
+      f.js { render 'show' }
+    end
   end
 
   def edit

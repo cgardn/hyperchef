@@ -14,3 +14,6 @@ $ ->
     backgroundColor = $(this).data("background-color")
     textColor = $(this).data("text-color")
     paintIt(this, backgroundColor, textColor)
+
+  $("#filterModal").on 'hidden.bs.modal', ->
+    $("#searchform").trigger("submit.rails")

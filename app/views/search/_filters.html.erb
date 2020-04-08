@@ -1,0 +1,38 @@
+<div class="modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalTitle" aria-hidden-"true">
+  <div class="modal-dialog modal-dialog-centered card-text-color" role="document">
+    <div class="modal-content card-bg-color">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalTitle">Filters</h5>
+        <button type="button" class="btn btn-primary" data-filter="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <h5>Recipe tags:</h5>
+        <div class="font-sm">
+          <% @rType_inuse.each do |rt| %>
+            <% @checked_rTypes.include?(rt) ? @chk = true : @chk = false %>
+            <%= check_box_tag("rTypes[]selected", rt, checked=@chk) %>
+            <%= fForm.label rt %>
+          <% end %>
+          <br>
+        </div>
+        <br>
+
+        <h5>Ingredient tags:</h5>
+        <div class="font-sm">
+          <% @iTags_inuse.each do |it| %>
+            <% @checked_iTags.include?(it) ? @chk = true : @chk = false %>
+            <%= check_box_tag("iTags[]selected", it, checked=@chk) %>
+            <%= fForm.label it %>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-filter="close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

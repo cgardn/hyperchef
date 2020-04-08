@@ -75,6 +75,7 @@ Pre-Launch:
   + fix non-updating time_score and ingredient_score on production
 
 Post-Launch (v1.1):
+  - tidy up url for searches
   - way to programatically check all routes configured in the router against what's actually set up with views and actions
   + replace filter 'X' at top right with another "close" button
   - all actions that take in params should gracefully handle if they're not there (i.e. avoid calling methods on nil)
@@ -91,8 +92,9 @@ Post-Launch (v1.1):
       - also bounce-rate and things like that
   - add a "only favorites" option to the search filters
   - BUG: "back to search" button on recipe#show is a fresh search, doesn't save your filters
-  - filter buttons still need you to press Go, should auto-filter when you close the filter modal
+  ~ filter buttons still need you to press Go, should auto-filter when you close the filter modal
     + at least the order is more sensible now, filters are above the search button
+    + js triggers form submission on clicking filter close button or clicking outside modal
   ~ test coverage of at least all the controller actions and user stories
     + bare minimum, check for all pages loading without errors so i know when i broke a page
       + this is done now, not full coverage but at i'll know if i broke something user-facing
@@ -120,6 +122,9 @@ Post-Launch (v1.1):
     - filters should be grouped by type/organized somehow, so it's easy to find the tags you want. Groupings like meat, veg, starch type,
       etc. does this require extra db columns on tag models?
     - I'd like a way to easily and helpfully allow positive and negative searches, so easy to include tomatoes and exclude wheat/gluten
+      - made a three-way radio button component in React, but how can I replicate that here without a full-blown React frontend?
+        - 3-way meaning: two radio buttons and a label, initial state: none checked, each click cycles through first radio selected, then second radio
+          selected, then none selected again. Can probably be styled to be a green unicode check and a red x
     - better way to search for and selectively include/exclude specific ingredients (cinnamon, garlic, etc) - 
     - diet-specific pre-made filters? (Jainist-friendly: no meat/roots/etc, Paleo, Gluten-free, Vegan, etc)
       - can define the rules at the model level with hashes of disallowed ingredients and/or tags, and then create the category tags on the fly
