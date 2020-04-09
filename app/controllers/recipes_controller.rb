@@ -18,7 +18,6 @@ class RecipesController < ApplicationController
   end
 
   def show
-    puts "servings in controller: #{params[:servings]}"
     @ingredients = @recipe.ingredients.sort_by{ |obj| obj.name }
 
     # picking :selected for unit select tag
