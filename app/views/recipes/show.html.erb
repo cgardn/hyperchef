@@ -47,15 +47,11 @@
       <%= form_with(url: recipe_path, method: "get", id: "unit_form" ) do |cForm| %>
         <%= cForm.label "Servings: " %>
         <%= cForm.select(:servings, (1..12), selected: @servings) %>
-        <%= link_to "Metric", recipe_path({convert: "true", servings: @servings}), method: "get",
-                  id: "convert_true",
-                  remote: true, class: "btn btn-dark active",
-                  data: {disable: "true"} %>
+  
+        <a id="convert_true", class="btn btn-dark active" data-disable="true">Metric</a>
 
-        <%= link_to "Imperial", recipe_path({convert: "false", servings: @servings}), method: "get",
-                  id: "convert_false",
-                  remote: true, class: "btn btn-dark active",
-                  data: {disable: "true"} %>
+        <a id="convert_false", class="btn btn-dark active" data-disable="true">Imperial</a>
+
       <% end %>
   </div>
 </div>

@@ -38,8 +38,8 @@ class RecipesController < ApplicationController
     params[:servings].nil? ? @servings = 1 : @servings = params[:servings].to_i
 
     respond_to do |f|
-      f.html 
-      f.js
+      f.html {}
+      f.js {}
     end
   end
 
