@@ -1,4 +1,4 @@
-function fireForm(form, item) {
+function fireForm(form) {
   Rails.fire(form, 'submit');
 }
 
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("change", function (e) {
     select = document.getElementById("servings");
     if (e.target === select) {
-      fireForm(form, e);
+      fireForm(form);
     }
   });
   
