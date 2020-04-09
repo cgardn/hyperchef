@@ -15,12 +15,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
   
-  document.getElementById("convert_true").addEventListener("mouseup", (e) => {
-    console.log("listener 2");
-    fireForm(form, e);
-  });
-  document.getElementById("convert_false").addEventListener("mouseup", (e) => {
-    console.log("listener 3");
-    fireForm(form, e);
-  });
 });
