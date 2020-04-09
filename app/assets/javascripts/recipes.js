@@ -5,7 +5,7 @@ function fireForm(form, item) {
 document.addEventListener("DOMContentLoaded", function () {
   form = document.getElementById("unit_form");
 
-  document.addEventListener("change", (e) => {
+  document.addEventListener("change", function (e) {
     select = document.getElementById("servings");
     if (e.target === select) {
       fireForm(form, e);

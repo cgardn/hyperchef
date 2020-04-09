@@ -1,4 +1,3 @@
-console.log("show js");
 document.getElementById("ingredients-table").innerHTML = "<%= j render partial: 'ing-table' %>";
 
 document.getElementById("convert_true").setAttribute('href', "<%= recipe_path(@recipe, {convert: "true", servings: @servings}) %>");
