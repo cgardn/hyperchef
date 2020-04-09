@@ -41,26 +41,22 @@
 <div class="row">
   <div class="col-12 bg-secondary border border-secondary rounded py-3">
     <h4>Ingredients:</h4>
-    <table id="ingredients-table">
+    <div id="ingredients-table">
       <%= render 'ing-table' %>
-    </table>
-    <%= form_with(url: recipe_path, method: "get", id: "unit_form" ) do |cForm| %>
-      <%= cForm.label "Servings: " %>
-      <%= cForm.select(:servings, (1..12), selected: @servings) %>
-      <%= link_to "Metric", recipe_path, method: "get", id: "convert_true",
-          convert: true, remote: true, class: "btn btn-dark active" %>
-      <%= link_to "Imperial", recipe_path, method: "get", id: "convert_false",
-          convert: false, remote: true, class: "btn btn-dark active" %>
-      
-      <% if @chosen == "true" %>
-        <%= cForm.radio_button :convert, true, checked: true %> Metric
-        <%= cForm.radio_button :convert, false %> Imperial
-      <% else %>
-        <%= cForm.radio_button :convert, true %> Metric
-        <%= cForm.radio_button :convert, false, checked: true %> Imperial
-      <% end %>
+    </div>
+      <%= form_with(url: recipe_path, method: "get", id: "unit_form" ) do |cForm| %>
+        <%= cForm.label "Servings: " %>
+        <%= cForm.select(:servings, (1..12), selected: @servings) %>
+        <%= link_to "Metric", recipe_path({convert: "true", servings: @servings}), method: "get",
+                  id: "convert_true",
+                  remote: true, class: "btn btn-dark active",
+                  data: {disable: "true"} %>
 
-    <% end %>
+        <%= link_to "Imperial", recipe_path({convert: "false", servings: @servings}), method: "get",
+                  id: "convert_false",
+                  remote: true, class: "btn btn-dark active",
+                  data: {disable: "true"} %>
+      <% end %>
   </div>
 </div>
 

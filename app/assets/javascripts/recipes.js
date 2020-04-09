@@ -1,20 +1,22 @@
-function fireForm(form) {
+function fireForm(form, item) {
+  console.log(item);
   Rails.fire(form, 'submit');
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   form = document.getElementById("unit_form");
-  select = document.getElementById("servings");
-  radio_true = document.getElementById("convert_true");
-  radio_false = document.getElementById("convert_false");
 
-  select.addEventListener("change", (e) => {
-    fireForm(form);
+  document.addEventListener("change", (e) => {
+    select = document.getElementById("servings");
+    if (e.target === select) {
+      fireForm(form, e);
+    }
   });
 
-  [radio_true, radio_false].forEach( (item) => {
-    item.addEventListener("click", (e) => {
-      fireForm(form);
-    });
+  document.getElementById("convert_true").addEventListener("mouseup", (e) => {
+    fireForm(form, e);
+  });
+  document.getElementById("convert_false").addEventListener("mouseup", (e) => {
+    fireForm(form, e);
   });
 });

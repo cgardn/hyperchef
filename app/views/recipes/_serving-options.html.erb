@@ -1,0 +1,5 @@
+<select name="servings" id="servings" >
+  <% (1..12).each do |n| %>
+    <option value=<%= "#{n}" %> <% select == n ? "selected" : "" %>><%= "#{n}" %></option>
+  <% end %>
+</select>
