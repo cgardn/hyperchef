@@ -45,21 +45,13 @@
       <%= render 'ing-table' %>
     </div>
       <%= form_with(url: recipe_path, method: "get", id: "unit_form" ) do |cForm| %>
+        <%= cForm.hidden_field :units, value: "imperial", id: "unit_field" %>
         <%= cForm.label "Servings: " %>
         <%= cForm.select(:servings, (1..12), selected: @servings) %>
-        <%= link_to "Metric", recipe_path({ 
-          convert: "true", servings: @servings}),
-          method: "get",
-          id: "convert_true",
-          remote: true, class: "btn btn-dark active",
-          data: {disable: "true"} %>
 
-        <%= link_to "Imperial", recipe_path({
-          convert: "false", servings: @servings}),
-          id: "convert_false",
-          remote: true,
-          class: "btn btn-dark active",
-          data: {disable: "true"} %>
+        <div id="button_metric" class="btn btn-dark active">Metric</div>
+        <div id="button_imperial" class="btn btn-dark active">Imperial</div>
+
       <% end %>
   </div>
 </div>

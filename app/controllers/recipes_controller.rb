@@ -19,22 +19,10 @@ class RecipesController < ApplicationController
 
   def show
     @ingredients = @recipe.ingredients.sort_by{ |obj| obj.name }
-
-    # picking :selected for unit select tag
-    unless params[:convert].nil?
-      if params[:convert] == "false"
-        @unit_selector = "imperial_show"
-        @chosen = params[:convert]
-      elsif params[:convert] == "true"
-        @unit_selector = "metric_show"
-        @chosen = params[:convert]
-      end
-    else
-      @unit_selector = "imperial_show"
-      @chosen = "false"
-    end
-
+    params[:units].nil? ? @unit = "imperial" : @unit = params[:units]
     params[:servings].nil? ? @servings = 1 : @servings = params[:servings].to_i
+
+    @unit_selector = "#{@unit}_show"
 
     respond_to do |f|
       f.html {}

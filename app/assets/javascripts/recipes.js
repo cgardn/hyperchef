@@ -1,4 +1,7 @@
-function fireForm(form) {
+function fireForm(form, newValue) {
+  if (newValue) {
+    document.getElementById("unit_field").setAttribute('value', newValue);
+  }
   Rails.fire(form, 'submit');
 }
 
@@ -10,6 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target === select) {
       fireForm(form);
     }
+  });
+
+  metric = document.getElementById("button_metric");
+  metric.addEventListener("mousedown", function () {
+    fireForm(form, "metric");
+  });
+
+  imperial = document.getElementById("button_imperial");
+  imperial.addEventListener("mousedown", function() {
+    fireForm(form, "imperial");
   });
   
 });

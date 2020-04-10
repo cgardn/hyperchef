@@ -1,5 +1,1 @@
 document.getElementById("ingredients-table").innerHTML = "<%= j render partial: 'ing-table' %>";
-
-document.getElementById("convert_true").setAttribute('href', "<%= recipe_path(@recipe, {convert: "true", servings: @servings}) %>");
-
-document.getElementById("convert_false").setAttribute('href', "<%= recipe_path(@recipe, {convert: "false", servings: @servings}) %>");
