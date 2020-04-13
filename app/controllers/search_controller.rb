@@ -11,9 +11,7 @@ class SearchController < ApplicationController
     end
 
     # only filter results by checked boxes if boxes were actually checked
-    # - hack to fix top search bar and filter submit button technically
-    #   being seperate forms
-    
+    # - saves some time when nothing is checked
     unless params[:rTypes].to_s + params[:iTags].to_s == ""
       if params[:rTypes].to_s == ""
         @filter = params[:iTags].flatten.reject {
@@ -26,6 +24,8 @@ class SearchController < ApplicationController
           |n| n[:selected] == "0" }.pluck(:selected)
       end
 
+      # This still produces one database call per recipe, might be a way to 
+      #   do it in a single call
       filteredResults = []
       @results.each do |r|
         if (r.all_tags & @filter).length == @filter.length

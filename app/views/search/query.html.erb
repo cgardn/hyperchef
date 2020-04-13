@@ -34,7 +34,5 @@
 </div>
 <hr>
 <div class="row col-12 p-0 mx-auto">
-  <% @results.each do |r| %>
-    <%= render 'shared/recipe_link', rec: r %>
-  <% end %>
+  <%= render partial: 'shared/recipe_link', collection: @results, as: :rec %>
 </div>
