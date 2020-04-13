@@ -26,13 +26,10 @@ class Recipe < ApplicationRecord
   end
 
   def all_tags
-    # it_new = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id)
+    # it_new = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id).pluck(:name).flatten.uniq
     rt = recipe_types.pluck(:name)
-    it = []
-    ingredients.each do |ing|
-      it.push(ing.ingredient_tags.pluck(:name))
-    end
-    rt + it.flatten.uniq
+    it = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id).pluck(:name).flatten.uniq
+    rt + it
   end
 
   # not used
