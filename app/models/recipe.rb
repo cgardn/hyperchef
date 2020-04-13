@@ -26,6 +26,7 @@ class Recipe < ApplicationRecord
   end
 
   def all_tags
+    # it_new = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id)
     rt = recipe_types.pluck(:name)
     it = []
     ingredients.each do |ing|
