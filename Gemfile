@@ -11,6 +11,9 @@ gem 'rspec'
 gem 'jquery-rails'
 gem 'figaro'
 
+# CORS for running separate frontend
+gem 'rack-cors'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0', '>= 6.0.0'
 # Use Puma as the app server
@@ -24,6 +27,8 @@ gem 'uglifier', '>= 1.3.0'
 
 # default JS compiler for rails 6
 gem "webpacker"
+# for initiating several processes at once
+gem "foreman"
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

@@ -47,7 +47,7 @@ metric_units = ['g', 'mL']
   i.save
   
   tags = nil
-  while tags == nil || tags.length < 3
+  while tags == nil || tags.length < 2
     tags = Array.new(rand(3..4)) {rand(2..iTags.length-1)}.uniq!
   end
 

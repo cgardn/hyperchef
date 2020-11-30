@@ -3,6 +3,14 @@ class SearchController < ApplicationController
   def index
   end
 
+  def all_json
+    render json: Recipe.all
+  end
+
+  def test
+    render json: {msg: "Test"}
+  end
+
   def query
     @results = Recipe.search_names(params[:query])
 

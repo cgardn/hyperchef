@@ -26,9 +26,12 @@ class Recipe < ApplicationRecord
   end
 
   def all_tags
-    rt = recipe_types.pluck(:name)
-    it = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id).pluck(:name).flatten.uniq
-    rt + it
+    rt = recipe_types.pluck(:name).to_set
+    it = IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id).pluck(:name).to_set
+    
+    rt.merge(it).to_a
+
+    #recipe_types.pluck(:name).to_set.merge(IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", id).pluck(:name)).to_a
   end
 
   # not used

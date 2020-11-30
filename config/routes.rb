@@ -10,6 +10,13 @@ Rails.application.routes.draw do
 
   get '/admin', to: 'admin#index'
 
+  # API endpoints
+  get '/api/test', to: 'api#test'
+  get '/api/all', to: 'api#all'
+  get '/api/search', to: 'api#search'
+  get '/api/:slug', to: 'api#single'
+
+
   resources :recipes, except: [:create, :index], param: :slug
   get '/recipes', to: 'search#query'
   post '/recipes', to: 'recipes#update'
