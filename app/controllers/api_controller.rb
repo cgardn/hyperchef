@@ -16,8 +16,7 @@ class ApiController < ApplicationController
     #   ingredient, then inserting the tags into the actual recipes
     #   - also likely needs pagination for when we get to large numbers of recipes
     render json: Recipe.all.to_json(
-      :methods => :all_tags,
-      :only => [:difficulty, :time_score, :ingredient_score, :name, :slug, :saves],
+      :only => [:ingredientTags, :difficulty, :time_score, :ingredient_score, :name, :slug, :saves],
     )
     
   end
