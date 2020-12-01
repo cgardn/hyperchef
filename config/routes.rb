@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/api/test', to: 'api#test'
   get '/api/all', to: 'api#all'
   get '/api/search', to: 'api#search'
+  get '/api/get_tags', to: 'api#get_tags'
   get '/api/:slug', to: 'api#single'
 
 

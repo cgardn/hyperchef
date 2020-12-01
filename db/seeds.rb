@@ -10,13 +10,12 @@ require 'faker'
 
 # Creating recipe and ingredient tags - must be done first to assign to actual ingredients/recipes
 puts "Creating tags..."
-rTypes = RecipeType.create([{name: "unused tester"}, {name: "salad"},
+rTypes = RecipeType.create([{name: "salad"},
                             {name: "pastry"},{name: "dinner"},{name: "lunch"},
                             {name: "breakfast"},{name: "quick & easy"},
                             {name: "rice bowls"}])
 
-iTags = IngredientTag.create([{name: "unused ingredient tag"},
-                              {name: "poultry"},{name: "meat"},
+iTags = IngredientTag.create([{name: "poultry"},{name: "meat"},
                               {name: "red meat"},{name: "vegetable"},
                               {name: "starch"},{name: "root"},{name: "grain"},
                               {name: "leafy greens"},{name: "spice"},
@@ -69,14 +68,14 @@ puts "done, #{equipment.length} pieces created."
 
 # Creating recipes
 puts "Creating Recipes..."
-53.times do |n|
+500.times do |n|
   used = []
-  r = Recipe.create({name: Faker::Food.unique.dish, origin: Faker::Nation.unique.nationality,
+  r = Recipe.create({name: Faker::Number.unique.number(digits: 3), origin: Faker::Nation.nationality,
                      author: Faker::Name.name, views: 0, saves: 0})
 
   i = nil
   while i == nil
-    i = Array.new(rand(1..15)) {rand(1..Ingredient.all.length-1)}.uniq!
+    i = Array.new(rand(1..8)) {rand(1..Ingredient.all.length-1)}.uniq!
   end
   e = nil
   while e == nil

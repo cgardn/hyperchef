@@ -1,4 +1,4 @@
-namespace :update_recipe_ingredient_tags do
+namespace :recipe_tags do
   desc "Denormalizes ingredient tags onto Recipe Table"
   task :denormalize => :environment do
     Recipe.all.each do |r|
