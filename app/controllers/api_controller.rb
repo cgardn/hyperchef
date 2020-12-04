@@ -22,9 +22,14 @@ class ApiController < ApplicationController
     #   frontend to refresh the recipe list, but as of right now it's <1s for 500
     #   recipes. Not sure how this will scale beyond 500, but also not sure if 
     #   Hyperchef will ever grow beyond (or even up to!) 500 recipes
+=begin original recipe delivery
+       replaced with value cached on startup since recipe data doesnt change
+       - except for views/saves, which should be saved separately
     render json: Recipe.all.to_json(
       :only => [:ingredientTags, :difficulty, :time_score, :ingredient_score, :name, :slug, :saves],
     )
+=end
+    render json: FilterGraph.graph()
     
   end
 
