@@ -58,7 +58,7 @@ class FilterGraph
       puts "Building recipe data for Home view..."
       out = {}
       Recipe.all.each do |r|
-        out[r.id] = r.to_json(:only => [:difficulty, :time_score, :ingredient_score, :name, :slug, :saves])
+        out[r.id] = r.slice(:difficulty, :time_score, :ingredient_score, :name, :slug, :saves)
       end
       return out
     end
@@ -68,11 +68,17 @@ class FilterGraph
       # this is for the frontend to build an organized UI of all the different
       #   filter types
       puts "Categorizing filters..."
-      return {
-        "Recipe Types" => RecipeType.all.pluck(:name),
-        "Ingredient Types" => IngredientTag.all.pluck(:name),
-        "Ingredients" => Ingredient.all.pluck(:name)
-      }
+      out = {}
+      RecipeType.all.pluck(:name).each do |tag|
+        out[tag] = {state: false, type: "recipeType"}
+      end
+      IngredientTag.all.pluck(:name).each do |tag|
+        out[tag] = {state: false, type: "ingredientTag"}
+      end
+      Ingredient.all.pluck(:name).each do |tag|
+        out[tag] = {state: false, type: "ingredient"}
+      end
+      return out
     end
 
     def build_sorted_recipe_ids()
