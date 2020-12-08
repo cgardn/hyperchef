@@ -31,30 +31,100 @@ class FilterGraph
     # I am aware this can be done with Rails.cache.fetch, but I couldn't 
     #   figure out how quickly enough :embarrassed:
     puts "Retrieving graph"
-    if Rails.cache.exist?("all_recipes")
-      return Rails.cache.read("all_recipes")
-    else
-      Rails.cache.write("all_recipes", 
+    if !Rails.cache.exist?("all_recipes")
+      Rails.cache.write("all_recipes", build_all_recipes())
+    end
+    if !Rails.cache.exist?("all_filters")
+      Rails.cache.write("all_filters", build_all_filters())
+    end
+    if !Rails.cache.exist?("sorted_recipe_ids")
+      Rails.cache.write("sorted_recipe_ids", build_sorted_recipe_ids())
+    end
 
+    return {
+      "all_recipes" => Rails.cache.read("all_recipes"),
+      "all_filters" => Rails.cache.read("all_filters"),
+      "sorted_recipe_ids" => Rails.cache.read("sorted_recipe_ids"),
+    }
+  end
+
+  class << self
+
+    def build_all_recipes()
+      # pluck Recipe fields for building Home view (maybe actually pluck)
+      # this should be a Hash keyed by Recipe ID for direct access (ie no 
+      #   searching)
+      # probably don't need :ingredientTags since build_sorted_recipe_ids?
+      puts "Building recipe data for Home view..."
+      out = {}
+      Recipe.all.each do |r|
+        out[r.id] = r.to_json(:only => [:difficulty, :time_score, :ingredient_score, :name, :slug, :saves])
+      end
+      return out
+    end
+
+    def build_all_filters()
       # build hash of arrays of categorized filters
+      # this is for the frontend to build an organized UI of all the different
+      #   filter types
+      puts "Categorizing filters..."
+      return {
+        "Recipe Types" => RecipeType.all.pluck(:name),
+        "Ingredient Types" => IngredientTag.all.pluck(:name),
+        "Ingredients" => Ingredient.all.pluck(:name)
+      }
+    end
 
-      # build categorized lists of recipes by filter
+    def build_sorted_recipe_ids()
+      # build hash of arrays of recipe ids, keyed by filter
+      # each filter is a key, each key has a list of all recipe ids that apply
+      #   to that filter
+      # frontend performs series of array intersections to produce the
+      #   filtered views
       # - get recipe types and all associated recipes
       # - get ingredients and all associated recipes
       # - get ingredient tags and all associated recipes
       # - store in cache as Hash by filter
+      puts "Sorting recipe ids by filter..."
+      out = {}
+      # recipe types
+      RecipeType.all.each do |rt|
+        out[rt.name] = rt.recipes.pluck(:id)
+      end
 
-      # build actual recipes, or at least retrieve them and put in cache
-      Recipe.all.to_json(
-        :only => [:ingredientTags, :difficulty, :time_score, :ingredient_score, :name, :slug, :saves],
-      ))
+      # ingredient tags, manual join required
+      # this was originally for getting all the ingredient tags on each 
+      #   recipe, now its creating a list of recipes for each ingredient tag
+      #   so this usage is very inefficient and bad - TODO i'll come back 
+      #   later and fix it (12-7-2020)
+      puts "Sorting by ingredient tag..."
+      Recipe.all.each do |r|
+        # this gets all the ingredient tags associated with this recipe
+        IngredientTag.joins(ingredients: :recipes).where("recipe_id = ?", r.id).pluck(:name).to_set.each do |tag|
+          # for each tag, put r.id (this recipe id) in each tag's list,
+          #   creating the array if it doesn't exist
+          if out.keys.include?(tag) && out[tag].instance_of?(Array)
+            out[tag].push(r.id)
+          else
+            out[tag] = [r.id]
+          end
+        end
+      end
+
+      # ingredients
+      puts "Sorting by ingredient..."
+      Ingredient.all.each do |ing|
+        out[ing.name] = ing.recipes.pluck(:id)
+      end
+
+      # finally, remove duplicate recipe ids
+      puts "Removing duplicates..."
+      out.keys.each do |tag|
+        out[tag] = out[tag].to_set.to_a
+      end
+      return out
+
     end
-  end
 
-  def self.get_graph()
-    # maybe I can call the graph out of the cache store here? Does that make
-    # sense or should I use the cache directly? I should check the cache on
-    # each call, just to make sure that it's still around, and rebuild if not
-    puts Rails.cache.read("all_filters")
   end
 end

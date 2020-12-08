@@ -1,34 +1,15 @@
 class ApiController < ApplicationController
 
   def all
-    #  need some way to pull out the tags on ingredients plus recipe tags and
-    #  return them in plain arrays, so the frontend can quickly sort and filter 
-    #  without an extra api call
-    #  - probably need to change the Recipe model so the tags are denormalized
-    #    onto the actual Recipe object, since it only changes on creation+update 
-    #    (i.e. when the ingredient list changes, or when the recipe tags are 
-    #    edited by an admin)
-    
     # current solution: 
-    # a rake task (recipe_tags:denormalize) denormalizes all recipe+ingredient
-    #   tags onto each recipe model directly. This cuts down the db calls from
-    #   ~30ms to ~2ms per row, however now the rake task needs to be run from the
-    #   console when new recipes are added or the seed db is recreated. 
-    #   Eventually I will add the denormalization to the new Recipe code.
-    #
-    # this allows us to send all the recipes in one shot to the user, and let the
-    #   frontend handle all the heavy lifting of pagination and filtering without
-    #   any further hits to the server or db. There (are/will be) options on the
-    #   frontend to refresh the recipe list, but as of right now it's <1s for 500
-    #   recipes. Not sure how this will scale beyond 500, but also not sure if 
-    #   Hyperchef will ever grow beyond (or even up to!) 500 recipes
-=begin original recipe delivery
-       replaced with value cached on startup since recipe data doesnt change
-       - except for views/saves, which should be saved separately
-    render json: Recipe.all.to_json(
-      :only => [:ingredientTags, :difficulty, :time_score, :ingredient_score, :name, :slug, :saves],
-    )
-=end
+    # FilterGraph is a service object in app/services. It builds all the
+    #   static recipe data into whatever form is needed, and caches it.
+    #   As of 12-3-2020 this app is configured to use the memory store. The
+    #   FilterGraph object has one method, graph(), that checks the cache,
+    #   rebuilding the data structures if there's a cache miss.
+    # Since all the data the user interacts with regarding the actual recipes
+    #   is static, we can return 500+ recipes in <100ms straight from cache
+    
     render json: FilterGraph.graph()
     
   end
