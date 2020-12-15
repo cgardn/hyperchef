@@ -1,5 +1,7 @@
 class ApiController < ApplicationController
 
+=begin 
+** MOVED to new api v1
   def all
     # current solution: 
     # FilterGraph is a service object in app/services. It builds all the
@@ -13,6 +15,7 @@ class ApiController < ApplicationController
     render json: FilterGraph.graph()
     
   end
+=end
 
   def get_tags
     # return list of ingredient tags and recipe types for frontend to build
@@ -35,8 +38,16 @@ class ApiController < ApplicationController
     render json: @results.to_json(:include => {:ingredients => {:methods => :all_tags }})
   end
 
-  def test
-    render json: {msg: "Test"}
+  def admin_recipes
+    unless request.headers['username'] && request.headers['password']
+      return
+    end
+    puts "Admin username: ", request.headers['username']
+    puts "Admin password: ", request.headers['password']
+  end
+
+  def admin_ingredients 
+    puts request.headers['admin-username']
   end
 
 end

@@ -25,9 +25,9 @@
     <!-- Login/Logout/UserProfile links -->
     <div class="btn-group-sm">
       <% if user_signed_in? %>
-        <%= link_to "View Favorites",
+        <!-- link_to "View Favorites",
             user_profile_path(current_user.user_profile),
-            class: "btn btn-primary active" %>
+            class: "btn btn-primary active" -->
           <%= link_to "Logout",
             destroy_user_session_path,
             method: :delete,

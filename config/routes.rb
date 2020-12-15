@@ -3,20 +3,32 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'search#index'
   get '/search', to: 'search#query'
 
   get '/admin', to: 'admin#index'
 
-  # API endpoints
-  get '/api/test', to: 'api#test'
-  get '/api/all', to: 'api#all'
-  get '/api/search', to: 'api#search'
-  get '/api/get_tags', to: 'api#get_tags'
-  get '/api/:slug', to: 'api#single'
+  # API v1
+  namespace :api do
+    namespace :v1 do
+      resources :recipes, only: [:index, :show], param: :slug
+      # the new/edit views are handled in frontend as part of show, the
+      #   api call will just be to auth the admin since all the ingredient
+      #   data will already be there?
+      resources :ingredients, except: [:new, :edit]
+      resources :ingredient_tags, only: [:index, :create, :update, :destroy]
+      resources :recipe_types, except: [:new, :edit, :show]
 
+      # searching is done only on frontend for now
+      #get '/text-search', action: :textSearch, controller: :recipes
+      #get '/tag-search', action: :tagSearch, controller: :recipes
+    end
+  end
+
+=begin
+  get '/api/get_tags', to: 'api#get_tags'
+=end
 
   resources :recipes, except: [:create, :index], param: :slug
   get '/recipes', to: 'search#query'
