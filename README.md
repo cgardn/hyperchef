@@ -16,4 +16,4 @@ Upcoming Features:
   * Grocery list generation
   * Many more recipes
 
-Built on Rails v5.2.4, styled with Bootstrap v4
+Built on Rails v6, styled with Bootstrap
