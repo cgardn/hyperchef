@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 .notes_schema
+TODO
 
 # Ignore bundler config.
 /.bundle
