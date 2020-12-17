@@ -67,16 +67,38 @@ class FilterGraph
       # build hash of arrays of categorized filters
       # this is for the frontend to build an organized UI of all the different
       #   filter types
+      # must ensure only I-Tags that actually have ingredients are included,
+      #   and only filters that actually have recipes are included
       puts "Categorizing filters..."
       out = {}
-      RecipeType.all.pluck(:name).each do |tag|
-        out[tag] = {state: false, type: "recipeType"}
+      RecipeType.all.each do |tag|
+        if tag.recipes.count < 1
+          next
+        end
+        out[tag.name] = {state: false, type: "recipeType"}
       end
-      IngredientTag.all.pluck(:name).each do |tag|
-        out[tag] = {state: false, type: "ingredientTag"}
-      end
-      Ingredient.all.pluck(:name).each do |tag|
-        out[tag] = {state: false, type: "ingredient"}
+      IngredientTag.all.each do |tag|
+        # skip i-tags with no ingredients under them
+        if tag.ingredients.count < 1
+          next
+        end
+  
+        # for each ingredient in this i-tag category
+        #   - skip the ingredient if it's not in any recipes
+        #   - add the ingredient filter to the final hash with state and i-tag
+        #     as attributes
+        #     > frontend will go through and assemble the lists of categories
+        #       this allows for direct hash access on this list of ingredients
+        #       since those are the things being used, the i-tags are just
+        #       for toggling whole groups of ingredients on or off
+        tag.ingredients.each do |ing|
+          # skip ingredients with no recipes
+          if ing.recipes.count < 1
+            next
+          end
+
+          out[ing.name] = {state: false, itag: tag.name}
+        end
       end
       return out
     end
