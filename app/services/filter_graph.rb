@@ -58,7 +58,7 @@ class FilterGraph
       puts "Building recipe data for Home view..."
       out = {}
       Recipe.all.each do |r|
-        out[r.id] = r.slice(:difficulty, :time_score, :ingredient_score, :name, :slug, :saves)
+        out[r.id] = r.slice(:difficulty, :cook_time, :prep_time, :ingredient_score, :name, :slug, :saves)
       end
       return out
     end
