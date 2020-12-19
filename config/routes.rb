@@ -20,6 +20,13 @@ Rails.application.routes.draw do
       resources :ingredient_tags, only: [:index, :create, :update, :destroy]
       resources :recipe_types, except: [:new, :edit, :show]
 
+      resource :auth, only: :create
+      namespace :admin do
+        resources :recipes
+        #resources :ingredients
+        #resources :ingredient_tags
+        #resources :recipe_types
+      end
       # searching is done only on frontend for now
       #get '/text-search', action: :textSearch, controller: :recipes
       #get '/tag-search', action: :tagSearch, controller: :recipes

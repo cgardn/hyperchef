@@ -11,6 +11,9 @@ gem 'rspec'
 gem 'jquery-rails'
 gem 'figaro'
 
+# for API
+gem 'jwt'
+
 # CORS for running separate frontend
 gem 'rack-cors'
 
