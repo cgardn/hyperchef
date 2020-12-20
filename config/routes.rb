@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :recipe_types, except: [:new, :edit, :show]
 
       resource :auth, only: :create
+      get '/auth/check', to: 'auths#check'
       namespace :admin do
         resources :recipes
         #resources :ingredients

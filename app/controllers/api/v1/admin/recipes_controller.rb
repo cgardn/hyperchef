@@ -10,7 +10,13 @@ class Api::V1::Admin::RecipesController < ApplicationController
         r.equipment.count
       ]
     end
-    render json: recipes
+    render json: {
+      recipes: recipes,
+      recipe_types: RecipeType.all,
+      ingredients: Ingredient.all,
+      ingredient_tags: IngredientTag.all,
+      equipment: Equipment.all,
+    }
   end
 
   def create
@@ -23,12 +29,10 @@ class Api::V1::Admin::RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
-    @ingredients = @recipe.ingredients.sort_by{ |obj| obj.name }
-    render json: {
-      recipe: @recipe,
-      ingredients: @ingredients
-    }
+    if params[:id]
+      recipe = Recipe.find(params[:id])
+      render json: recipe.to_json(:include => [:equipment, :ingredients])
+    end
   end
 
   def update
