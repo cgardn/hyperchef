@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :recipes
         #resources :ingredients
-        #resources :ingredient_tags
+        resources :ingredient_tags
         #resources :recipe_types
       end
       # searching is done only on frontend for now
