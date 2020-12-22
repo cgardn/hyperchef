@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       get '/auth/check', to: 'auths#check'
       namespace :admin do
         resources :recipes
-        #resources :ingredients
+        resources :ingredients
         resources :ingredient_tags
         #resources :recipe_types
       end
