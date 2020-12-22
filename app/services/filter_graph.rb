@@ -48,6 +48,18 @@ class FilterGraph
     }
   end
 
+  def self.rebuild_recipes()
+    Rails.cache.write("all_recipes", build_all_recipes())
+  end
+
+  def self.rebuild_filters()
+    Rails.cache.write("all_filters", build_all_filters())
+  end
+
+  def self.rebuild_sorted_recipe_ids()
+    Rails.cache.write("sorted_recipe_ids", build_sorted_recipe_ids())
+  end
+
   class << self
 
     def build_all_recipes()

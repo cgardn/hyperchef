@@ -8,6 +8,9 @@
 
 require 'faker'
 
+startTime = Time.now
+checkpoint = startTime
+
 # Creating recipe and ingredient tags - must be done first to assign to actual ingredients/recipes
 puts "Creating tags..."
 rTypes = RecipeType.create([{name: "salad"},
@@ -21,7 +24,8 @@ iTags = IngredientTag.create([{name: "poultry"},{name: "meat"},
                               {name: "leafy greens"},{name: "spice"},
                               {name: "herb"},{name: "liquid"},{name: "fruit"},
                               {name: "citrus"}])
-puts "done."
+puts "Tag creation finished in %0.2f seconds" % [Time.now - startTime]
+checkpoint = Time.now
 
 # Creating ingredients
 puts "Creating ingredients..."
@@ -55,8 +59,8 @@ metric_units = ['g', 'mL']
   end
 end
 
-
-puts "done."
+puts "Ingredients done in %0.2f seconds" % [Time.now - checkpoint]
+checkpoint = Time.now
 
 # Creating Equipment
 puts "Creating Equipment..."
@@ -64,54 +68,56 @@ equipment = Equipment.create([{name: "10-inch frying pan"},{name: "4-quart stock
                               {name: "oven"},{name: "chef's knife"},{name: "paring knife"},
                               {name: "bread knife"},{name: "rice cooker"},
                               {name: "citrus squeezer"},{name: "grater"}])
-puts "done, #{equipment.length} pieces created."
+puts "Equipment done in %0.2fs" % [Time.now - checkpoint]
+checkpoint = Time.now
+puts "#{equipment.length} pieces created."
 
 # Creating recipes
 puts "Creating Recipes..."
 500.times do |n|
+  rTime = Time.now
+  rTimeCheck = rTime
   used = []
   r = Recipe.create({name: Faker::Number.unique.number(digits: 3), origin: Faker::Nation.nationality,
                      author: Faker::Name.name, views: 0, saves: 0})
 
-  i = nil
-  while i == nil
-    i = Array.new(rand(1..8)) {rand(1..Ingredient.all.length-1)}.uniq!
-  end
-  e = nil
-  while e == nil
-    e = Array.new(rand(2..equipment.length)) {rand(1..equipment.length-1)}.uniq!
-  end
+  i = Array.new(rand(2..8)) {rand(1..Ingredient.all.length-1)}.to_set.to_a
+  e = Array.new(rand(2..equipment.length)) {rand(1..equipment.length-1)}.to_set.to_a
 
   puts "ingredients: #{i}"
   puts "equipment: #{e}"
+  puts "Created in %0.2f seconds" % [Time.now - rTimeCheck]
+  rTimeCheck = Time.now
 
-  i.length.times do |n|
-    r.ingredients << Ingredient.find(i[n])
+  i.each do |ing|
+    r.ingredients << Ingredient.find(ing)
   end
-  e.length.times do |n|
-    r.equipment << Equipment.find(e[n])
+  e.each do |eq|
+    r.equipment << Equipment.find(eq)
   end
 
-  types = nil
-  while types == nil
-    types = Array.new(rand(2..rTypes.length)) {rand(2..rTypes.length-1)}.uniq!
+  puts "Relations added in %0.2f seconds" % [Time.now - rTimeCheck]
+  rTimeCheck = Time.now
+
+  types = Array.new(rand(2..rTypes.length)) {rand(2..rTypes.length-1)}.to_set.to_a
+  types.each do |t|
+    r.recipe_types << RecipeType.find(t)
   end
-  types.length.times do |n|
-    r.recipe_types << RecipeType.find(types[n])
-  end
+
+  puts "Meal Types added in %0.2f seconds" % [Time.now - rTimeCheck]
+  rTimeCheck = Time.now
 
   rand(2..15).times do |n|
     r.actions[n] = [Faker::Lorem.sentence(word_count: rand(1..4)),
                     Faker::Lorem.paragraph(sentence_count: rand(1..5))]
   end
 
+  puts "Actions added in %0.2f seconds" % [Time.now - rTimeCheck]
+  rTimeCheck = Time.now
+
   r.prep_time = rand(5..30)
   r.cook_time = rand(0..45)
   r.difficulty = rand(1..10)
-
-  r.time_score = r.normalize(
-    r.cook_time + r.prep_time,
-    5.0, 75.0, 10.0, 100.0).to_i
 
   r.ingredient_score = r.normalize(
     r.ingredients.count,
@@ -119,10 +125,18 @@ puts "Creating Recipes..."
 
   r.slug = URI::encode(r.name.gsub(' ','-').downcase)
   r.save!
+  puts "Scores and slug added in %0.2f seconds" % [Time.now - rTimeCheck]
+  puts "Recipe finished in %0.2f seconds" % [Time.now - rTime]
 end
+
+puts "All Recipes finished in %0.2fs" % [Time.now - checkpoint]
 
 # Creating users
 puts "Creating admin"
+u = ApiUser.new(email: "admin@test.gov", password: "passwordasdf")
+u.save!
+puts "Everything done in %0.2fs total" % [Time.now - startTime]
+=begin old admin user creation
 u = User.new(email: "admin@test.gov", password: "passwordasdf", password_confirmation: "passwordasdf", admin: true)
 profile = UserProfile.new
 profile.user = u
@@ -132,17 +146,4 @@ end
 profile.save
 u.save!
 puts "done."
-
-puts "Creating 20 users"
-20.times do |n|
-  puts "#{n}..."
-  u = User.new(email: Faker::Internet.email, password: "passwordasdf", password_confirmation: "passwordasdf")
-  profile = UserProfile.new
-  profile.user = u
-  rand(1..10).times do |n|
-    profile.favorites << Recipe.find(rand(1..53))
-  end
-  profile.save
-  u.save
-end
-puts "done."
+=end
