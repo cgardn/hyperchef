@@ -85,14 +85,16 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
 
     # rebuild cache with new recipe
-=begin
     FilterGraph.rebuild_filters()
     FilterGraph.rebuild_sorted_recipe_ids()
-=end
     render json: recipe
   end
 
   def destroy
+    if params[:id]
+      Recipe.find(params[:id]).destroy
+      render json: {}, status: :no_content
+    end
   end
 
   private
