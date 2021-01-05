@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_19_184710) do
+ActiveRecord::Schema.define(version: 2021_01_05_175442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_12_19_184710) do
     t.integer "time_score", default: 0, null: false
     t.integer "ingredient_score", default: 0, null: false
     t.text "ingredientTags", default: [], array: true
+    t.string "action_array"
     t.index ["slug"], name: "index_recipes_on_slug", unique: true
   end
 

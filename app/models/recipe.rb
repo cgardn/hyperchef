@@ -169,4 +169,5 @@ class Recipe < ApplicationRecord
   end
 
   serialize :actions, Hash
+  serialize :action_array, Array
 end
