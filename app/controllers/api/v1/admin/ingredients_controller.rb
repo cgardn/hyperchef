@@ -2,12 +2,9 @@ class Api::V1::Admin::IngredientsController < ApplicationController
   include TokenAuthenticatable
   protect_from_forgery with: :null_session
 
-=begin
-  def create
+  def index
+    render json: Ingredient.all.pluck(:id, :name)
   end
-  def destroy
-  end
-=end
 
   def update
     if params[:id]

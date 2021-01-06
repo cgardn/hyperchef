@@ -108,8 +108,8 @@ puts "Creating Recipes..."
   rTimeCheck = Time.now
 
   rand(2..15).times do |n|
-    r.actions[n] = [Faker::Lorem.sentence(word_count: rand(1..4)),
-                    Faker::Lorem.paragraph(sentence_count: rand(1..5))]
+    r.action_array.push([Faker::Lorem.sentence(word_count: rand(1..4)),
+                        Faker::Lorem.paragraph(sentence_count: rand(1..5))]
   end
 
   puts "Actions added in %0.2f seconds" % [Time.now - rTimeCheck]

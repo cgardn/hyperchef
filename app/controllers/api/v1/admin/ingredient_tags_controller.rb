@@ -1,6 +1,10 @@
 class Api::V1::Admin::IngredientTagsController < ApplicationController
   protect_from_forgery with: :null_session
 
+  def index
+    render json: IngredientTag.all.pluck(:id, :name)
+  end
+
   def create
     if params[:name]
       it = IngredientTag.new(name: params[:name])

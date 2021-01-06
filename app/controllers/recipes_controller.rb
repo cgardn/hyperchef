@@ -7,7 +7,8 @@ class RecipesController < ApplicationController
 
   def new
     20.times do |n|
-      @recipe.actions[(n+1).to_s] = {title: "", body: ""}
+      #@recipe.actions[(n+1).to_s] = {title: "", body: ""}
+      @recipe.action_array.push( ['', ''] )
     end
     @iNames = @recipe.ingredients.map{ |i| i[:name] }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
@@ -36,6 +37,7 @@ class RecipesController < ApplicationController
     @allIngredients = Ingredient.all.sort_by{ |ing| ing.name }
     @eNames = @recipe.equipment.map{ |e| e[:name] }
 
+=begin super old, api only now, might delete later idk
     # if less than 20 steps, add blank steps until 20
     aCount = @recipe.actions.keys.count
     if aCount == 0
@@ -47,6 +49,7 @@ class RecipesController < ApplicationController
         @recipe.actions[(n+aCount).to_s] = {title: "", body: ""}
       end
     end
+=end
 
   end
 

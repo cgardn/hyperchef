@@ -26,7 +26,8 @@ Rails.application.routes.draw do
         resources :recipes
         resources :ingredients
         resources :ingredient_tags
-        #resources :recipe_types
+        resources :recipe_types
+        resources :equipment
       end
       # searching is done only on frontend for now
       #get '/text-search', action: :textSearch, controller: :recipes

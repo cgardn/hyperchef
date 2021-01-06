@@ -3,16 +3,24 @@ class Api::V1::Admin::RecipesController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
+    recipes = Recipe.all.pluck(:id, :name)
+    render json: recipes
+  end
+
+=begin
     recipes = {}
     Recipe.all.each do |r|
+      # excluding actions because it has been replaced by action_array
       recipes[r.id] = r.attributes.except(
-        "created_at", "updated_at", "time_score", "ingredient_score", "ingredientTags"
+        "actions", "created_at", "updated_at", "time_score", "ingredient_score", "ingredientTags"
       )
       # adding recipe types as array of ids, text labels are pulled from
       #   RecipeType object on frontend
       recipes[r.id]['types'] = r.recipe_types.pluck(:id)
     end
+=end
 
+=begin misguided attempt - what was I thinking here?
     ingredients = {}
     Ingredient.all.each do |ing|
       ingredients[ing.id] = ing.attributes.except(
@@ -36,7 +44,10 @@ class Api::V1::Admin::RecipesController < ApplicationController
     Equipment.all.each do |e|
       equip[e.id] = e.attributes.except("id", "created_at", "updated_at")
     end
+=end
 
+    #render json: {recipeList: recipes}
+=begin
     render json: {
       recipes: recipes,
       recipe_types: rTypes,
@@ -44,7 +55,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
       ingredient_tags: iTags,
       equipment: equip,
     }
-  end
+=end
 
   def create
   end
@@ -58,27 +69,46 @@ class Api::V1::Admin::RecipesController < ApplicationController
   def show
     if params[:id]
       recipe = Recipe.find(params[:id])
-      render json: recipe.to_json(:include => [:equipment, :ingredients])
+      equipment = recipe.equipment.pluck(:id)
+      ingredients = recipe.ingredients.pluck(:id)
+      rTypes = recipe.recipe_types.pluck(:id)
+      render json: {
+        recipe: recipe,
+        equipment: equipment,
+        ingredients: ingredients,
+        rTypes: rTypes
+      }
+      #render json: recipe.to_json(:include => [:equipment, :ingredients])
     end
   end
 
   def update
     if params[:id]
       recipe = Recipe.find(params[:id])
-      bulk_params.keys.each do |key|
-        recipe[key] = bulk_params[key]
+      recipe_params.keys.each do |key|
+        recipe[key] = recipe_params[key]
       end
-      recipe.slug = URI::encode(bulk_params[:name].gsub(' ', '-').downcase)
-      # remove existing actions and replace with new ones
-      recipe.actions = {}
-      recipe_params[:actions].each_with_index do |action, idx|
-        recipe.actions[idx] = [action[:title], action[:body]]
-      end
+      recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
+      # new actions
+      recipe.action_array = JSON.parse(action_params[:action_array])
+      
       # remove existing types and replace with new ones
       recipe.recipe_types.delete_all
-      recipe_params[:types].each do |type|
+      rTypes_params.each do |type|
         recipe.recipe_types << RecipeType.find(type)
+      end
+
+      # update ingredients
+      recipe.ingredients.delete_all
+      ingredient_params.each do |ing|
+        recipe.ingredients << Ingredient.find(ing)
+      end
+      
+      # update equipment
+      recipe.equipment.delete_all
+      equipment_params.each do |equip|
+        recipe.equipment << Equipment.find(equip)
       end
 
       saveResult = recipe.save
@@ -87,6 +117,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     # rebuild cache with new recipe
     FilterGraph.rebuild_filters()
     FilterGraph.rebuild_sorted_recipe_ids()
+
     render json: recipe
   end
 
@@ -98,16 +129,24 @@ class Api::V1::Admin::RecipesController < ApplicationController
   end
 
   private
-    def recipe_params
-      params.require(:recipe).permit(types: [],
-                                     actions: [:title, :body],
-                                     equipment: [],
-                                     ingredients: [])
-    end
-    def bulk_params
-      params.require(:recipe).permit(:name, :origin, :author, :prep_time,
-                                       :cook_time, :card_image_path,
-                                       :difficulty)
+    def equipment_params
+      params.require(:equipment)
     end
 
+    def ingredient_params
+      params.require(:ingredients)
+    end
+
+    def rTypes_params
+      params.require(:rTypes)
+    end
+
+    def action_params
+      params.require(:recipe).permit(:action_array)
+    end
+
+    def recipe_params
+      params.require(:recipe).permit(:name, :author, :origin, 
+                                     :prep_time, :cook_time, :difficulty)
+    end
 end
