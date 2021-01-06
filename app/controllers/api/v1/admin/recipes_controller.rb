@@ -58,12 +58,36 @@ class Api::V1::Admin::RecipesController < ApplicationController
 =end
 
   def create
-  end
+    recipe = Recipe.new
+    recipe_params.keys.each do |key|
+      recipe[key] = recipe_params[key]
+    end
+    recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
-  def new
-  end
+    # new actions
+    recipe.action_array = JSON.parse(action_params[:action_array])
+    
+    # remove existing types and replace with new ones
+    rTypes_params.each do |type|
+      recipe.recipe_types << RecipeType.find(type)
+    end
 
-  def edit
+    # update ingredients
+    ingredient_params.each do |ing|
+      recipe.ingredients << Ingredient.find(ing)
+    end
+    
+    # update equipment
+    equipment_params.each do |equip|
+      recipe.equipment << Equipment.find(equip)
+    end
+
+    saveResult = recipe.save
+    # rebuild cache with new recipe
+    FilterGraph.rebuild_recipes()
+    FilterGraph.rebuild_filters()
+    FilterGraph.rebuild_sorted_recipe_ids()
+    render json: {}, status: 200
   end
 
   def show
@@ -115,6 +139,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
 
     # rebuild cache with new recipe
+    FilterGraph.rebuild_recipes()
     FilterGraph.rebuild_filters()
     FilterGraph.rebuild_sorted_recipe_ids()
 
