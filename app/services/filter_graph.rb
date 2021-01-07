@@ -48,6 +48,12 @@ class FilterGraph
     }
   end
 
+  def self.rebuild_all()
+    rebuild_recipes()
+    rebuild_filters()
+    rebuild_sorted_recipe_ids()
+  end
+
   def self.rebuild_recipes()
     Rails.cache.write("all_recipes", build_all_recipes())
   end
@@ -65,7 +71,7 @@ class FilterGraph
     def build_all_recipes()
       # pluck Recipe fields for building Home view (maybe actually pluck)
       # this should be a Hash keyed by Recipe ID for direct access (ie no 
-      #   searching)
+      #   array traversal)
       # probably don't need :ingredientTags since build_sorted_recipe_ids?
       puts "Building recipe data for Home view..."
       out = {}
@@ -109,7 +115,11 @@ class FilterGraph
             next
           end
 
-          out[ing.name] = {state: false, itag: tag.name}
+          out[ing.name] = {
+            state: false,
+            itags: ing.ingredient_tags.pluck(:name)
+          }
+
         end
       end
       return out

@@ -17,6 +17,18 @@ class Api::V1::Admin::IngredientsController < ApplicationController
     }
   end
 
+  def create
+    ing = Ingredient.new
+    ing.name = ing_params[:name]
+    ing.caloriespergram = ing_params[:caloriespergram]
+    ing.units = JSON.parse(ing_params[:units])
+    tag_params.each do |it|
+      ing.ingredient_tags << IngredientTag.find(it)
+    end
+    ing.save
+    FilterGraph.rebuild_all()
+  end
+
   def update
     if params[:id]
       ing = Ingredient.find(params[:id])
