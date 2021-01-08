@@ -28,5 +28,11 @@ class Api::V1::Admin::IngredientTagsController < ApplicationController
       iTag = IngredientTag.find(params[:id])
       iTag.destroy
     end
+    render json: {}, status: :no_content
+    FilterGraph.rebuild_filters()
+  end
+  private
+  def iTag_params
+    params.permit(:id, :name)
   end
 end
