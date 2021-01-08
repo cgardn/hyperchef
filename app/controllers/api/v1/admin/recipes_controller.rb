@@ -7,56 +7,6 @@ class Api::V1::Admin::RecipesController < ApplicationController
     render json: recipes
   end
 
-=begin
-    recipes = {}
-    Recipe.all.each do |r|
-      # excluding actions because it has been replaced by action_array
-      recipes[r.id] = r.attributes.except(
-        "actions", "created_at", "updated_at", "time_score", "ingredient_score", "ingredientTags"
-      )
-      # adding recipe types as array of ids, text labels are pulled from
-      #   RecipeType object on frontend
-      recipes[r.id]['types'] = r.recipe_types.pluck(:id)
-    end
-=end
-
-=begin misguided attempt - what was I thinking here?
-    ingredients = {}
-    Ingredient.all.each do |ing|
-      ingredients[ing.id] = ing.attributes.except(
-        "id", "created_at", "updated_at"
-      )
-      # same as recipetypes above
-      ingredients[ing.id]['tags'] = ing.ingredient_tags.pluck(:id)
-    end
-
-    rTypes = {}
-    RecipeType.all.each do |rt|
-      rTypes[rt.id] = rt.attributes.slice("name")
-    end
-
-    iTags = {}
-    IngredientTag.all.each do |it|
-      iTags[it.id] = it.attributes.slice("name")
-    end
-
-    equip = {}
-    Equipment.all.each do |e|
-      equip[e.id] = e.attributes.except("id", "created_at", "updated_at")
-    end
-=end
-
-    #render json: {recipeList: recipes}
-=begin
-    render json: {
-      recipes: recipes,
-      recipe_types: rTypes,
-      ingredients: ingredients,
-      ingredient_tags: iTags,
-      equipment: equip,
-    }
-=end
-
   def create
     recipe = Recipe.new
     recipe_params.keys.each do |key|
@@ -84,9 +34,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
 
     saveResult = recipe.save
     # rebuild cache with new recipe
-    FilterGraph.rebuild_recipes()
-    FilterGraph.rebuild_filters()
-    FilterGraph.rebuild_sorted_recipe_ids()
+    FilterGraph.rebuild_all()
     render json: {}, status: 200
   end
 
@@ -102,7 +50,6 @@ class Api::V1::Admin::RecipesController < ApplicationController
         ingredients: ingredients,
         rTypes: rTypes
       }
-      #render json: recipe.to_json(:include => [:equipment, :ingredients])
     end
   end
 
@@ -139,9 +86,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
 
     # rebuild cache with new recipe
-    FilterGraph.rebuild_recipes()
-    FilterGraph.rebuild_filters()
-    FilterGraph.rebuild_sorted_recipe_ids()
+    FilterGraph.rebuild_all()
 
     render json: recipe
   end
@@ -149,6 +94,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
   def destroy
     if params[:id]
       Recipe.find(params[:id]).destroy
+      FilterGraph.rebuild_all()
       render json: {}, status: :no_content
     end
   end

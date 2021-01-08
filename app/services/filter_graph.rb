@@ -20,9 +20,10 @@ class FilterGraph
   #      - this is sent over as an array to save on data, since nested objects
   #        create a lot of extra '{}''s in the stringified JSON object
   # NOTE
-  # I am aware this isn't a real graph! this is just the first fastest thing
-  #   I came up with since I'm trying to ship instead of spending a week on 
-  #   what would likely be a premature optimization
+  # I am aware this isn't a real graph! just the first name that popped into my
+  #   head.
+  #   I'm trying to ship instead of spending a week on what would likely be a
+  #   premature optimization
 
   def self.graph()
     # build filter graph and save in memory store
