@@ -20,8 +20,9 @@ module Api
     
       def show
         if params[:slug]
-          recipe = Recipe.find_by(slug: params[:slug])
-          render json: recipe.to_json(:include => [:equipment, :ingredients])
+          recipe = Recipe.includes(:equipment, :ingredients).find_by(slug: params[:slug])
+          #recipe = Recipe.find_by(slug: params[:slug])
+          render json: recipe
         end
       end
     
