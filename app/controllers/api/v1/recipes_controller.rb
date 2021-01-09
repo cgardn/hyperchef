@@ -22,7 +22,11 @@ module Api
         if params[:slug]
           recipe = Recipe.includes(:equipment, :ingredients).find_by(slug: params[:slug])
           #recipe = Recipe.find_by(slug: params[:slug])
-          render json: recipe
+          render json: {
+            recipe: recipe,
+            ingredients: recipe.ingredients.to_a,
+            equipment: recipe.equipment.to_a,
+          }
         end
       end
     
