@@ -38,7 +38,7 @@ RSpec.describe Api::V1::RecipesController do
         "recipe" => {
           "id"=>recipe.id, 
           "name"=>"Test Recipe", "slug"=>"test-recipe", 
-          "action_array"=>[], "actions"=>{},
+          "action_array"=>[],
           "author"=>nil, "origin"=>nil,
           "card_image_path"=>"",
           "cook_time"=>0, "prep_time"=>0, "difficulty"=>1, 

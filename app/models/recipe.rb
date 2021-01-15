@@ -168,6 +168,5 @@ class Recipe < ApplicationRecord
     newMin + (newMax - newMin)*( (input - oldMin)/(oldMax - oldMin) )
   end
 
-  serialize :actions, Hash
   serialize :action_array, Array
 end

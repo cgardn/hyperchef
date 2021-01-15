@@ -14,7 +14,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
     recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
-    # new actions
+    # new action_array
     recipe.action_array = JSON.parse(action_params[:action_array])
     
     # remove existing types and replace with new ones
@@ -61,7 +61,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
       end
       recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
-      # new actions
+      # new action_array
       recipe.action_array = JSON.parse(action_params[:action_array])
       
       # remove existing types and replace with new ones
