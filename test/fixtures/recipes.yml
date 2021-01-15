@@ -3,6 +3,7 @@ one:
   name: Test Recipe
   origin: Test Origin
   author: Test Author
+  action_array: <%= ["Title", "Body"].to_yaml.inspect %>
   actions: <%= {
     0 => ["test1", "test2"],
     1 => ["test3", "test4"] }.to_yaml.inspect %>

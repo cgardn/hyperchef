@@ -7,7 +7,6 @@ gem 'pg'
 gem 'faker'
 gem 'devise'
 gem 'will_paginate'
-gem 'rspec'
 gem 'jquery-rails'
 gem 'figaro'
 
@@ -56,6 +55,11 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
 end
 
 group :development do
