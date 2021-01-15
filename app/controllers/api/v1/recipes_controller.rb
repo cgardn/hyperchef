@@ -24,10 +24,10 @@ module Api
           recipe = Recipe.includes(:equipment, :ingredients).find_by(slug: params[:slug])
 
           # exclude keys that aren't relevant to user view
-          # these also break the tests, since time elapses between creating the
-          #   test Recipe and checking the values
+          # these attrs also break tests, since time elapses between creating 
+          #   the test Recipe and checking the values
           recipe_attrs = recipe.attributes.except(
-            "updated_at", "created_at"
+            "updated_at", "created_at", "ingredientTags", "time_score"
           )
           
           render json: {

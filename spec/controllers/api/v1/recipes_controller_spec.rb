@@ -42,8 +42,7 @@ RSpec.describe Api::V1::RecipesController do
           "author"=>nil, "origin"=>nil,
           "card_image_path"=>"",
           "cook_time"=>0, "prep_time"=>0, "difficulty"=>1, 
-          "ingredient_score"=>0, "time_score"=>0, 
-          "ingredientTags"=>[],
+          "ingredient_score"=>0,
           "views"=>nil, "saves"=>nil
         },
         "equipment" => [],
