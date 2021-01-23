@@ -10,6 +10,7 @@ gem 'will_paginate'
 gem 'rspec'
 gem 'jquery-rails'
 gem 'figaro'
+gem 'dotenv-rails'
 
 # for API
 gem 'jwt'
