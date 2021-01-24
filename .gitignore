@@ -6,6 +6,7 @@
 
 .notes_schema
 TODO
+.env
 
 # Ignore bundler config.
 /.bundle

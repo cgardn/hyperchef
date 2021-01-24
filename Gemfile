@@ -9,6 +9,7 @@ gem 'devise'
 gem 'will_paginate'
 gem 'jquery-rails'
 gem 'figaro'
+gem 'dotenv-rails'
 
 # for API
 gem 'jwt'

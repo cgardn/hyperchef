@@ -1,4 +1,5 @@
 class Api::V1::Admin::EquipmentController < ApplicationController
+  include TokenAuthenticatable
   protect_from_forgery with: :null_session
 
   def index
