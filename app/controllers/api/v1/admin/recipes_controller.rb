@@ -24,7 +24,14 @@ class Api::V1::Admin::RecipesController < ApplicationController
 
     # update ingredients
     ingredient_params.each do |ing|
-      recipe.ingredients << Ingredient.find(ing)
+      JoinIngredientsRecipe.new({
+        recipe_id: recipe.id,
+        ingredient_id: ing[0],
+        show_quantity: ing[2],
+        show_unit: ing[3],
+        list_quantity: ing[4],
+        list_unit: ing[5],
+      }).save
     end
     
     # update equipment
@@ -110,11 +117,21 @@ class Api::V1::Admin::RecipesController < ApplicationController
       end
 
       # update ingredients
-      recipe.ingredients.delete_all
+      # remove old ingredient associations
+      recipe.join_ingredients_recipes.each do |ir|
+        ir.delete
+      end
+
+      # add new ingredient associations
       ingredient_params.each do |ing|
-        recipe.ingredients << Ingredient.find(ing)
-        # get the association directly, set the show_* and list_*, then save
-        # TODO (...)
+        JoinIngredientsRecipe.new({
+          recipe_id: recipe.id,
+          ingredient_id: ing[0],
+          show_quantity: ing[2],
+          show_unit: ing[3],
+          list_quantity: ing[4],
+          list_unit: ing[5],
+        }).save
       end
       
       # update equipment

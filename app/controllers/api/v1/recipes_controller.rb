@@ -29,10 +29,13 @@ module Api
           recipe_attrs = recipe.attributes.except(
             "updated_at", "created_at", "ingredientTags", "time_score"
           )
+          # gathering ingredient associations
+          ingredients = recipe.join_ingredients_recipes.pluck(:ingredient_id, :show_quantity, :show_unit, :list_quantity, :list_unit)
+          ingredients.map!{|ing| ing.insert(1, Ingredient.find(ing[0]).name)}
           
           render json: {
             recipe: recipe_attrs,
-            ingredients: recipe.ingredients.to_a,
+            ingredients: ingredients,
             equipment: recipe.equipment.to_a,
           }
         end
