@@ -3,7 +3,11 @@ class Api::V1::Admin::IngredientsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    render json: Ingredient.all.pluck(:id, :name)
+    allIngredients = Ingredient.all.pluck(:id, :name).map do |ing|
+      [ing[0], ing[1], 0, 'g', 0, 'g']
+    end
+
+    render json: allIngredients
   end
 
   def show

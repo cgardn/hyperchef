@@ -14,7 +14,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
     recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
-    # new actions
+    # new action_array
     recipe.action_array = JSON.parse(action_params[:action_array])
     
     # remove existing types and replace with new ones
@@ -24,7 +24,14 @@ class Api::V1::Admin::RecipesController < ApplicationController
 
     # update ingredients
     ingredient_params.each do |ing|
-      recipe.ingredients << Ingredient.find(ing)
+      JoinIngredientsRecipe.new({
+        recipe_id: recipe.id,
+        ingredient_id: ing[0],
+        show_quantity: ing[2],
+        show_unit: ing[3],
+        list_quantity: ing[4],
+        list_unit: ing[5],
+      }).save
     end
     
     # update equipment
@@ -42,13 +49,52 @@ class Api::V1::Admin::RecipesController < ApplicationController
     if params[:id]
       recipe = Recipe.find(params[:id])
       equipment = recipe.equipment.pluck(:id)
-      ingredients = recipe.ingredients.pluck(:id)
+      # get ingredient ids, names, and show/list quants/units
+      ingredients = []
+      recipe.join_ingredients_recipes.each do |ir|
+        # [id, name, sQ, sU, lQ, lU]
+        ingredients.push([
+          ir.ingredient_id,
+          Ingredient.find(ir.ingredient_id).name,
+          ir.show_quantity,
+          ir.show_unit,
+          ir.list_quantity,
+          ir.list_unit,
+        ])
+      end
       rTypes = recipe.recipe_types.pluck(:id)
+      # nest recipe data under 'recipe', add ingredients, equipment, rTypes
+      #   as their own attributes at the same level, and then you can get rid
+      #   of the other api calls in the frontend admin recipe show view for
+      #   the info needed to list all the checkboxes at the bottom. Instead
+      #   everything will be packed into here - since we're doing so much
+      #   work to collect the join table quantites etc, we might as well just
+      #   grab everything here and save on some api calls
+      # TODO convert Ingredient model to an ActiveModel or ActiveHash, if 
+      #      quantities are on the join table then Ingredient is just static
+      #      data
+      allIngredients = Ingredient.all.pluck(:id, :name)
+      allIngredients.map! do |ing|
+        match = ingredients.find { |obj| obj[0] == ing[0]}
+        if match
+          match
+        else
+          [ing[0], ing[1], 0, 'g', 0, 'g']
+        end
+      end
+      # now get all the rTypes
+      allRTypes = RecipeType.all.pluck(:id, :name)
+
+      # compose giant object for frontend
       render json: {
-        recipe: recipe,
-        equipment: equipment,
-        ingredients: ingredients,
-        rTypes: rTypes
+        recipe: {
+          recipe: recipe,
+          equipment: equipment,
+          ingredients: ingredients,
+          rTypes: rTypes
+        },
+        ingredients: allIngredients,
+        rTypes: allRTypes,
       }
     end
   end
@@ -61,7 +107,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
       end
       recipe.slug = URI::encode(recipe_params[:name].gsub(' ', '-').downcase)
 
-      # new actions
+      # new action_array
       recipe.action_array = JSON.parse(action_params[:action_array])
       
       # remove existing types and replace with new ones
@@ -71,9 +117,21 @@ class Api::V1::Admin::RecipesController < ApplicationController
       end
 
       # update ingredients
-      recipe.ingredients.delete_all
+      # remove old ingredient associations
+      recipe.join_ingredients_recipes.each do |ir|
+        ir.delete
+      end
+
+      # add new ingredient associations
       ingredient_params.each do |ing|
-        recipe.ingredients << Ingredient.find(ing)
+        JoinIngredientsRecipe.new({
+          recipe_id: recipe.id,
+          ingredient_id: ing[0],
+          show_quantity: ing[2],
+          show_unit: ing[3],
+          list_quantity: ing[4],
+          list_unit: ing[5],
+        }).save
       end
       
       # update equipment
