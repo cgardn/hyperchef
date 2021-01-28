@@ -24,14 +24,17 @@ class Api::V1::Admin::RecipesController < ApplicationController
 
     # update ingredients
     ingredient_params.each do |ing|
-      JoinIngredientsRecipe.new({
+      recipe.ingredients << Ingredient.find(ing[0])
+      jir = JoinIngredientsRecipe.new({
         recipe_id: recipe.id,
         ingredient_id: ing[0],
         show_quantity: ing[2],
         show_unit: ing[3],
         list_quantity: ing[4],
         list_unit: ing[5],
-      }).save
+      })
+      jir.save
+      recipe.join_ingredients_recipes << jir
     end
     
     # update equipment
@@ -152,8 +155,8 @@ class Api::V1::Admin::RecipesController < ApplicationController
   def destroy
     if params[:id]
       Recipe.find(params[:id]).destroy
+      render json: {}, status: :ok
       FilterGraph.rebuild_all()
-      render json: {}, status: :no_content
     end
   end
 
