@@ -24,7 +24,6 @@ class Api::V1::Admin::RecipesController < ApplicationController
 
     # update ingredients
     ingredient_params.each do |ing|
-      recipe.ingredients << Ingredient.find(ing[0])
       jir = JoinIngredientsRecipe.new({
         recipe_id: recipe.id,
         ingredient_id: ing[0],
@@ -38,7 +37,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
     end
 
     # ingredient count normalized to 100 for index view
-    r.ingredient_score = r.normalize(r.ingredients.count, 1,15,10,100).to_i
+    recipe.ingredient_score = recipe.normalize(recipe.ingredients.count, 1,15,10,100).to_i
     
     # update equipment
     equipment_params.each do |equip|
@@ -141,7 +140,7 @@ class Api::V1::Admin::RecipesController < ApplicationController
       end
       
       # update ingredient score
-      r.ingredient_score = r.normalize(r.ingredients.count, 1,15,10,100).to_i
+      recipe.ingredient_score = recipe.normalize(recipe.ingredients.count, 1,15,10,100).to_i
 
       # update equipment
       recipe.equipment.delete_all
