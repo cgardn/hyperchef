@@ -36,6 +36,9 @@ class Api::V1::Admin::RecipesController < ApplicationController
       jir.save
       recipe.join_ingredients_recipes << jir
     end
+
+    # ingredient count normalized to 100 for index view
+    r.ingredient_score = r.normalize(r.ingredients.count, 1,15,10,100).to_i
     
     # update equipment
     equipment_params.each do |equip|
@@ -137,6 +140,9 @@ class Api::V1::Admin::RecipesController < ApplicationController
         }).save
       end
       
+      # update ingredient score
+      r.ingredient_score = r.normalize(r.ingredients.count, 1,15,10,100).to_i
+
       # update equipment
       recipe.equipment.delete_all
       equipment_params.each do |equip|
