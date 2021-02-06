@@ -166,6 +166,10 @@ class Api::V1::Admin::RecipesController < ApplicationController
   end
 
   private
+    def is_admin
+      @current_user.admin == true
+    end
+
     def equipment_params
       params.require(:equipment)
     end

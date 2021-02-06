@@ -1,4 +1,8 @@
 class AuthenticateUserCommand < BaseCommand
+  def is_admin?
+    @user.admin == true
+  end
+
   private
 
   attr_reader :email, :password

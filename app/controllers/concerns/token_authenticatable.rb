@@ -11,6 +11,11 @@ module TokenAuthenticatable
 
   private
 
+  def authenticate_admin
+    @current_user = DecodeAuthenticationCommand.call(request.headers).result
+    raise NotAuthorizedException unless @current_user and @current_user.admin
+  end
+
   def authenticate_user
     @current_user = DecodeAuthenticationCommand.call(request.headers).result
     raise NotAuthorizedException unless @current_user
