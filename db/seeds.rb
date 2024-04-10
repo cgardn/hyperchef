@@ -74,14 +74,14 @@ puts "#{equipment.length} pieces created."
 
 # Creating recipes
 puts "Creating Recipes..."
-500.times do |n|
+5000.times do |n|
   rTime = Time.now
   rTimeCheck = rTime
   used = []
-  r = Recipe.create({name: Faker::Number.unique.number(digits: 3), origin: Faker::Nation.nationality,
+  r = Recipe.create({name: Faker::Number.unique.number(digits: 5), origin: Faker::Nation.nationality,
                      author: Faker::Name.name, views: 0, saves: 0})
 
-  i = Array.new(rand(2..8)) {rand(1..Ingredient.all.length-1)}.to_set.to_a
+  i = Array.new(rand(4..8)) {rand(1..Ingredient.all.length-1)}.to_set.to_a
   e = Array.new(rand(2..equipment.length)) {rand(1..equipment.length-1)}.to_set.to_a
 
   puts "ingredients: #{i}"
@@ -90,7 +90,17 @@ puts "Creating Recipes..."
   rTimeCheck = Time.now
 
   i.each do |ing|
-    r.ingredients << Ingredient.find(ing)
+    quant = rand(5..20)
+    jir = JoinIngredientsRecipe.new({
+      recipe_id: r.id,
+      ingredient_id: ing,
+      show_quantity: quant,
+      show_unit: 'g',
+      list_quantity: quant,
+      list_unit: 'g'
+    })
+    jir.save
+    r.join_ingredients_recipes << jir
   end
   e.each do |eq|
     r.equipment << Equipment.find(eq)
@@ -109,14 +119,14 @@ puts "Creating Recipes..."
 
   rand(2..15).times do |n|
     r.action_array.push([Faker::Lorem.sentence(word_count: rand(1..4)),
-                        Faker::Lorem.paragraph(sentence_count: rand(1..5))]
+                        Faker::Lorem.paragraph(sentence_count: rand(1..5))])
   end
 
   puts "Actions added in %0.2f seconds" % [Time.now - rTimeCheck]
   rTimeCheck = Time.now
 
   r.prep_time = rand(5..30)
-  r.cook_time = rand(0..45)
+  r.cook_time = rand(5..45)
   r.difficulty = rand(1..10)
 
   r.ingredient_score = r.normalize(
@@ -132,6 +142,7 @@ end
 puts "All Recipes finished in %0.2fs" % [Time.now - checkpoint]
 
 # Creating users
+# just one for now, the api admin user
 puts "Creating admin"
 u = ApiUser.new(email: "admin@test.gov", password: "passwordasdf")
 u.save!
