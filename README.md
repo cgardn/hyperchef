@@ -17,5 +17,3 @@ Upcoming Features:
   * Many more recipes
 
 Built on Rails v6, styled with Bootstrap
-
-Checkout the live version at: [cgardn.github.io/hyperchef](https://cgardn.github.io/hyperchef)
